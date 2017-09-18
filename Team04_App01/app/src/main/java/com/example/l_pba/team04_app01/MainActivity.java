@@ -1,5 +1,11 @@
 package com.example.l_pba.team04_app01;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -14,6 +20,8 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 public class MainActivity extends AppCompatActivity {
     private MapView mapView;
+    public LocationManager lmanager;
+    public LocationListener llistner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +46,61 @@ public class MainActivity extends AppCompatActivity {
                         .snippet("test_snippet"));
             }
         });
+
+
+        //Location Manager
+        lmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        llistner = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if (location!=null){
+                    final double lat = location.getLatitude();
+                    final double lon = location.getLongitude();
+
+                    /** Camera jumps to actual position **/
+
+                    mapView.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(MapboxMap mapboxMap) {
+                            mapboxMap.setCameraPosition(new CameraPosition.Builder()
+                                    .target(new LatLng(lat, lon))
+                                    .build());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        //for API 23+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mapView.onStart();
+
+        try{    //updates every 2 secs
+            lmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, llistner);
+        }
+        catch (SecurityException e){
+            //---
+        }
     }
 
     @Override
@@ -56,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         mapView.onPause();
+        lmanager.removeUpdates(llistner);
     }
 
     @Override
@@ -80,5 +138,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        switch (requestCode){
+            case 1:
+                if ( (grantResults.length>0) && (grantResults[0]== PackageManager.PERMISSION_GRANTED) ){
+                    try{
+                        lmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, llistner);
+                    }
+                    catch (SecurityException e){
+                        //--
+                    }
+                }
+                break;
+            default:
+
+        }
     }
 }
