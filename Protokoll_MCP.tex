@@ -1,0 +1,162 @@
+\documentclass[a4paper, 10pt]{scrartcl}
+
+\usepackage{a4wide}
+\usepackage{float}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx} %%Grafiken in pdfLaTeX
+\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{empheq}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{stmaryrd }   %Symbole, z.B. Blitz
+\usepackage{booktabs}
+\usepackage{multirow}		%Zum Zusammenfassen mehrere Zeilen einer Tabelle
+%\usepackage{amsfonts}
+\usepackage{hyperref}
+
+%\usepackage{pictex}
+
+
+
+
+% Zusatzpakete verbatim und moreverb: listing-Umgebung
+\usepackage{verbatim, moreverb}
+\usepackage{color}
+\definecolor{darkred}{rgb}{0.5,0,0}
+\usepackage{listings}		%Für Quellcode
+
+\lstloadlanguages{Java, XML}
+\lstset{language=Java}
+\lstset{
+basicstyle=\scriptsize\ttfamily, % alle listings scriptsize drucken (kann man gerade noch lesen) und Schreibmaschinenschrift für alles
+keywordstyle=\color{darkred}\bfseries, % Schlüsselwörter fett und dunkelrot drucken
+commentstyle=\color{blue}, % Kommentare blau drucken
+showstringspaces=false, % Strings im Code ohne Kenntlichmachung von Leerzeichen
+breaklines=true,
+frame=lines,
+numbers=left,
+numberstyle=\tiny
+}
+
+
+
+
+%  \usepackage{SIunits}
+%  \usepackage[version=3]{mhchem}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Stichwortverzeichnis 
+\usepackage{makeidx}
+\makeindex
+%
+\newcommand{\idx}[1]{\index{#1} #1}
+%indizierte Quelltextline - kleiner Fehler in der Darstellung im Index: Schrift lässt sich nicht anpassen, da Eintrag sonst nicht erscheint.
+\newcommand{\lstx}[1]{\index{\lstinline$#1$} \lstinline[basicstyle=\normalsize\ttfamily]$#1$}
+
+
+%Absatzeinstellungen
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.3cm}
+
+%Gleitobjekteinstellungen
+\setcounter{bottomnumber}{2}
+\renewcommand{\textfraction}{0}
+\renewcommand{\bottomfraction}{0.7}
+
+%Abstand zw. Bild und Bildunterschrift
+\setlength{\abovedisplayshortskip}{0pt}
+
+
+
+\title{Praktikum Mobile Computing}
+\author{RK}		%Fügt eure Namen am Ende hinzu
+
+
+\begin{document}
+
+\begin{titlepage}
+   
+   \begin{center}
+   \vspace*{4cm}
+      \huge{Praktikum Mobile Computing}\\
+      \vspace{1cm}
+      
+      \Large{18.09. – 29.09.2017}
+      
+      \vfill
+      \Large{RK, }\\		%Namen hinzufügen
+      \large{@}\\	%Mailadressen hinzufügen
+      \vspace{1cm}
+      \today
+      
+      \vspace*{2cm}
+      
+      
+   \end{center}
+   
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\begin{abstract}
+Mapbox GPS-App
+\end{abstract}
+
+\newpage
+
+\section{Einleitung}
+
+Mindest API: Android 5.0 
+
+\section{Quelltextbeispiele}
+
+\subsection{Unterüberschrift}
+
+\subsection{Beispiel Quelltext}
+
+\begin{lstlisting}
+package com.example.android.helplearntolearn;
+
+import android.annotation.SuppressLint;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.MotionEvent;
+import android.view.View;
+
+/**
+ * An example full-screen activity that shows and hides the system UI (i.e.
+ * status bar and navigation/system bar) with user interaction.
+ */
+public class FullscreenActivity extends AppCompatActivity {
+    /**
+     * Whether or not the system UI should be auto-hidden after
+     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
+     */
+    private static final boolean AUTO_HIDE = true;
+
+    /**
+     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
+     * user interaction before hiding the system UI.
+     */
+    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+\end{lstlisting}
+
+
+
+
+
+
+
+
+\end{document}
