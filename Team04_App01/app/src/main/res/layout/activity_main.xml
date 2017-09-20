@@ -10,14 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        mapbox:mapbox_cameraTargetLat="-36.84"
-        mapbox:mapbox_cameraTargetLng="174.76"
-        mapbox:mapbox_cameraZoom="10"
-        mapbox:mapbox_cameraBearing="34.33"
-        mapbox:mapbox_cameraTilt="50.25"
-        mapbox:mapbox_styleUrl="@string/mapbox_style_satellite_streets"
+        mapbox:mapbox_cameraTargetLat="49.99024947275354"
+        mapbox:mapbox_cameraTargetLng="8.233534097671508"
+
+        mapbox:mapbox_cameraBearing="0"
+        mapbox:mapbox_cameraTilt="45"
+        mapbox:mapbox_uiRotateGestures="true"
+
+        mapbox:mapbox_cameraZoom="17"
         mapbox:mapbox_cameraZoomMax="20"
-        mapbox:mapbox_cameraZoomMin="0"
-        mapbox:mapbox_uiRotateGestures="true"/>
+        mapbox:mapbox_cameraZoomMin="0"/>
 
 </RelativeLayout>
