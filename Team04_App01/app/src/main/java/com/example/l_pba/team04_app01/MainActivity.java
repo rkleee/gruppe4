@@ -21,6 +21,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * MapBox Imports
@@ -66,12 +67,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * const parameters
      */
-    final static int updateTime = 10000; //in ms
+    final static int updateTime = 1000; //in ms
+    final static int polyCountPoints = 25000/updateTime;
     final static int cameraSmooth = 1000; //in ms
     final static int lineWidth = 5; //for draw route
     final static String lineColor = "#ff38afea"; //color of the route
     final static String polygonColor = "#7f3bb2d0"; //color of the polygon
-    final static double offset = 0.000001; //measuring inaccuracy for polygon calculating
+    final static double offset = 0.00005; //measuring inaccuracy for polygon calculating (0.00005 = 3.5m)
     private static final String TAG = MainActivity.class.getName(); //Tagging for Logging
 
     @Override
@@ -117,16 +119,11 @@ public class MainActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 if (location != null){
 
-                    /**
-                     * actualPosition
-                     */
-                    final double lat = location.getLatitude();
-                    final double lon = location.getLongitude();
-                    final LatLng actualPoint = new LatLng(lat, lon);
+                    //actual position
+                    final LatLng actualPoint =
+                            new LatLng(location.getLatitude(), location.getLongitude());
 
-                    /**
-                     * mapboxMap
-                     */
+                    //MapBox
                     mapView.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(MapboxMap mapboxMap) {
@@ -148,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                                     .title("Your Position")
                                     .snippet("You are here"));
 
-                            //ROUTE
+                            //Draw Line
                             //first point
                             if (points[1] == null) {
                                 //if points[] is empty, the first point will put in both
@@ -168,24 +165,38 @@ public class MainActivity extends AppCompatActivity {
                             //POLYGON
                             allPoints.add(actualPoint);
                             //search through all Points
-                            for (int i = 0; i < allPoints.size() - 1; i++) {
+
+                            //temporary vars
+                            int polygoncounter = 0; //number of points out of offset
+
+                            //search through the field of points
+                            for (int i = allPoints.size() - 2; i>=0; i--) {
                                 LatLng temp = allPoints.get(i);
-                                //search an intersection
-                                if(Math.abs(temp.getLatitude() - actualPoint.getLatitude())
-                                        < offset && Math.abs(temp.getLongitude() -
-                                        actualPoint.getLongitude()) < offset) {
-                                    //found polygon
-                                    //remove all points before
-                                    for (int j = 0; j <= i; j++) {
-                                        allPoints.removeFirst();
+                                //Deltas
+                                double dlat = Math.abs(temp.getLatitude() - actualPoint.getLatitude());
+                                double dlong = Math.abs(temp.getLongitude() - actualPoint.getLongitude());
+
+                                //Trigger
+                                if((dlat > offset) || (dlong > offset)) { polygoncounter++; }
+
+
+                                //Polygon found
+                                if ((dlat < offset) && (dlong < offset) && (polygoncounter>polyCountPoints)) {
+
+                                    Toast.makeText(MainActivity.this, "Polygon", Toast.LENGTH_SHORT).show();
+                                    //create polygon
+                                    LinkedList<LatLng> polyPoints = new LinkedList<>();
+                                    for (int j = allPoints.size()-1; j>=i; j--) {
+                                        polyPoints.add(allPoints.get(j));
                                     }
                                     //draw Polygon
                                     mapboxMap.addPolygon(new PolygonOptions()
-                                            .addAll(allPoints)
+                                            .addAll(polyPoints)
                                             .fillColor(Color.parseColor(polygonColor)));
-                                    //clear the list for the next Polygon
-                                    allPoints.clear();
-                                    allPoints.add(actualPoint);
+                                    //clear polyPoints for next polygon
+                                    polyPoints.clear();
+                                    //allPoints.clear();
+                                    //allPoints.add(actualPoint);
                                     //end the search
                                     break;
                                 }
