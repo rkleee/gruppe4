@@ -1,0 +1,9 @@
+# ignore all latex-files except source and output
+*.aux
+*.idx
+*.ilg
+*.ind
+*.out
+*.tex.backup
+*.toc
+*.log

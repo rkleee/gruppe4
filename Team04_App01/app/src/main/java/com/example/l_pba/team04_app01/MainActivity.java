@@ -6,6 +6,7 @@
  */
 package com.example.l_pba.team04_app01;
 
+<<<<<<< HEAD
 //IMPORTS
 
 /**
@@ -14,6 +15,10 @@ package com.example.l_pba.team04_app01;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+=======
+import android.Manifest;
+import android.content.pm.PackageManager;
+>>>>>>> 36bdf29d3794efe13a597c719a61d13c376fab8d
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -50,6 +55,8 @@ import java.util.LinkedList;
  */
 public class MainActivity extends AppCompatActivity {
     private MapView mapView;
+    public LocationManager lmanager;
+    public LocationListener llistner;
 
     /**
      * for GPS position
@@ -207,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStatusChanged(String provider, int status, Bundle extras) {
                 Log.d(TAG, "onStatusChanged");
             }
+<<<<<<< HEAD
 
             @Override
             /**
@@ -228,17 +236,71 @@ public class MainActivity extends AppCompatActivity {
         //RequestCode 1
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+=======
+        });
+
+
+        //Location Manager
+        lmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        llistner = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if (location!=null){
+                    final double lat = location.getLatitude();
+                    final double lon = location.getLongitude();
+
+                    /** Camera jumps to actual position **/
+
+                    mapView.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(MapboxMap mapboxMap) {
+                            mapboxMap.setCameraPosition(new CameraPosition.Builder()
+                                    .target(new LatLng(lat, lon))
+                                    .build());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        //for API 23+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+>>>>>>> 36bdf29d3794efe13a597c719a61d13c376fab8d
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mapView.onStart();
+<<<<<<< HEAD
         try {
             //Update Loop
             lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateTime, 0, lListener);
         } catch (SecurityException e){
             Log.e(TAG, "SecurityException in onStart was thrown");
+=======
+
+        try{    //updates every 2 secs
+            lmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, llistner);
+        }
+        catch (SecurityException e){
+            //---
+>>>>>>> 36bdf29d3794efe13a597c719a61d13c376fab8d
         }
     }
 
@@ -252,7 +314,11 @@ public class MainActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         mapView.onPause();
+<<<<<<< HEAD
         lManager.removeUpdates(lListener);
+=======
+        lmanager.removeUpdates(llistner);
+>>>>>>> 36bdf29d3794efe13a597c719a61d13c376fab8d
     }
 
     @Override
@@ -283,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+<<<<<<< HEAD
     /**
      * @param requestCode   int
      * @param permissions   String[]
@@ -299,12 +366,29 @@ public class MainActivity extends AppCompatActivity {
                                 updateTime, 0, lListener);
                     } catch (SecurityException e) {
                         Log.e(TAG, "SecurityException in onRequestPermissionsResult was thrown");
+=======
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        switch (requestCode){
+            case 1:
+                if ( (grantResults.length>0) && (grantResults[0]== PackageManager.PERMISSION_GRANTED) ){
+                    try{
+                        lmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, llistner);
+                    }
+                    catch (SecurityException e){
+                        //--
+>>>>>>> 36bdf29d3794efe13a597c719a61d13c376fab8d
                     }
                 }
                 break;
             default:
+<<<<<<< HEAD
                 Log.wtf(TAG, "No other RequestCode is implemented");
         }
     }
 
+=======
+
+        }
+    }
+>>>>>>> 36bdf29d3794efe13a597c719a61d13c376fab8d
 }
