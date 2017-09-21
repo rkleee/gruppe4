@@ -1,8 +1,14 @@
+/**
+ * @author group04
+ * @version 1.0
+ * MapActivity for displaying the map
+ */
 package com.example.l_pba.team04_app01_splashscreendesign;
 
+/**
+ * Android Imports
+ */
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -10,6 +16,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -52,7 +59,8 @@ public class MapActivity extends AppCompatActivity {
      * drawing parameters
      */
     public LatLng[] points = new LatLng[2]; //Array of two points for route draw
-    LinkedList<LatLng> allPoints = new LinkedList<>(); //List of all points for polygon draw
+    LinkedList<LatLng> polyPoints = new LinkedList<>(); //List of all points for polygon draw
+    LinkedList<LatLng> allPoints = new LinkedList<>(); //List of all points
 
     /**
      * const parameters
@@ -63,7 +71,7 @@ public class MapActivity extends AppCompatActivity {
     final static int lineWidth = 5; //for draw route
     final static String lineColor = "#ff38afea"; //color of the route
     final static String polygonColor = "#7f3bb2d0"; //color of the polygon
-    final static double offset = 0.00005; //measuring inaccuracy for polygon calculating (0.00005 = 3.5m)
+    final static double offset = 0.00005; //inaccuracy for polygon calculating (0.00005 = 3.5m)
     private static final String TAG = MapActivity.class.getName(); //Tagging for Logging
 
     @Override
@@ -112,6 +120,7 @@ public class MapActivity extends AppCompatActivity {
                     //actual position
                     final LatLng actualPoint =
                             new LatLng(location.getLatitude(), location.getLongitude());
+                    allPoints.add(actualPoint);
 
                     //MapBox
                     mapView.getMapAsync(new OnMapReadyCallback() {
@@ -121,6 +130,7 @@ public class MapActivity extends AppCompatActivity {
                             CameraPosition camPos = new CameraPosition.Builder()
                                     .target(actualPoint)
                                     .build();
+                            //Camera moves smooth to actual position
                             mapboxMap.easeCamera(CameraUpdateFactory.newCameraPosition(camPos),
                                     cameraSmooth);
 
@@ -132,10 +142,10 @@ public class MapActivity extends AppCompatActivity {
                             //create new Marker
                             mapboxMap.addMarker(new MarkerOptions()
                                     .position(actualPoint)
-                                    .title("Your Position")
-                                    .snippet("You are here"));
+                                    .title(getResources().getString(R.string.marker_title))
+                                    .snippet(getResources().getString(R.string.marker_snippet)));
 
-                            //Draw Line
+                            //ROUTE
                             //first point
                             if (points[1] == null) {
                                 //if points[] is empty, the first point will put in both
@@ -153,30 +163,27 @@ public class MapActivity extends AppCompatActivity {
                                     .width(lineWidth));
 
                             //POLYGON
-                            allPoints.add(actualPoint);
-                            //search through all Points
 
                             //temporary vars
-                            int polygoncounter = 0; //number of points out of offset
+                            int polygonCounter = 0; //number of points out of offset
 
                             //search through the field of points
                             for (int i = allPoints.size() - 2; i>=0; i--) {
                                 LatLng temp = allPoints.get(i);
                                 //Deltas
-                                double dlat = Math.abs(temp.getLatitude() - actualPoint.getLatitude());
-                                double dlong = Math.abs(temp.getLongitude() - actualPoint.getLongitude());
+                                double dLat = Math.abs(temp.getLatitude() - actualPoint.getLatitude());
+                                double dLong = Math.abs(temp.getLongitude() - actualPoint.getLongitude());
 
                                 //Trigger
-                                if((dlat > offset) || (dlong > offset)) { polygoncounter++; }
-
+                                if((dLat > offset) || (dLong > offset)) {
+                                    polygonCounter++;
+                                }
 
                                 //Polygon found
-                                if ((dlat < offset) && (dlong < offset) && (polygoncounter>polyCountPoints)) {
-
+                                if ((dLat < offset) && (dLong < offset) && (polygonCounter > polyCountPoints)) {
                                     Toast.makeText(MapActivity.this, "Polygon", Toast.LENGTH_SHORT).show();
                                     //create polygon
-                                    LinkedList<LatLng> polyPoints = new LinkedList<>();
-                                    for (int j = allPoints.size()-1; j>=i; j--) {
+                                    for (int j = allPoints.size() - 1; j >= i; j--) {
                                         polyPoints.add(allPoints.get(j));
                                     }
                                     //draw Polygon
@@ -185,8 +192,6 @@ public class MapActivity extends AppCompatActivity {
                                             .fillColor(Color.parseColor(polygonColor)));
                                     //clear polyPoints for next polygon
                                     polyPoints.clear();
-                                    //allPoints.clear();
-                                    //allPoints.add(actualPoint);
                                     //end the search
                                     break;
                                 }

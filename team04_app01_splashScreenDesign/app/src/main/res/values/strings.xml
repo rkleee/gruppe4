@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">team04_app01_splashScreenDesign</string>
+    <string name="app_name">MC Route</string>
+    <string name="marker_title">Your Position</string>
+    <string name="marker_snippet">You are here</string>
 </resources>
