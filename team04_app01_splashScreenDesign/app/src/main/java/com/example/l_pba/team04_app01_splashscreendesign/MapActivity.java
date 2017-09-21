@@ -46,7 +46,6 @@ import java.util.LinkedList;
 
 
 //MAIN
-
 /**
  * MainActivity for the Map
  */
@@ -61,7 +60,7 @@ public class MapActivity extends AppCompatActivity {
     public LocationListener lListener;
 
     /**
-     * speichern
+     * save with SharedPreferences
      */
     public static SharedPreferences preferences;
     public static SharedPreferences.Editor editor;
@@ -84,16 +83,19 @@ public class MapActivity extends AppCompatActivity {
     final static String polygonColor = "#7f3bb2d0"; //color of the polygon
     final static double offset = 0.00005; //inaccuracy for polygon calculating (0.00005 = 3.5m)
     private static final String TAG = MapActivity.class.getName(); //Tagging for Logging
+
     /**
      * other parameters
      */
     private boolean gpsPlay = false;
 
+    
     @Override
     /**
      * @param savedInstanceState Bundle
      */
     protected void onCreate(Bundle savedInstanceState) {
+
         /**
          * Android Shit
          */
@@ -109,7 +111,7 @@ public class MapActivity extends AppCompatActivity {
         mapView.onCreate(savedInstanceState);
 
         /**
-         *
+         * set preferences
          */
         preferences = MapActivity.this.getPreferences(Context.MODE_PRIVATE);
         editor = preferences.edit();
@@ -126,8 +128,9 @@ public class MapActivity extends AppCompatActivity {
         //mapView.setStyleUrl(Style.MAPBOX_STREETS); //Default
 
         /**
-         * Buttons
+         * BUTTONS
          */
+        //Button to start the Route record
         playButton = (Button) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,25 +147,24 @@ public class MapActivity extends AppCompatActivity {
             }
         });
 
+        //Button to save the Routes and Polygons
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /**
-                for (int i=0; i<allPoints.size(); i++) {
-                    String Key = "default" + Integer.toString(i);
-                    String Data = allPoints.get(i).toString();
-                    editor.putString(Key, Data);
-                }
+                 for (int i=0; i<allPoints.size(); i++) {
+                 String Key = "default" + Integer.toString(i);
+                 String Data = allPoints.get(i).toString();
+                 editor.putString(Key, Data);
+                 }
                  */
-                if (allPoints.size()>0) {
+
+                if (!allPoints.isEmpty()) {
                     Toast.makeText(MapActivity.this, allPoints.get(0).toString(), Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
-
 
 
         /**
@@ -170,23 +172,24 @@ public class MapActivity extends AppCompatActivity {
          */
         lManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         lListener = new LocationListener() {
-
             @Override
             /**
              * @param location Location
              */
             public void onLocationChanged(Location location) {
                 if (location != null){
-
                     //actual position
                     final LatLng actualPoint =
                             new LatLng(location.getLatitude(), location.getLongitude());
-                    if (gpsPlay) {allPoints.add(actualPoint);}
+                    if (gpsPlay) {
+                        allPoints.add(actualPoint);
+                    }
 
                     //MapBox
                     mapView.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(MapboxMap mapboxMap) {
+
                             //CAMERAPOSITION
                             CameraPosition camPos = new CameraPosition.Builder()
                                     .target(actualPoint)
@@ -200,6 +203,7 @@ public class MapActivity extends AppCompatActivity {
                             if(!mapboxMap.getMarkers().isEmpty()) {
                                 mapboxMap.getMarkers().get(0).remove();
                             }
+
                             //create new Marker
                             mapboxMap.addMarker(new MarkerOptions()
                                     .position(actualPoint)
@@ -216,6 +220,7 @@ public class MapActivity extends AppCompatActivity {
                                     //old point put in 0
                                     points[0] = points[1];
                                 }
+
                                 //new point put in 1
                                 points[1] = actualPoint;
                                 // Draw Points on MapView
@@ -225,8 +230,8 @@ public class MapActivity extends AppCompatActivity {
                                         .width(lineWidth));
                             }
 
-                            //POLYGON
 
+                            //POLYGON
                             //temporary vars
                             int polygonCounter = 0; //number of points out of offset
 
@@ -249,17 +254,19 @@ public class MapActivity extends AppCompatActivity {
                                     for (int j = allPoints.size() - 1; j >= i; j--) {
                                         polyPoints.add(allPoints.get(j));
                                     }
+
                                     //draw Polygon
                                     mapboxMap.addPolygon(new PolygonOptions()
                                             .addAll(polyPoints)
                                             .fillColor(Color.parseColor(polygonColor)));
+
                                     //clear polyPoints for next polygon
                                     polyPoints.clear();
+
                                     //end the search
                                     break;
                                 }
                             }
-
                         }//end of onMapReady
                     });//getMapAsync
                 } else {
@@ -377,4 +384,3 @@ public class MapActivity extends AppCompatActivity {
     }
 
 }
-
