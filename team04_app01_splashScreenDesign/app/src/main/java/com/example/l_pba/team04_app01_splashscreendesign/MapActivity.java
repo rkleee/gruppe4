@@ -135,9 +135,11 @@ public class MapActivity extends AppCompatActivity {
                 if (!gpsPlay){
                     gpsPlay = true;
                     playButton.setText("Pause");
+                    Toast.makeText(MapActivity.this, "gpsPlay = true", Toast.LENGTH_SHORT).show();
                 } else {
                     gpsPlay = false;
                     playButton.setText("Play");
+                    Toast.makeText(MapActivity.this, "gpsPlay = false", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -146,7 +148,16 @@ public class MapActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                /**
+                for (int i=0; i<allPoints.size(); i++) {
+                    String Key = "default" + Integer.toString(i);
+                    String Data = allPoints.get(i).toString();
+                    editor.putString(Key, Data);
+                }
+                 */
+                if (allPoints.size()>0) {
+                    Toast.makeText(MapActivity.this, allPoints.get(0).toString(), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -165,12 +176,12 @@ public class MapActivity extends AppCompatActivity {
              * @param location Location
              */
             public void onLocationChanged(Location location) {
-                if ((location != null) && gpsPlay){
+                if (location != null){
 
                     //actual position
                     final LatLng actualPoint =
                             new LatLng(location.getLatitude(), location.getLongitude());
-                    allPoints.add(actualPoint);
+                    if (gpsPlay) {allPoints.add(actualPoint);}
 
                     //MapBox
                     mapView.getMapAsync(new OnMapReadyCallback() {
@@ -196,21 +207,23 @@ public class MapActivity extends AppCompatActivity {
                                     .snippet(getResources().getString(R.string.marker_snippet)));
 
                             //ROUTE
-                            //first point
-                            if (points[1] == null) {
-                                //if points[] is empty, the first point will put in both
-                                points[0] = actualPoint;
-                            } else {
-                                //old point put in 0
-                                points[0] = points[1];
+                            if (gpsPlay) {
+                                //first point
+                                if (points[1] == null) {
+                                    //if points[] is empty, the first point will put in both
+                                    points[0] = actualPoint;
+                                } else {
+                                    //old point put in 0
+                                    points[0] = points[1];
+                                }
+                                //new point put in 1
+                                points[1] = actualPoint;
+                                // Draw Points on MapView
+                                mapboxMap.addPolyline(new PolylineOptions()
+                                        .add(points)
+                                        .color(Color.parseColor(lineColor))
+                                        .width(lineWidth));
                             }
-                            //new point put in 1
-                            points[1] = actualPoint;
-                            // Draw Points on MapView
-                            mapboxMap.addPolyline(new PolylineOptions()
-                                    .add(points)
-                                    .color(Color.parseColor(lineColor))
-                                    .width(lineWidth));
 
                             //POLYGON
 
