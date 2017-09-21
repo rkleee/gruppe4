@@ -32,15 +32,18 @@ public class SplashActivity extends AppCompatActivity {
      * @param savedInstanceState Bundle
      */
     protected void onCreate(Bundle savedInstanceState) {
+        /**
+         * Android Shit
+         */
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //No title on splashScreen
         setContentView(R.layout.splashactivity_main);
 
         cL = (ConstraintLayout) findViewById(R.id.constraintLayout);
-        cL.setBackgroundResource(images[0]);
+        cL.setBackgroundResource(images[0]); //first image
+        //flipbook implementation
         new CountDownTimer(3900, 300) {
-            int i = 1;
+            int i = 1; //get the right image of the images[]
             public void onTick(long millisUntilFinished) {
                 cL.setBackgroundResource(images[i]);
                 i++;
@@ -48,11 +51,11 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                cL.setBackgroundResource(images[11]);
+                cL.setBackgroundResource(images[11]); //last image
                 Intent homeIntent = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(homeIntent);
                 finish();
-                // After the time is expieried so here can change image
+                // After the time of 3900 is over so here can change image
             }
         }.start();
     }

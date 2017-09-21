@@ -22,21 +22,26 @@ public class HomeActivity extends AppCompatActivity {
 
     private Button button1;
     private Button button2;
-    private ImageButton button3;
+    private ImageButton mapButton;
 
     @Override
     /**
      * @param savedInstanceState  Bundle
      */
     protected void onCreate(Bundle savedInstanceState) {
+        /**
+         * Android Shit
+         */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homeactivity);
 
+        //Initialize Buttons
         button1 = (Button) findViewById(R.id.but1);
         button2 = (Button) findViewById(R.id.but2);
-        button3 = (ImageButton) findViewById(R.id.imageButton);
+        mapButton = (ImageButton) findViewById(R.id.mapButton);
 
-        button3.setOnClickListener(new View.OnClickListener() {
+        //start the MapActivity
+        mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent explicitIntent = new Intent(HomeActivity.this,MapActivity.class);
