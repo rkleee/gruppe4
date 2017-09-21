@@ -8,6 +8,8 @@ package com.example.l_pba.team04_app01_splashscreendesign;
 /**
  * Android Imports
  */
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -18,6 +20,8 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -48,12 +52,19 @@ import java.util.LinkedList;
  */
 public class MapActivity extends AppCompatActivity {
     private MapView mapView;
+    private Button saveButton, playButton;
 
     /**
      * for GPS position
      */
     public LocationManager lManager;
     public LocationListener lListener;
+
+    /**
+     * speichern
+     */
+    public static SharedPreferences preferences;
+    public static SharedPreferences.Editor editor;
 
     /**
      * drawing parameters
@@ -73,6 +84,10 @@ public class MapActivity extends AppCompatActivity {
     final static String polygonColor = "#7f3bb2d0"; //color of the polygon
     final static double offset = 0.00005; //inaccuracy for polygon calculating (0.00005 = 3.5m)
     private static final String TAG = MapActivity.class.getName(); //Tagging for Logging
+    /**
+     * other parameters
+     */
+    private boolean gpsPlay = false;
 
     @Override
     /**
@@ -94,6 +109,12 @@ public class MapActivity extends AppCompatActivity {
         mapView.onCreate(savedInstanceState);
 
         /**
+         *
+         */
+        preferences = MapActivity.this.getPreferences(Context.MODE_PRIVATE);
+        editor = preferences.edit();
+
+        /**
          * set mapView style
          */
         mapView.setStyleUrl(Style.SATELLITE_STREETS);
@@ -103,6 +124,35 @@ public class MapActivity extends AppCompatActivity {
         //mapView.setStyleUrl(Style.LIGHT);
         //mapView.setStyleUrl(Style.OUTDOORS);
         //mapView.setStyleUrl(Style.MAPBOX_STREETS); //Default
+
+        /**
+         * Buttons
+         */
+        playButton = (Button) findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!gpsPlay){
+                    gpsPlay = true;
+                    playButton.setText("Pause");
+                } else {
+                    gpsPlay = false;
+                    playButton.setText("Play");
+                }
+            }
+        });
+
+        saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
+
 
         /**
          * Initialize GPS
@@ -115,7 +165,7 @@ public class MapActivity extends AppCompatActivity {
              * @param location Location
              */
             public void onLocationChanged(Location location) {
-                if (location != null){
+                if ((location != null) && gpsPlay){
 
                     //actual position
                     final LatLng actualPoint =

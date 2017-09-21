@@ -20,9 +20,7 @@ import android.widget.ImageButton;
  */
 public class HomeActivity extends AppCompatActivity {
 
-    private Button button1;
-    private Button button2;
-    private ImageButton mapButton;
+    private ImageButton dataButton, settingButton, mapButton;
 
     @Override
     /**
@@ -36,8 +34,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.homeactivity);
 
         //Initialize Buttons
-        button1 = (Button) findViewById(R.id.but1);
-        button2 = (Button) findViewById(R.id.but2);
+        dataButton = (ImageButton) findViewById(R.id.dataButton);
+        settingButton = (ImageButton) findViewById(R.id.settingButton);
         mapButton = (ImageButton) findViewById(R.id.mapButton);
 
         //start the MapActivity
@@ -48,6 +46,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(explicitIntent);
             }
         });
+
+
     }
 
 }
