@@ -9,6 +9,7 @@ package com.example.l_pba.team04_app01_splashscreendesign;
  * Android Imports
  */
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.Manifest;
@@ -17,6 +18,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -401,6 +403,19 @@ public class MapActivity extends AppCompatActivity {
             default:
                 Log.wtf(TAG, "No other RequestCode is implemented");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent backIntent = new Intent(MapActivity.this,HomeActivity.class);
+                startActivity(backIntent);
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                finish();
+            }
+        },50);
     }
 
 }

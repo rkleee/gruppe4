@@ -24,7 +24,7 @@
     <!-- Styles -->
     <string name="preference_style_title">Map Style</string>
     <string name="preference_style_key">style</string>
-    <string name="preference_style_default">streets</string>
+    <string name="preference_style_default">Streets</string>
     <string-array name="style_entries">
         <item>Streets</item>
         <item>Satellite</item>

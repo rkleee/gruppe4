@@ -8,8 +8,10 @@ package com.example.l_pba.team04_app01_splashscreendesign;
 /**
  * Android Imports
  */
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -57,4 +59,17 @@ public class SettingsActivity extends PreferenceActivity
 
             return true;
         }
+
+    @Override
+    public void onBackPressed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent backIntent = new Intent(SettingsActivity.this,HomeActivity.class);
+                startActivity(backIntent);
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                finish();
+            }
+        },50);
+    }
 }

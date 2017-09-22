@@ -111,7 +111,7 @@ public class InformationActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 finish();
             }
-        },500);
+        },50);
     }
 }
 
