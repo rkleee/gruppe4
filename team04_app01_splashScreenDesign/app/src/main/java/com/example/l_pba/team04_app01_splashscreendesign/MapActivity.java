@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -42,7 +43,10 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 /**
  * Util Imports
  */
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 
 //MAIN
@@ -75,7 +79,7 @@ public class MapActivity extends AppCompatActivity {
     /**
      * const parameters
      */
-    final static int updateTime = 1000; //in ms
+    static int updateTime = 1000; //in ms
     final static int polyCountPoints = 25000/updateTime;
     final static int cameraSmooth = 1000; //in ms
     final static int lineWidth = 5; //for draw route
@@ -83,6 +87,18 @@ public class MapActivity extends AppCompatActivity {
     final static String polygonColor = "#7f3bb2d0"; //color of the polygon
     final static double offset = 0.00005; //inaccuracy for polygon calculating (0.00005 = 3.5m)
     private static final String TAG = MapActivity.class.getName(); //Tagging for Logging
+
+    //Map with Styles
+    private static final Map<String, String> styles;
+    static {
+        Map<String, String> aMap = new HashMap<>();
+        aMap.put("Streets", Style.MAPBOX_STREETS);
+        aMap.put("Satellite", Style.SATELLITE);
+        aMap.put("Dark", Style.DARK);
+        aMap.put("Light", Style.LIGHT);
+        aMap.put("Outdoor", Style.OUTDOORS);
+        styles = Collections.unmodifiableMap(aMap);
+    }
 
     /**
      * other parameters
@@ -111,21 +127,25 @@ public class MapActivity extends AppCompatActivity {
         mapView.onCreate(savedInstanceState);
 
         /**
+         * Loading Settings
+         */
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //updateTime
+        String prefPingKey = getString(R.string.preference_ping_key);
+        String prefPingDefault = getString(R.string.preference_ping_default);
+        String ping = sPrefs.getString(prefPingKey,prefPingDefault);
+        updateTime = Integer.parseInt(ping);
+        //Style
+        String prefStyleKey = getString(R.string.preference_style_key);
+        String prefStyleDefault = getString(R.string.preference_style_default);
+        String style = sPrefs.getString(prefStyleKey,prefStyleDefault);
+        mapView.setStyleUrl(styles.get(style));
+
+        /**
          * set preferences
          */
         preferences = MapActivity.this.getPreferences(Context.MODE_PRIVATE);
         editor = preferences.edit();
-
-        /**
-         * set mapView style
-         */
-        mapView.setStyleUrl(Style.SATELLITE_STREETS);
-        //mapView.setStyleUrl(Style.TRAFFIC_NIGHT);
-        //mapView.setStyleUrl(Style.TRAFFIC_DAY);
-        //mapView.setStyleUrl(Style.DARK);
-        //mapView.setStyleUrl(Style.LIGHT);
-        //mapView.setStyleUrl(Style.OUTDOORS);
-        //mapView.setStyleUrl(Style.MAPBOX_STREETS); //Default
 
         /**
          * BUTTONS
