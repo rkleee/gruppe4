@@ -9,6 +9,7 @@ package com.example.l_pba.team04_app01_splashscreendesign;
  * Android Imports
  */
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,10 @@ public class SplashActivity extends AppCompatActivity {
 
         cL = (ConstraintLayout) findViewById(R.id.constraintLayout);
         cL.setBackgroundResource(images[0]); //first image
+
+        //set ScreenOrientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         //flipbook implementation
         new CountDownTimer(3900, 300) {
             int i = 1; //get the right image of the images[]

@@ -9,8 +9,10 @@ package com.example.l_pba.team04_app01_splashscreendesign;
  * Android Imports
  */
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,7 +46,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private Button secretButton; //for the easteregg
     private Button mapButton; //to start the MapActivity
-    private TextView logo; //the spinning logog
+    private TextView logo; //the spinning logo
+    private TextView welcome; //welcome
+    private CircleMenu circleMenu; //circleMenu
 
     private int circleMenuColor = Color.WHITE;
     private int settingsColor = Color.parseColor("#ffc1e3ff"); //blue
@@ -81,11 +85,15 @@ public class HomeActivity extends AppCompatActivity {
         secretButton.getBackground().setColorFilter(0x00000000, PorterDuff.Mode.MULTIPLY);
         logo = (TextView) findViewById(R.id.textViewLogo);
         mapButton = (Button) findViewById(R.id.mapbutton);
-        TextView welcome = (TextView) findViewById(R.id.textViewWelcome);
+        welcome = (TextView) findViewById(R.id.textViewWelcome);
 
         //set the Background
         cL = (ConstraintLayout) findViewById(R.id.constraintLayout);
         cL.setBackgroundResource(R.drawable.background);
+
+
+        //set Screen Orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
         //SecretButton, which will rotate the logo
@@ -107,16 +115,54 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // --circleMenu--
-        CircleMenu circleMenu = (CircleMenu) findViewById(R.id.circleMenu);
+        circleMenu = (CircleMenu) findViewById(R.id.circleMenu);
+
         circleMenu.setMainMenu(circleMenuColor,R.drawable.ic_addbtn,R.drawable.ic_clear)
                 .addSubMenu(settingsColor,R.drawable.ic_settings03)
                 .addSubMenu(dataColor,R.drawable.ic_data03)
                 .addSubMenu(informationColor,R.drawable.ic_information)
                 .setOnMenuSelectedListener(new OnMenuSelectedListener() {
+
                     @Override
                     public void onMenuSelected(int index) {
-                       // welcome.setVisibility(View.INVISIBLE);
+                        //welcome.setVisibility(View.INVISIBLE);
+                        switch(index) {
+                            case 0:
+                                new CountDownTimer(900, 300) {
+                                    public void onTick(long millisUntilFinished) {
+                                        //--
+                                    }
+                                    public void onFinish() {
+                                        Intent setting = new Intent(HomeActivity.this,SettingsActivity.class);
+                                        startActivity(setting);
+                                    }
+                                }.start();
+                                break;
+                            case 1:
+                                new CountDownTimer(900, 300) {
+                                    public void onTick(long millisUntilFinished) {
+                                        //--
+                                    }
+                                    public void onFinish() {
+                                        Intent data = new Intent(HomeActivity.this,DataActivity.class);
+                                        startActivity(data);
+                                    }
+                                }.start();
+                                break;
+                            case 2:
+                                new CountDownTimer(900, 300) {
+                                    public void onTick(long millisUntilFinished) {
+                                        //--
+                                    }
+                                    public void onFinish() {
+                                        Intent info = new Intent(HomeActivity.this,InformationActivity.class);
+                                        startActivity(info);
+                                    }
+                                }.start();
+                                break;
+                        }
                         Toast.makeText(HomeActivity.this, "You selected " + circleArray[index], Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
