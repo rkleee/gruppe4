@@ -13,6 +13,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -109,14 +110,20 @@ public class HomeActivity extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent explicitIntent = new Intent(HomeActivity.this,MapActivity.class);
-                startActivity(explicitIntent);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent mapview = new Intent(HomeActivity.this,MapActivity.class);
+                        startActivity(mapview);
+                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                        finish();
+                    }
+                },500);
             }
         });
 
-        // --circleMenu--
+        /**Start new Activities from the Circle-Menu**/
         circleMenu = (CircleMenu) findViewById(R.id.circleMenu);
-
         circleMenu.setMainMenu(circleMenuColor,R.drawable.ic_addbtn,R.drawable.ic_clear)
                 .addSubMenu(settingsColor,R.drawable.ic_settings03)
                 .addSubMenu(dataColor,R.drawable.ic_data03)
@@ -125,44 +132,41 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onMenuSelected(int index) {
-                        //welcome.setVisibility(View.INVISIBLE);
                         switch(index) {
                             case 0:
-                                new CountDownTimer(900, 300) {
-                                    public void onTick(long millisUntilFinished) {
-                                        //--
-                                    }
-                                    public void onFinish() {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
                                         Intent setting = new Intent(HomeActivity.this,SettingsActivity.class);
                                         startActivity(setting);
+                                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                        finish();
                                     }
-                                }.start();
+                                },500);
                                 break;
                             case 1:
-                                new CountDownTimer(900, 300) {
-                                    public void onTick(long millisUntilFinished) {
-                                        //--
-                                    }
-                                    public void onFinish() {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
                                         Intent data = new Intent(HomeActivity.this,DataActivity.class);
                                         startActivity(data);
+                                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                        finish();
                                     }
-                                }.start();
+                                },500);
                                 break;
                             case 2:
-                                new CountDownTimer(900, 300) {
-                                    public void onTick(long millisUntilFinished) {
-                                        //--
-                                    }
-                                    public void onFinish() {
-                                        Intent info = new Intent(HomeActivity.this,InformationActivity.class);
-                                        startActivity(info);
-                                    }
-                                }.start();
+                                new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent fade = new Intent(HomeActivity.this, InformationActivity.class);
+                                            startActivity(fade);
+                                            overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                            finish();
+                                        }
+                                    },500);
                                 break;
                         }
-                        Toast.makeText(HomeActivity.this, "You selected " + circleArray[index], Toast.LENGTH_SHORT).show();
-
                     }
                 });
     }
