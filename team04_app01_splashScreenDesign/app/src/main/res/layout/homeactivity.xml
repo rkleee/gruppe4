@@ -7,36 +7,7 @@
     android:id="@+id/constraintLayout"
     tools:context="com.example.l_pba.team04_app01_splashscreendesign.HomeActivity">
 
-    <!-- The MapButton to start the MapActivity -->
-
-    <ImageButton
-        android:id="@+id/settingButton"
-        android:layout_width="98dp"
-        android:layout_height="91dp"
-        android:background="@null"
-        app:srcCompat="@mipmap/ic_settings03"
-        android:layout_marginRight="55dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="106dp"
-        android:layout_marginEnd="55dp" />
-
-    <ImageButton
-        android:id="@+id/dataButton"
-        android:layout_width="98dp"
-        android:layout_height="91dp"
-        android:layout_marginBottom="106dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/settingButton"
-        app:srcCompat="@mipmap/ic_data03" />
-
+    <!-- Displays "Created by group04" -->
     <TextView
         android:id="@+id/textViewCreator"
         android:layout_width="wrap_content"
@@ -51,6 +22,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <!-- image moves -->
     <com.gjiazhe.panoramaimageview.PanoramaImageView
         android:id="@+id/panorama_image_view"
         android:src="@drawable/newyork02"
@@ -60,15 +33,17 @@
         app:piv_show_scrollbar="false"
         app:piv_invertScrollDirection="true"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="0dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
+    <!-- The MapButton to start the MapActivity -->
     <Button
         android:id="@+id/mapbutton"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -80,13 +55,18 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textColor="@color/cardview_dark_background"
         android:textStyle="italic"
-        tools:layout_editor_absoluteX="6dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="1.0" />
 
+    <!-- Displays "MCROUTE"-->
     <TextView
         android:id="@+id/textViewLogo"
         android:layout_width="131dp"
@@ -106,45 +86,51 @@
         app:layout_constraintTop_toBottomOf="@+id/mapbutton"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewCreator"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
+    <!-- Easteregg, which rotates the Logo -->
     <Button
         android:id="@+id/secretButton"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="128dp"
-        android:layout_height="63dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="139dp"
+        android:layout_height="76dp"
         android:layout_marginBottom="7dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/panorama_image_view"
-        app:layout_constraintVertical_bias="0.947" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewLogo"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.502" />
 
+    <!-- Visual effect for the MapButton-->
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textViewBorder"
         android:layout_width="396dp"
         android:layout_height="5dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
         android:background="@color/cardview_dark_background"
         app:layout_constraintBottom_toTopOf="@+id/secretButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapbutton"
-        app:layout_constraintVertical_bias="0.005" />
+        app:layout_constraintVertical_bias="0.005"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
+    <!-- Displays "Welcome"-->
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/textViewWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="cursive"
         android:text="Welcome"
@@ -154,10 +140,32 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/secretButton"
-        app:layout_constraintHorizontal_bias="0.535"
-        app:layout_constraintLeft_toRightOf="@+id/dataButton"
-        app:layout_constraintRight_toLeftOf="@+id/settingButton"
         app:layout_constraintTop_toBottomOf="@+id/mapbutton"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <!-- The central menu, where you can go settings, data and information-->
+    <com.hitomi.cmlibrary.CircleMenu
+        android:id="@+id/circleMenu"
+        android:layout_width="300dp"
+        android:layout_height="162dp"
+        android:scaleX="2.0"
+        android:scaleY="2.0"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/textViewWelcome"
+        app:layout_constraintBottom_toTopOf="@+id/secretButton" />
 
 </android.support.constraint.ConstraintLayout>

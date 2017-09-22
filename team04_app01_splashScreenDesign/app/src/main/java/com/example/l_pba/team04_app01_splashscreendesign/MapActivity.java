@@ -89,7 +89,7 @@ public class MapActivity extends AppCompatActivity {
      */
     private boolean gpsPlay = false;
 
-    
+
     @Override
     /**
      * @param savedInstanceState Bundle
