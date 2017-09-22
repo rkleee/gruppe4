@@ -45,6 +45,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 /**
  * Util Imports
  */
+import java.io.FileOutputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -146,7 +147,7 @@ public class MapActivity extends AppCompatActivity {
         /**
          * set preferences
          */
-        preferences = MapActivity.this.getPreferences(Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
         editor = preferences.edit();
 
         /**
@@ -170,20 +171,25 @@ public class MapActivity extends AppCompatActivity {
         });
 
         //Button to save the Routes and Polygons
+
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
+
                  for (int i=0; i<allPoints.size(); i++) {
-                 String Key = "default" + Integer.toString(i);
+                 String Key = "mydefault" + Integer.toString(i);
                  String Data = allPoints.get(i).toString();
                  editor.putString(Key, Data);
                  }
-                 */
+                 editor.commit();
+
 
                 if (!allPoints.isEmpty()) {
                     Toast.makeText(MapActivity.this, allPoints.get(0).toString(), Toast.LENGTH_LONG).show();
+                }
+                if (!preferences.getAll().isEmpty()){
+                    Toast.makeText(MapActivity.this, "!Empty", Toast.LENGTH_SHORT).show();
                 }
             }
         });

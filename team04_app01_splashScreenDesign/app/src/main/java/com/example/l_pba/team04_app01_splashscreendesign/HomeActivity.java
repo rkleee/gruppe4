@@ -37,6 +37,8 @@ import com.gjiazhe.panoramaimageview.PanoramaImageView;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 
+import java.io.File;
+
 
 /**
  * HomeActivity to go to other Activities
@@ -71,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
          */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homeactivity);
+
 
         //rotate Animation of the easteregg
         final Animation anim = AnimationUtils.loadAnimation(this,R.anim.animation);
