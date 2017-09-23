@@ -35,10 +35,14 @@ public class SettingsActivity extends PreferenceActivity
             Preference languagePref = findPreference(getString(R.string.preference_language_key));
             Preference stylePref = findPreference(getString(R.string.preference_style_key));
             Preference pingPref = findPreference(getString(R.string.preference_ping_key));
+            Preference routeColorPref = findPreference(getString(R.string.preference_route_color_key));
+            Preference polygonColorPref = findPreference(getString(R.string.preference_polygon_color_key));
 
             languagePref.setOnPreferenceChangeListener(this);
             stylePref.setOnPreferenceChangeListener(this);
             pingPref.setOnPreferenceChangeListener(this);
+            routeColorPref.setOnPreferenceChangeListener(this);
+            polygonColorPref.setOnPreferenceChangeListener(this);
 
             // call onPreferenceChange instantly with the values, which are saved in SharedPref.
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -46,10 +50,14 @@ public class SettingsActivity extends PreferenceActivity
             String savedLanguage = sharedPrefs.getString(languagePref.getKey(), "");
             String savedStyle = sharedPrefs.getString(stylePref.getKey(), "");
             String savedPing = sharedPrefs.getString(pingPref.getKey(), "");
+            String savedRouteColor = sharedPrefs.getString(routeColorPref.getKey(), "");
+            String savedPolygonColor = sharedPrefs.getString(polygonColorPref.getKey(), "");
 
             onPreferenceChange(languagePref, savedLanguage);
             onPreferenceChange(stylePref, savedStyle);
             onPreferenceChange(pingPref, savedPing);
+            onPreferenceChange(routeColorPref, savedRouteColor);
+            onPreferenceChange(polygonColorPref, savedPolygonColor);
         }
 
         @Override

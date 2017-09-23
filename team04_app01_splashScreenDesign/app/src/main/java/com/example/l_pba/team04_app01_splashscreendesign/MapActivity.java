@@ -80,14 +80,18 @@ public class MapActivity extends AppCompatActivity {
     LinkedList<LatLng> allPoints = new LinkedList<>(); //List of all points
 
     /**
+     * setting parameters
+     */
+    static int updateTime; //in ms
+    static int polyCountPoints; // = 25000/updateTime
+    static String lineColor; //color of the route
+    static String polygonColor; //color of the polygon
+
+    /**
      * const parameters
      */
-    static int updateTime = 1000; //in ms
-    final static int polyCountPoints = 25000/updateTime;
     final static int cameraSmooth = 1000; //in ms
     final static int lineWidth = 5; //for draw route
-    final static String lineColor = "#ff38afea"; //color of the route
-    final static String polygonColor = "#7f3bb2d0"; //color of the polygon
     final static double offset = 0.00005; //inaccuracy for polygon calculating (0.00005 = 3.5m)
     private static final String TAG = MapActivity.class.getName(); //Tagging for Logging
 
@@ -101,6 +105,54 @@ public class MapActivity extends AppCompatActivity {
         aMap.put("Light", Style.LIGHT);
         aMap.put("Outdoor", Style.OUTDOORS);
         styles = Collections.unmodifiableMap(aMap);
+    }
+
+    //Map with Route Colors
+    private static final Map<String, String> routeColors;
+    static {
+        Map<String, String> aMap = new HashMap<>();
+        aMap.put("black",       "ff000000");
+        aMap.put("red",         "ffff0000");
+        aMap.put("green",       "ff00ff00");
+        aMap.put("blue",        "ff0000ff");
+        aMap.put("yellow",      "ffffff00");
+        aMap.put("magenta",     "ffff00ff");
+        aMap.put("cyan",        "ff00ffff");
+        aMap.put("white",       "ffffffff");
+        aMap.put("grey",        "ff7f7f7f");
+        aMap.put("lightgrey",   "ffd3d3d3");
+        aMap.put("silver",      "ffc0c0c0");
+        aMap.put("gold",        "ffffd700");
+        aMap.put("goldenrod",   "ffdaa520");
+        aMap.put("orange",      "ffffa500");
+        aMap.put("pink",        "ffffc0cb");
+        aMap.put("violet",      "ffee82ee");
+        aMap.put("purple",      "ff800080");
+        routeColors = Collections.unmodifiableMap(aMap);
+    }
+
+    //Map with Route Colors
+    private static final Map<String, String> polygonColors;
+    static {
+        Map<String, String> aMap = new HashMap<>();
+        aMap.put("black",       "7f000000");
+        aMap.put("red",         "7fff0000");
+        aMap.put("green",       "7f00ff00");
+        aMap.put("blue",        "7f0000ff");
+        aMap.put("yellow",      "7fffff00");
+        aMap.put("magenta",     "7fff00ff");
+        aMap.put("cyan",        "7f00ffff");
+        aMap.put("white",       "7fffffff");
+        aMap.put("grey",        "7f7f7f7f");
+        aMap.put("lightgrey",   "7fd3d3d3");
+        aMap.put("silver",      "7fc0c0c0");
+        aMap.put("gold",        "7fffd700");
+        aMap.put("goldenrod",   "7fdaa520");
+        aMap.put("orange",      "7fffa500");
+        aMap.put("pink",        "7fffc0cb");
+        aMap.put("violet",      "7fee82ee");
+        aMap.put("purple",      "7f800080");
+        polygonColors = Collections.unmodifiableMap(aMap);
     }
 
     /**
@@ -133,16 +185,25 @@ public class MapActivity extends AppCompatActivity {
          * Loading Settings
          */
         SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //updateTime
+        //updateTime and polyCountPoints
         String prefPingKey = getString(R.string.preference_ping_key);
         String prefPingDefault = getString(R.string.preference_ping_default);
         String ping = sPrefs.getString(prefPingKey,prefPingDefault);
         updateTime = Integer.parseInt(ping);
+        polyCountPoints = 25000/updateTime;
         //Style
         String prefStyleKey = getString(R.string.preference_style_key);
         String prefStyleDefault = getString(R.string.preference_style_default);
         String style = sPrefs.getString(prefStyleKey,prefStyleDefault);
         mapView.setStyleUrl(styles.get(style));
+        //Route Color
+        String prefRouteColorKey = getString(R.string.preference_route_color_key);
+        String prefRouteColorDefault = getString(R.string.preference_route_color_default);
+        lineColor = sPrefs.getString(prefRouteColorKey,prefRouteColorDefault);
+        //Polygon Color
+        String prefPolygonColorKey = getString(R.string.preference_polygon_color_key);
+        String prefPolygonColorDefault = getString(R.string.preference_polygon_color_default);
+        polygonColor = sPrefs.getString(prefPolygonColorKey,prefPolygonColorDefault);
 
         /**
          * set preferences
@@ -177,12 +238,12 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                 for (int i=0; i<allPoints.size(); i++) {
-                 String Key = "mydefault" + Integer.toString(i);
-                 String Data = allPoints.get(i).toString();
-                 editor.putString(Key, Data);
-                 }
-                 editor.commit();
+                for (int i=0; i < allPoints.size(); i++) {
+                    String Key = "mydefault" + Integer.toString(i);
+                    String Data = allPoints.get(i).toString();
+                    editor.putString(Key, Data);
+                }
+                editor.commit();
 
 
                 if (!allPoints.isEmpty()) {
