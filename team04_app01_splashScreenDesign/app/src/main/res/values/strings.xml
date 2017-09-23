@@ -125,8 +125,12 @@
     </string-array>
 
     <!-- Information Activity -->
-    <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a programming-project which was born in cause of the Mobile Computing internship of the University of Mainz. \n\n We hope you enjoy our Application and are trying to find the special Animations. \n\n ENJOY!</string>
-    <string name="creators_text">Created by: \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
+    <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a
+        programming-project which was born in cause of the Mobile Computing internship of the
+        University of Mainz. \n\n We hope you enjoy our Application and are trying to find the
+        special Animations. \n\n ENJOY!</string>
+    <string name="creators_text">Created by:
+        \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
     <string name="title_activity_test">TestActivity</string>
 
 </resources>
