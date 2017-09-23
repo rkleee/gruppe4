@@ -6,25 +6,13 @@
     <!-- Settings Activity -->
     <string name="title_activity_settings">Settings</string>
     <!-- GPS Ping -->
-    <string name="preference_ping_title">GPS Ping in ms</string>
-    <string name="preference_ping_key">ping</string>
-    <string name="preference_ping_default">1000</string>
-    <!-- Language -->
-    <string name="preference_language_title">Language</string>
-    <string name="preference_language_key">language</string>
-    <string name="preference_language_default">eng</string>
-    <string-array name="language_entries">
-        <item>English</item>
-        <item>Deutsch</item>
-    </string-array>
-    <string-array name="language_values">
-        <item>eng</item>
-        <item>deu</item>
-    </string-array>
+    <string name="preference_ping_title" translatable="false">GPS Ping in ms</string>
+    <string name="preference_ping_key" translatable="false">ping</string>
+    <string name="preference_ping_default" translatable="false">1000</string>
     <!-- Styles -->
-    <string name="preference_style_title">Map Style</string>
-    <string name="preference_style_key">style</string>
-    <string name="preference_style_default">Streets</string>
+    <string name="preference_style_title" translatable="false">Map Style</string>
+    <string name="preference_style_key" translatable="false">style</string>
+    <string name="preference_style_default" translatable="false">Streets</string>
     <string-array name="style_entries">
         <item>Streets</item>
         <item>Satellite</item>
@@ -41,8 +29,8 @@
     </string-array>
     <!-- Route Color -->
     <string name="preference_route_color_title">Route Color</string>
-    <string name="preference_route_color_key">routecolor</string>
-    <string name="preference_route_color_default">cyan</string>
+    <string name="preference_route_color_key" translatable="false">routecolor</string>
+    <string name="preference_route_color_default" translatable="false">cyan</string>
     <string-array name="route_color_entries">
         <item>black</item>
         <item>red</item>
@@ -71,8 +59,8 @@
     </string-array>
     <!-- Polygon Color -->
     <string name="preference_polygon_color_title">Polygon Color</string>
-    <string name="preference_polygon_color_key">polygoncolor</string>
-    <string name="preference_polygon_color_default">cyan</string>
+    <string name="preference_polygon_color_key" translatable="false">polygoncolor</string>
+    <string name="preference_polygon_color_default" translatable="false">cyan</string>
     <string-array name="polygon_color_entries">
         <item>black</item>
         <item>red</item>
@@ -107,6 +95,6 @@
         special Animations. \n\n ENJOY!</string>
     <string name="creators_text">Created by:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
-    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_test" translatable="false">TestActivity</string>
 
 </resources>
