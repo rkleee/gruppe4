@@ -9,6 +9,18 @@
     <string name="preference_ping_title">GPS Ping in ms</string>
     <string name="preference_ping_key">ping</string>
     <string name="preference_ping_default">1000</string>
+    <!-- Language -->
+    <string name="preference_language_title">Language</string>
+    <string name="preference_language_key">language</string>
+    <string name="preference_language_default">eng</string>
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Deutsch</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>eng</item>
+        <item>deu</item>
+    </string-array>
     <!-- Styles -->
     <string name="preference_style_title">Map Style</string>
     <string name="preference_style_key">style</string>
@@ -113,12 +125,8 @@
     </string-array>
 
     <!-- Information Activity -->
-    <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a
-        programming-project which was born in cause of the Mobile Computing internship of the
-        University of Mainz. \n\n We hope you enjoy our Application and are trying to find the
-        special Animations. \n\n ENJOY!</string>
-    <string name="creators_text">Created by:
-        \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
+    <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a programming-project which was born in cause of the Mobile Computing internship of the University of Mainz. \n\n We hope you enjoy our Application and are trying to find the special Animations. \n\n ENJOY!</string>
+    <string name="creators_text">Created by: \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
     <string name="title_activity_test">TestActivity</string>
 
 </resources>
