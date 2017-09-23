@@ -69,8 +69,8 @@ public class MapActivity extends AppCompatActivity {
     /**
      * save with SharedPreferences
      */
-    public static SharedPreferences preferences;
-    public static SharedPreferences.Editor editor;
+    private static SharedPreferences preferences;
+    private static SharedPreferences.Editor editor;
 
     /**
      * drawing parameters

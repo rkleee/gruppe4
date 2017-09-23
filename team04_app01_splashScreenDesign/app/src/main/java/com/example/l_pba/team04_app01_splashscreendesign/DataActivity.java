@@ -3,7 +3,6 @@ package com.example.l_pba.team04_app01_splashscreendesign;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,49 +12,52 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import static com.example.l_pba.team04_app01_splashscreendesign.MapActivity.editor;
+
 
 public class DataActivity extends AppCompatActivity {
 
-    private Button delete = (Button) findViewById(R.id.deleteButton);
-    private Button show = (Button) findViewById(R.id.showButton);
+    private Button delete;
+    private Button show;
 
     private ListView listView;
     private LinkedList<String> allItems = new LinkedList<>();
     private LinkedList<String> selectedItem = new LinkedList<String>();
 
     private SharedPreferences preferences;
-    private String[] caption;
+    private SharedPreferences.Editor editor;
+    private String[] caption, prefArray;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Android
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
-
-        //set ScreenOrientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //Buttons
+        delete = (Button) findViewById(R.id.deleteButton);
+        show = (Button) findViewById(R.id.showButton);
 
-        //Load data !!!
-        String[] test = new String[]{"Text 1", "???", "OMG"};
+
+        //Load data
+
+        String[] test = new String[]{"Text 1", "???", "OMG"}; //String if preferences.isEmpty
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
+        editor = preferences.edit();
 
         if (!preferences.getAll().isEmpty()) {
-            String[] prefArray = preferences.getAll().keySet().toArray(new String[0]);
-
+            prefArray = preferences.getAll().keySet().toArray(new String[0]);
+            String[] helpArray = new String[]{};
+            //extract Route names
             for (int i=0; i<prefArray.length; i++){
-                prefArray[i] = prefArray[i].replaceAll("[0-9]", "");
-                if (!allItems.contains(prefArray[i])){
-                    allItems.add(prefArray[i]);
+                helpArray[i] = prefArray[i].replaceAll("[0-9]", ""); //remove numbers
+                if (!allItems.contains(helpArray[i])){
+                    allItems.add(helpArray[i]); //allItems contains all Route names by String
                 }
             }
+
             caption = allItems.toArray(new String[0]);
             Toast.makeText(this, caption[0], Toast.LENGTH_SHORT).show();
         } else {
@@ -63,22 +65,19 @@ public class DataActivity extends AppCompatActivity {
             Toast.makeText(this, "else branch", Toast.LENGTH_SHORT).show();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, caption); //twoLines
-
-
         //Listview
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_list_item_1, caption); //twoLines
+
         listView = (ListView) findViewById(R.id.ListView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (caption.length>0) {
-                    if (!selectedItem.contains(allItems.get(position))){
-                        selectedItem.add(allItems.get(position));
-                    }
-                    Toast.makeText(DataActivity.this, caption[position]+" picked", Toast.LENGTH_SHORT).show();
+                if (!selectedItem.contains(allItems.get(position))){
+                    selectedItem.add(allItems.get(position));
+                    //Toast.makeText(DataActivity.this, allItems.get(position)+" picked", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -87,11 +86,23 @@ public class DataActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i=0; i<selectedItem.size(); i++){
-
+                String [] helpselected = selectedItem.toArray(new String[0]);
+                for (int i=0; i<prefArray.length; i++){
+                    for (int j=0; j<helpselected.length; j++) {
+                        if (prefArray[i].contains(helpselected[j])) {
+                            editor.remove(prefArray[i]);
+                            break;
+                        }
+                    }
                 }
+                editor.commit();
+
+                Toast.makeText(DataActivity.this, "Route deleted", Toast.LENGTH_SHORT).show();
+                //update listview
+
             }
         });
+
 
         show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +110,7 @@ public class DataActivity extends AppCompatActivity {
                 //---
             }
         });
+
 
     }
 }
