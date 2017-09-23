@@ -55,12 +55,6 @@
         <item>grey</item>
         <item>lightgrey</item>
         <item>silver</item>
-        <item>gold</item>
-        <item>goldenrod</item>
-        <item>orange</item>
-        <item>pink</item>
-        <item>violet</item>
-        <item>purple</item>
     </string-array>
     <string-array name="route_color_values">
         <item>black</item>
@@ -74,12 +68,6 @@
         <item>grey</item>
         <item>lightgrey</item>
         <item>silver</item>
-        <item>gold</item>
-        <item>goldenrod</item>
-        <item>orange</item>
-        <item>pink</item>
-        <item>violet</item>
-        <item>purple</item>
     </string-array>
     <!-- Polygon Color -->
     <string name="preference_polygon_color_title">Polygon Color</string>
@@ -97,12 +85,6 @@
         <item>grey</item>
         <item>lightgrey</item>
         <item>silver</item>
-        <item>gold</item>
-        <item>goldenrod</item>
-        <item>orange</item>
-        <item>pink</item>
-        <item>violet</item>
-        <item>purple</item>
     </string-array>
     <string-array name="polygon_color_values">
         <item>black</item>
@@ -116,17 +98,15 @@
         <item>grey</item>
         <item>lightgrey</item>
         <item>silver</item>
-        <item>gold</item>
-        <item>goldenrod</item>
-        <item>orange</item>
-        <item>pink</item>
-        <item>violet</item>
-        <item>purple</item>
     </string-array>
 
     <!-- Information Activity -->
-    <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a programming-project which was born in cause of the Mobile Computing internship of the University of Mainz. \n\n We hope you enjoy our Application and are trying to find the special Animations. \n\n ENJOY!</string>
-    <string name="creators_text">Created by: \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
+    <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a
+        programming-project which was born in cause of the Mobile Computing internship of the
+        University of Mainz. \n\n We hope you enjoy our Application and are trying to find the
+        special Animations. \n\n ENJOY!</string>
+    <string name="creators_text">Created by:
+        \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
     <string name="title_activity_test">TestActivity</string>
 
 </resources>

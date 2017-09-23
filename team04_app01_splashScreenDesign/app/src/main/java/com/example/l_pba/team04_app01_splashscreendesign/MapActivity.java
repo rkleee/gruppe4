@@ -122,12 +122,6 @@ public class MapActivity extends AppCompatActivity {
         aMap.put("grey",        "ff7f7f7f");
         aMap.put("lightgrey",   "ffd3d3d3");
         aMap.put("silver",      "ffc0c0c0");
-        aMap.put("gold",        "ffffd700");
-        aMap.put("goldenrod",   "ffdaa520");
-        aMap.put("orange",      "ffffa500");
-        aMap.put("pink",        "ffffc0cb");
-        aMap.put("violet",      "ffee82ee");
-        aMap.put("purple",      "ff800080");
         routeColors = Collections.unmodifiableMap(aMap);
     }
 
@@ -146,12 +140,6 @@ public class MapActivity extends AppCompatActivity {
         aMap.put("grey",        "7f7f7f7f");
         aMap.put("lightgrey",   "7fd3d3d3");
         aMap.put("silver",      "7fc0c0c0");
-        aMap.put("gold",        "7fffd700");
-        aMap.put("goldenrod",   "7fdaa520");
-        aMap.put("orange",      "7fffa500");
-        aMap.put("pink",        "7fffc0cb");
-        aMap.put("violet",      "7fee82ee");
-        aMap.put("purple",      "7f800080");
         polygonColors = Collections.unmodifiableMap(aMap);
     }
 
