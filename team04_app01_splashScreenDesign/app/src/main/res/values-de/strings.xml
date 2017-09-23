@@ -9,9 +9,6 @@
         Animationen zu finden. \n\n VIEL SPAß!</string>
     <string name="marker_snippet">Du bist hier</string>
     <string name="marker_title">Deine Position</string>
-    <string name="preference_language_default">eng</string>
-    <string name="preference_language_key">language</string>
-    <string name="preference_language_title">Sprache</string>
     <string name="preference_ping_default">1000</string>
     <string name="preference_ping_key">ping</string>
     <string name="preference_ping_title">GPS Ping in ms</string>
