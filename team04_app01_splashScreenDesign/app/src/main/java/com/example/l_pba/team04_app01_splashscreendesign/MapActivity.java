@@ -210,11 +210,11 @@ public class MapActivity extends AppCompatActivity {
                 if (!gpsPlay){
                     gpsPlay = true;
                     playButton.setText("Pause");
-                    Toast.makeText(MapActivity.this, "gpsPlay = true", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapActivity.this, "Go", Toast.LENGTH_SHORT).show();
                 } else {
                     gpsPlay = false;
                     playButton.setText("Play");
-                    Toast.makeText(MapActivity.this, "gpsPlay = false", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapActivity.this, "Stop", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -339,6 +339,11 @@ public class MapActivity extends AppCompatActivity {
 
                                     //clear polyPoints for next polygon
                                     polyPoints.clear();
+                                    polyCountPoints = 0;
+                                    gpsPlay = false;
+
+
+                                    Toast.makeText(MapActivity.this, "Pause", Toast.LENGTH_SHORT).show();
 
                                     //end the search
                                     break;

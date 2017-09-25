@@ -1,8 +1,10 @@
 package com.example.l_pba.team04_app01_splashscreendesign;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,13 +25,14 @@ public class DataActivity extends AppCompatActivity {
     private Button show;
 
     private ListView listView;
-    private LinkedList<String> allItems = new LinkedList<>();
-    private LinkedList<String> selectedItem = new LinkedList<>();
+    private LinkedList<String> allItems = new LinkedList<>();       //contains all Route names
+    private LinkedList<String> selectedItem = new LinkedList<>();   //Teilmenge allItems
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private String[] caption;
-    private String[] prefArray;
+    private String[] prefArray;     //raw data
+    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -42,35 +45,15 @@ public class DataActivity extends AppCompatActivity {
         delete = (Button) findViewById(R.id.deleteButton);
         show = (Button) findViewById(R.id.showButton);
 
-        Toast.makeText(this, "before loading data", Toast.LENGTH_SHORT).show();
-
 
         //Load data
-
-        String[] test = new String[]{"Text 1", "???", "OMG"}; //String if preferences.isEmpty
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
         editor = preferences.edit();
 
-        if (!preferences.getAll().isEmpty()) {
-            prefArray = preferences.getAll().keySet().toArray(new String[0]);
-            ArrayList<String> helpArray = new ArrayList<>();
-            //extract Route names
-            for (int i=0; i<prefArray.length; i++){
-                helpArray.add(prefArray[i].replaceAll("[0-9]", "")); //remove numbers
-                if (!allItems.contains(helpArray.get(i))){
-                    allItems.add(helpArray.get(i)); //allItems contains all Route names by String
-                }
-            }
-
-            caption = allItems.toArray(new String[0]);
-            Toast.makeText(this, caption[0], Toast.LENGTH_SHORT).show();
-        } else {
-            caption = test;
-            Toast.makeText(this, "else branch", Toast.LENGTH_SHORT).show();
-        }
+        GetCaption();
 
         //Listview
-        ArrayAdapter<String> adapter = new ArrayAdapter<>
+        adapter = new ArrayAdapter<>
                 (this, android.R.layout.simple_list_item_1, caption); //twoLines
 
         listView = (ListView) findViewById(R.id.ListView);
@@ -80,7 +63,10 @@ public class DataActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (!selectedItem.contains(allItems.get(position))){
                     selectedItem.add(allItems.get(position));
-                    //Toast.makeText(DataActivity.this, allItems.get(position)+" picked", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataActivity.this, allItems.get(position)+" picked", Toast.LENGTH_SHORT).show();
+                } else {
+                    selectedItem.remove(allItems.get(position));
+                    Toast.makeText(DataActivity.this, allItems.get(position)+" removed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -102,7 +88,17 @@ public class DataActivity extends AppCompatActivity {
                 editor.commit();
 
                 Toast.makeText(DataActivity.this, "Route deleted", Toast.LENGTH_SHORT).show();
+
                 //update listview
+                selectedItem.clear();
+                GetCaption();
+                //adapter.clear();
+                //adapter.addAll(caption);
+                //listView.setAdapter(adapter);
+
+                Toast.makeText(DataActivity.this, "listview updated", Toast.LENGTH_SHORT).show();
+
+
 
             }
         });
@@ -116,5 +112,45 @@ public class DataActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+
+
+    private void GetCaption(){
+        String[] empty = new String[]{}; //String if preferences.isEmpty
+
+        if (!preferences.getAll().isEmpty()) {
+            prefArray = preferences.getAll().keySet().toArray(new String[0]);
+            ArrayList<String> helpArray = new ArrayList<>();
+            //extract Route names
+            for (int i=0; i<prefArray.length; i++){
+                helpArray.add(prefArray[i].replaceAll("[0-9]", "")); //remove numbers
+                if (!allItems.contains(helpArray.get(i))){
+                    allItems.add(helpArray.get(i)); //allItems contains all Route names by String
+                }
+            }
+
+            caption = allItems.toArray(new String[0]);
+            //Toast.makeText(this, caption[0], Toast.LENGTH_SHORT).show();
+        } else {
+            caption = empty;
+            Toast.makeText(this, "no Data found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent backIntent = new Intent(DataActivity.this,HomeActivity.class);
+                startActivity(backIntent);
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                finish();
+            }
+        },50);
     }
 }
