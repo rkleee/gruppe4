@@ -47,10 +47,6 @@ public class DataActivity extends AppCompatActivity {
 
 
         //Load data
-<<<<<<< HEAD
-=======
-        String[] test = new String[]{"Text 1", "???", "OMG"}; //String if preferences.isEmpty
->>>>>>> e8e8d6733eea6c31e98d77dbffac61dfd95d3a56
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
         editor = preferences.edit();
 
@@ -102,8 +98,6 @@ public class DataActivity extends AppCompatActivity {
 
                 Toast.makeText(DataActivity.this, "listview updated", Toast.LENGTH_SHORT).show();
 
-
-
             }
         });
 
@@ -118,7 +112,6 @@ public class DataActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
 
 
 
@@ -145,9 +138,6 @@ public class DataActivity extends AppCompatActivity {
     }
 
 
-
-=======
->>>>>>> e8e8d6733eea6c31e98d77dbffac61dfd95d3a56
     @Override
     public void onBackPressed() {
         new Handler().postDelayed(new Runnable() {
@@ -160,8 +150,5 @@ public class DataActivity extends AppCompatActivity {
             }
         },50);
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> e8e8d6733eea6c31e98d77dbffac61dfd95d3a56
 }
