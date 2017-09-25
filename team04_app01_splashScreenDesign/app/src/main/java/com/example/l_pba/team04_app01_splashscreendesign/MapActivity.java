@@ -75,9 +75,11 @@ public class MapActivity extends AppCompatActivity {
     /**
      * drawing parameters
      */
-    public LatLng[] points = new LatLng[2]; //Array of two points for route draw
-    LinkedList<LatLng> polyPoints = new LinkedList<>(); //List of all points for polygon draw
-    LinkedList<LatLng> allPoints = new LinkedList<>(); //List of all points
+    private LatLng[] points = new LatLng[2]; //Array of two points for route draw
+    private LinkedList<LinkedList<LatLng>> allRoutes = new LinkedList<>();      //Collection of all Routes
+    private LinkedList<LinkedList<LatLng>> allPolygons = new LinkedList<>();    //Collection of all Polygons
+    private LinkedList<LatLng> polyPoints = new LinkedList<>(); //List of all points for polygon draw
+    private LinkedList<LatLng> routePoints = new LinkedList<>(); //List of all points
 
     /**
      * setting parameters
@@ -169,6 +171,7 @@ public class MapActivity extends AppCompatActivity {
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
+
         /**
          * Loading Settings
          */
@@ -198,6 +201,36 @@ public class MapActivity extends AppCompatActivity {
          */
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
         editor = preferences.edit();
+        /**
+         * loading Routes/Polygons
+         */
+        //über alle keys sollen nun die latlng ausgelesen und in allRoute/allPolygon abgespeichert werden
+        //Die DataActivity übergibt ein String[], indem die namen aller zu ladenden routen steht
+        //HomeActivity übergibt dann ein leeres StringArray, sd. keine Route geladen wird
+
+        //  Polygon: #name0 = ff... ; #name1 = LatLng ; ...LatLng
+        //  Route:   name0 = ff.... ; ....
+
+        String[] keyArray = preferences.getAll().keySet().toArray(new String[0]);
+        LinkedList<LatLng> helpList = new LinkedList<>();
+        boolean route = false;
+        for (int i=1; i<keyArray.length; i++){
+            String raw = preferences.getString(keyArray[i],"");
+            if (raw.contains(",")){
+                String[] splitString = raw.split(",");
+                route = !keyArray[i].startsWith("#");
+                Double lat = Double.parseDouble(splitString[0].substring(17));
+                Double lon = Double.parseDouble(splitString[1].substring(11));
+                helpList.add(new LatLng(lat,lon));
+            }
+            if (!raw.contains(",") || ((i+1)==keyArray.length)){    //else-branch
+               if (route) {allRoutes.add(helpList);}
+                else {allPolygons.add(helpList);}
+            }
+        }
+
+        FillMap();
+
 
         /**
          * BUTTONS
@@ -226,20 +259,14 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                for (int i=0; i < allPoints.size(); i++) {
-                    String Key = "mydefault" + Integer.toString(i);
-                    String Data = allPoints.get(i).toString();
+                editor.putString("mydefault0", "color"); //EDIT
+                for (int i=0; i < routePoints.size(); i++) {
+                    String Key = "mydefault" + Integer.toString(i+1);
+                    String Data = routePoints.get(i).toString();
                     editor.putString(Key, Data);
                 }
                 editor.commit();
-
-
-                if (!allPoints.isEmpty()) {
-                    Toast.makeText(MapActivity.this, allPoints.get(0).toString(), Toast.LENGTH_LONG).show();
-                }
-                if (!preferences.getAll().isEmpty()){
-                    Toast.makeText(MapActivity.this, "!Empty", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(MapActivity.this, "saved", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -286,7 +313,7 @@ public class MapActivity extends AppCompatActivity {
 
                             //ROUTE
                             if (gpsPlay) {
-                                allPoints.add(actualPoint);
+                                routePoints.add(actualPoint);
                                 //first point
                                 if (points[1] == null) {
                                     //if points[] is empty, the first point will put in both
@@ -310,8 +337,8 @@ public class MapActivity extends AppCompatActivity {
                             int polygonCounter = 0; //number of points out of offset
 
                             //search through the field of points
-                            for (int i = allPoints.size() - 2; i>=0; i--) {
-                                LatLng temp = allPoints.get(i);
+                            for (int i = routePoints.size() - 2; i>=0; i--) {
+                                LatLng temp = routePoints.get(i);
                                 //Deltas
                                 double dLat = Math.abs(temp.getLatitude() - actualPoint.getLatitude());
                                 double dLong = Math.abs(temp.getLongitude() - actualPoint.getLongitude());
@@ -325,8 +352,8 @@ public class MapActivity extends AppCompatActivity {
                                 if ((dLat < offset) && (dLong < offset) && (polygonCounter > polyCountPoints)) {
                                     Toast.makeText(MapActivity.this, "Polygon", Toast.LENGTH_SHORT).show();
                                     //create polygon
-                                    for (int j = allPoints.size() - 1; j >= i; j--) {
-                                        polyPoints.add(allPoints.get(j));
+                                    for (int j = routePoints.size() - 1; j >= i; j--) {
+                                        polyPoints.add(routePoints.get(j));
                                     }
 
                                     //draw Polygon
@@ -335,11 +362,12 @@ public class MapActivity extends AppCompatActivity {
                                             .fillColor(Color.parseColor(polygonColor)));
 
                                     //clear polyPoints for next polygon
+                                    allPolygons.add(polyPoints);
                                     polyPoints.clear();
                                     polyCountPoints = 0;
+
+
                                     gpsPlay = false;
-
-
                                     Toast.makeText(MapActivity.this, "Pause", Toast.LENGTH_SHORT).show();
 
                                     //end the search
@@ -384,6 +412,39 @@ public class MapActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
+
+
+    //Farben aus dem datensatz auslesen!!
+    private void FillMap(){
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(MapboxMap mapboxMap) {
+                //Draw Routes
+                for (int i=0; i<allRoutes.size(); i++){
+                    mapboxMap.addPolyline(new PolylineOptions()
+                            .addAll(allRoutes.get(i))
+                            .color(Color.parseColor(lineColor))
+                            .width(lineWidth));
+                }
+                Toast.makeText(MapActivity.this, Integer.toString(allRoutes.size())+" Routes", Toast.LENGTH_SHORT).show();
+                //Draw Polygons
+                for (int i=0; i<allPolygons.size(); i++){
+                    mapboxMap.addPolygon(new PolygonOptions()
+                            .addAll(polyPoints)
+                            .fillColor(Color.parseColor(polygonColor)));
+                }
+                Toast.makeText(MapActivity.this, Integer.toString(allRoutes.size())+" Polygons", Toast.LENGTH_SHORT).show();
+                //Draw current line (for landscape)
+                mapboxMap.addPolyline(new PolylineOptions()
+                        .addAll(routePoints)
+                        .color(Color.parseColor(lineColor))
+                        .width(lineWidth));
+            }
+
+        });
+    }
+
+
 
     @Override
     public void onStart() {
