@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -23,11 +24,12 @@ public class DataActivity extends AppCompatActivity {
 
     private ListView listView;
     private LinkedList<String> allItems = new LinkedList<>();
-    private LinkedList<String> selectedItem = new LinkedList<String>();
+    private LinkedList<String> selectedItem = new LinkedList<>();
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    private String[] caption, prefArray;
+    private String[] caption;
+    private String[] prefArray;
 
 
     @Override
@@ -40,6 +42,8 @@ public class DataActivity extends AppCompatActivity {
         delete = (Button) findViewById(R.id.deleteButton);
         show = (Button) findViewById(R.id.showButton);
 
+        Toast.makeText(this, "before loading data", Toast.LENGTH_SHORT).show();
+
 
         //Load data
 
@@ -49,12 +53,12 @@ public class DataActivity extends AppCompatActivity {
 
         if (!preferences.getAll().isEmpty()) {
             prefArray = preferences.getAll().keySet().toArray(new String[0]);
-            String[] helpArray = new String[]{};
+            ArrayList<String> helpArray = new ArrayList<>();
             //extract Route names
             for (int i=0; i<prefArray.length; i++){
-                helpArray[i] = prefArray[i].replaceAll("[0-9]", ""); //remove numbers
-                if (!allItems.contains(helpArray[i])){
-                    allItems.add(helpArray[i]); //allItems contains all Route names by String
+                helpArray.add(prefArray[i].replaceAll("[0-9]", "")); //remove numbers
+                if (!allItems.contains(helpArray.get(i))){
+                    allItems.add(helpArray.get(i)); //allItems contains all Route names by String
                 }
             }
 
