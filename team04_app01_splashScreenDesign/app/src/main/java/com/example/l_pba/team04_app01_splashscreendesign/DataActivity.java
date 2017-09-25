@@ -32,7 +32,6 @@ public class DataActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private String[] caption;
     private String[] prefArray;     //raw data
-    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -53,11 +52,9 @@ public class DataActivity extends AppCompatActivity {
         GetCaption();
 
         //Listview
-        adapter = new ArrayAdapter<>
-                (this, android.R.layout.simple_list_item_1, caption); //twoLines
 
         listView = (ListView) findViewById(R.id.ListView);
-        listView.setAdapter(adapter);
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, caption));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -92,11 +89,7 @@ public class DataActivity extends AppCompatActivity {
                 //update listview
                 selectedItem.clear();
                 GetCaption();
-                //adapter.clear();
-                //adapter.addAll(caption);
-                //listView.setAdapter(adapter);
-
-                Toast.makeText(DataActivity.this, "listview updated", Toast.LENGTH_SHORT).show();
+                listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
 
             }
         });

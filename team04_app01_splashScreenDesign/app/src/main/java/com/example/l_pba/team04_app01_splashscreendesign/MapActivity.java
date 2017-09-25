@@ -258,9 +258,6 @@ public class MapActivity extends AppCompatActivity {
                     //actual position
                     final LatLng actualPoint =
                             new LatLng(location.getLatitude(), location.getLongitude());
-                    if (gpsPlay) {
-                        allPoints.add(actualPoint);
-                    }
 
                     //MapBox
                     mapView.getMapAsync(new OnMapReadyCallback() {
@@ -289,6 +286,7 @@ public class MapActivity extends AppCompatActivity {
 
                             //ROUTE
                             if (gpsPlay) {
+                                allPoints.add(actualPoint);
                                 //first point
                                 if (points[1] == null) {
                                     //if points[] is empty, the first point will put in both
@@ -309,7 +307,6 @@ public class MapActivity extends AppCompatActivity {
 
 
                             //POLYGON
-                            //temporary vars
                             int polygonCounter = 0; //number of points out of offset
 
                             //search through the field of points
