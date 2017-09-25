@@ -2,18 +2,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:title="@string/preference_language_title"
-        android:key="@string/preference_language_key"
-        android:defaultValue="@string/preference_language_default"
-        android:entries="@array/language_entries"
-        android:entryValues="@array/language_values"/>
-
-    <ListPreference
         android:title="@string/preference_style_title"
         android:key="@string/preference_style_key"
         android:defaultValue="@string/preference_style_default"
         android:entries="@array/style_entries"
         android:entryValues="@array/style_values"/>
+
+    <ListPreference
+        android:title="@string/preference_route_color_title"
+        android:key="@string/preference_route_color_key"
+        android:defaultValue="@string/preference_route_color_default"
+        android:entries="@array/route_color_entries"
+        android:entryValues="@array/route_color_values"/>
+
+    <ListPreference
+        android:title="@string/preference_polygon_color_title"
+        android:key="@string/preference_polygon_color_key"
+        android:defaultValue="@string/preference_polygon_color_default"
+        android:entries="@array/polygon_color_entries"
+        android:entryValues="@array/polygon_color_values"/>
 
     <EditTextPreference
         android:title="@string/preference_ping_title"

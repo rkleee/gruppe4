@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MC Route</string>
+    <string name="creators_text">Entwickelt von:
+        \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
+    <string name="informationtext">Willkommen bei MC ROUTE.\n Die "MC ROUTE"-App ist ein
+        Programmier-Projekt, welches während des Mobile Computing Praktikums der Universität Mainz
+        entstand. \n\n Wir hoffen Sie genießen unsere App und versuchen all unsere versteckten
+        Animationen zu finden. \n\n VIEL SPAß!</string>
+    <string name="marker_snippet">Du bist hier</string>
+    <string name="marker_title">Deine Position</string>
+    <string name="preference_polygon_color_title">Polygon Farbe</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="preference_route_color_title">Farbe der Route</string>
+</resources>
