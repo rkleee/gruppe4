@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
 
         //set ScreenOrientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        startService(new Intent(this,MusicBackgroundService.class));
         //flipbook implementation
         new CountDownTimer(3900, 300) {
             int i = 1; //get the right image of the images[]
@@ -57,6 +57,7 @@ public class SplashActivity extends AppCompatActivity {
 
             public void onFinish() {
                 cL.setBackgroundResource(images[11]); //last image
+                stopService(new Intent(SplashActivity.this, MusicBackgroundService.class));
                 Intent homeIntent = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(homeIntent);
                 finish();

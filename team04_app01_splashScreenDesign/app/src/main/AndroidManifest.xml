@@ -31,9 +31,15 @@
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.l_pba.team04_app01_splashscreendesign.HomeActivity"
-                />
+                android:value="com.example.l_pba.team04_app01_splashscreendesign.HomeActivity" />
         </activity>
+        <activity android:name=".StatisticActivity" />
+
+        <service
+            android:name=".MusicBackgroundService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>

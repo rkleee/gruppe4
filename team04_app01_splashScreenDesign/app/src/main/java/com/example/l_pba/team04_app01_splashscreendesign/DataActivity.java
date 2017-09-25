@@ -1,8 +1,10 @@
 package com.example.l_pba.team04_app01_splashscreendesign;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +48,6 @@ public class DataActivity extends AppCompatActivity {
 
 
         //Load data
-
         String[] test = new String[]{"Text 1", "???", "OMG"}; //String if preferences.isEmpty
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
         editor = preferences.edit();
@@ -117,4 +118,18 @@ public class DataActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent backIntent = new Intent(DataActivity.this,HomeActivity.class);
+                startActivity(backIntent);
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                finish();
+            }
+        },50);
+    }
+
 }
