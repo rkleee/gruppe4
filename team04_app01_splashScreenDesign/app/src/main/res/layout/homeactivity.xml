@@ -31,7 +31,7 @@
         android:layout_height="261dp"
         app:piv_enablePanoramaMode="true"
         app:piv_show_scrollbar="false"
-        app:piv_invertScrollDirection="true"
+        app:piv_invertScrollDirection="false"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -69,14 +69,10 @@ public class InformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(informationtext.getTextSize() == 54.0) {
-                    informationtext.setText("Welcome to MC ROUTE.\n The MC ROUTE-App is a " +
-                                    "programming-project which was born in cause of the Mobile " +
-                                    "Computing internship of the University of Mainz. \n\n We hope " +
-                                    "you enjoy our Application and are trying to find the " +
-                                    "special Animations. \n\n ENJOY!");
+                    informationtext.setText(R.string.informationtext);
                     informationtext.setTextSize(14);
                 }else{
-                    informationtext.setText("Created by: \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan \n Damian ");
+                    informationtext.setText(R.string.creators_text);
                     informationtext.setTextSize(18);
                 }
             }
@@ -97,6 +93,7 @@ public class InformationActivity extends AppCompatActivity {
                 }else {
                     appversion.setVisibility(View.VISIBLE);
                 }
+
             }
         });
     }
