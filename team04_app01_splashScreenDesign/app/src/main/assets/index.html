@@ -8,93 +8,111 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
 </head>
 <body style="background-color:#eeeeee;">
-<input type="button" value="Say hello" onClick="showAndroidToast('Hello You')" />
 <div id="chart"></div>
     <script type="text/javascript">
-        function makeArray(val1,val2) {
-            //{"data1":[30,40,50,60,70,80],
-            // "data2":[80,70,60,50,40,30]}
-            var a = val1;
-            var x = val2;
+        function makeArray(val1,val2,val3) {
+            var a = val1; //JSON.toString() from StatisticActivity
+            var x = val2; //number of datasets
 
-            //Android.showToast(a);
-            //Android.showToast(x);
+            var i = val3; //iterate number
 
-
-            //get names
-            var i = 2;
-            var name = "";
-            while(a[i] != '"') {
-                name+=a[i];
-                i++;
-            }
-
-            //get Arrays
-            var array=[name];
-            var index=1;
-            var temp = "";
-            i+=3;
-
-            while(a[i] != ']') {
-                if(a[i] != ',') {
-                    temp+=a[i];
-                }else{
-                    array[index]=temp;
-                    temp = "";
-                    index++;
+            if(x != 0) {
+                //store name of dataset in variable name
+                var name = "";
+                while(a[i] != '"') {
+                    name+=a[i];
+                    i++;
                 }
-                i++;
-            }
-            array[index]=temp;
 
-            //display Array
-            setTimeout(function (){
-            chart.load({
-                 columns: [
-                    array
-                 ]
-            });
-            },2000);
+                //Create Lat-&Lngarray to store the points
+                var array=[name]; //LatArray
+                var xarray = ['x']; //LngArray
+
+                var id=1;
+                var temp = "";
+                var xValue = true; //true if point is Latitude, false if point ist Longitude
+
+                i+=3;
+
+                while(a[i] != ']') {
+                    if(a[i] != ',') {
+                        temp+=a[i];
+                    }else{
+                        if (xValue) {
+                            //store all Longitude-Points
+                            xarray[id]=temp;
+                            xValue = false;
+                        } else {
+                            //store all Latitude-Points
+                            array[id]=temp;
+                            id++;
+                            xValue = true;
+                        }
+                        temp = "";
+                    }
+                    i++;
+                }
+                array[id]=temp;
+
+                //display points in chart
+                setTimeout(function (){
+                    chart.load({
+                         columns: [
+                            xarray,
+                            array
+                         ]
+                    });
+                },500);
+                i+=3;
+
+                //recursive call to display all datasets
+                makeArray(a,x-1,i);
+            }
+
         }
 
+        //generate clean chart
         var chart = c3.generate({
             size: {
                 height: 320,
                 width: 337
             },
+            padding: {
+                top: 2,
+                bottom: 2,
+                left: 25,
+                right: 5
+            },
             data: {
-
+                 x: 'x',
                  columns: [
-                    ['data2', 30, 150, 100, 60, 15, 50],
-                    ['data3', 130, 100, 70, 40, 50, 20]
                  ],
-
                  type: 'area-spline',
                  zoom: {
                     enabled: true
-                 },
-                 colors: {
-                    data1: '#81dfdd',
-                    data2: '#ea3b67',
-                    data3: '#ff8214'
+                 }
+            },
+            axis: {
+                x: {
+                    label: {
+                        text: 'Longitude',
+                        position: 'outer-right'
+                    }
+                },
+                y: {
+                    label: {
+                        text: 'Latitude',
+                        position: 'inner-top'
+                    }
                 }
             }
         });
 
-        /*--loadFunctionexample
-        setTimeout(function (){
-            chart.load({
-                 columns: [
-                    ['data3', 10, 100, 40, 20, 100, 55],
-                    arr,
-                 ],
-                 unload: ['data1'],
-            });
-        },1000);
-        */
+        //showToastFunction for debugging
         function showAndroidToast(toast) {
             Android.showToast(toast);
         }
+
     </script>
 </body>
 </html>
