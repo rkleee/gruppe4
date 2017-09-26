@@ -9,6 +9,7 @@ package com.example.l_pba.team04_app01_splashscreendesign;
  * Android Imports
  */
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,10 +22,13 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
@@ -59,7 +63,11 @@ import java.util.Map;
 public class MapActivity extends AppCompatActivity {
     private MapView mapView;
     private Button saveButton, playButton;
-
+    private EditText mName;
+    private CheckBox mRoute;
+    private CheckBox mPolygon;
+    private Button mSave;
+    private Button mCancel;
     /**
      * for GPS position
      */
@@ -259,14 +267,64 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                editor.putString("mydefault0", "color"); //EDIT
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_alert,null);
+
+                mName = (EditText) mView.findViewById(R.id.et2);
+                mRoute = (CheckBox) mView.findViewById(R.id.checkBox);
+                mPolygon = (CheckBox) mView.findViewById(R.id.checkBox2);
+                mSave = (Button) mView.findViewById(R.id.savebtn);
+                mCancel = (Button) mView.findViewById(R.id.cancelbtn);
+
+                mSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(!mName.getText().toString().isEmpty()&& ((mRoute.isChecked())||(mPolygon.isChecked()==true))){
+
+                            editor.putString("mydefault0", "color"); //EDIT
+                            for (int i=0; i < routePoints.size(); i++) {
+                                String Key = mName.getText().toString();
+                                String Data = routePoints.get(i).toString();
+                                editor.putString(Key, Data);
+                            }
+                            editor.commit();
+                            Toast.makeText(MapActivity.this, "saved", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(MapActivity.this, "new element created", Toast.LENGTH_SHORT).show();
+                            //"mydefault" + Integer.toString(i+1);
+                        }else {
+                            Toast.makeText(MapActivity.this, "please fill any empty fields", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+                dialog.cancel();
+
+           /*     mSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                     dialog.cancel();
+                    }
+
+                }); */
+
+
+
+
+             /*   editor.putString("mydefault0", "color"); //EDIT
                 for (int i=0; i < routePoints.size(); i++) {
                     String Key = "mydefault" + Integer.toString(i+1);
                     String Data = routePoints.get(i).toString();
                     editor.putString(Key, Data);
                 }
                 editor.commit();
-                Toast.makeText(MapActivity.this, "saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapActivity.this, "saved", Toast.LENGTH_SHORT).show();*/
             }
         });
 

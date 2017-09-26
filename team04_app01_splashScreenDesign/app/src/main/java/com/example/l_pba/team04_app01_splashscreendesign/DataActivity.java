@@ -98,7 +98,10 @@ public class DataActivity extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //---
+                Intent intent = new Intent(DataActivity.this,MapActivity.class);
+                intent.putExtra("Items",selectedItem.toArray(new String[0]));
+                startActivity(intent);
+
             }
         });
 
