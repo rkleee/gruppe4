@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyDialogAlert</string>
+    <string name="name">Name</string>
+    <string name="goTo">go</string>
+</resources>
