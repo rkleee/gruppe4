@@ -7,10 +7,14 @@
         Programmier-Projekt, welches während des Mobile Computing Praktikums der Universität Mainz
         entstand. \n\n Wir hoffen Sie genießen unsere App und versuchen all unsere versteckten
         Animationen zu finden. \n\n VIEL SPAß!</string>
-    <string name="language_summary" translatable="false">Deutsch</string>
-    <string name="language_title" translatable="false">Ihre Systemsprache ist:</string>
     <string name="marker_snippet">Du bist hier</string>
     <string name="marker_title">Deine Position</string>
+    <string name="preference_audio_title" translatable="false">Ton</string>
+    <string name="preference_audio_key" translatable="false">audio</string>
+    <string name="preference_audio_offSummary" translatable="false">Ton deaktiviert</string>
+    <string name="preference_audio_onSummary" translatable="false">Ton aktiviert</string>
+    <string name="preference_language_summary" translatable="false">Deutsch</string>
+    <string name="preference_language_title" translatable="false">Ihre Systemsprache ist:</string>
     <string name="preference_polygon_color_title">Polygon Farbe</string>
     <string name="preference_route_color_title">Farbe der Route</string>
     <string name="title_activity_settings">Einstellungen</string>

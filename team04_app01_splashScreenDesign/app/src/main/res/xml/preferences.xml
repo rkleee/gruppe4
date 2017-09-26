@@ -4,10 +4,16 @@
     <Preference
         android:selectable="true"
         android:enabled="true"
-        android:key="@string/language_key"
-        android:title="@string/language_title"
-        android:defaultValue="@string/language_title"
-        android:summary="@string/language_summary" />
+        android:key="@string/preference_language_key"
+        android:title="@string/preference_language_title"
+        android:defaultValue="@string/preference_language_title"
+        android:summary="@string/preference_language_summary" />
+
+    <SwitchPreference
+        android:key="@string/preference_audio_key"
+        android:title="@string/preference_audio_title"
+        android:summaryOn="@string/preference_audio_onSummary"
+        android:summaryOff="@string/preference_audio_offSummary"/>
 
     <ListPreference
         android:title="@string/preference_style_title"

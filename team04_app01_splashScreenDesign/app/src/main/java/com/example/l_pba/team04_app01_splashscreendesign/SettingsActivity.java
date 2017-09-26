@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 //the SettingsActivity class
 public class SettingsActivity extends PreferenceActivity
@@ -32,13 +33,15 @@ public class SettingsActivity extends PreferenceActivity
             addPreferencesFromResource(R.xml.preferences);
 
             //added keys to Listener
-            Preference languagePref = findPreference(getString(R.string.language_key));
+            Preference languagePref = findPreference(getString(R.string.preference_language_key));
+            Preference audioPref = findPreference(getString(R.string.preference_audio_key));
             Preference stylePref = findPreference(getString(R.string.preference_style_key));
             Preference pingPref = findPreference(getString(R.string.preference_ping_key));
             Preference routeColorPref = findPreference(getString(R.string.preference_route_color_key));
             Preference polygonColorPref = findPreference(getString(R.string.preference_polygon_color_key));
 
             languagePref.setOnPreferenceChangeListener(this);
+            audioPref.setOnPreferenceChangeListener(this);
             stylePref.setOnPreferenceChangeListener(this);
             pingPref.setOnPreferenceChangeListener(this);
             routeColorPref.setOnPreferenceChangeListener(this);
@@ -47,11 +50,13 @@ public class SettingsActivity extends PreferenceActivity
             // call onPreferenceChange instantly with the values, which are saved in SharedPref.
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+            Boolean savedAudio = sharedPrefs.getBoolean(audioPref.getKey(), true);
             String savedStyle = sharedPrefs.getString(stylePref.getKey(), "");
             String savedPing = sharedPrefs.getString(pingPref.getKey(), "");
             String savedRouteColor = sharedPrefs.getString(routeColorPref.getKey(), "");
             String savedPolygonColor = sharedPrefs.getString(polygonColorPref.getKey(), "");
 
+            onPreferenceChange(audioPref, savedAudio);
             onPreferenceChange(stylePref, savedStyle);
             onPreferenceChange(pingPref, savedPing);
             onPreferenceChange(routeColorPref, savedRouteColor);

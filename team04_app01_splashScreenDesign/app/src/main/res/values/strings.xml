@@ -6,9 +6,14 @@
     <!-- Settings Activity -->
     <string name="title_activity_settings">Settings</string>
     <!-- Language -->
-    <string name="language_title" translatable="false">Your System-Language is:</string>
-    <string name="language_key" translatable="false">language</string>
-    <string name="language_summary" translatable="false">English</string>
+    <string name="preference_language_title" translatable="false">Your System-Language is:</string>
+    <string name="preference_language_key" translatable="false">language</string>
+    <string name="preference_language_summary" translatable="false">English</string>
+    <!-- Audio Settings -->
+    <string name="preference_audio_title" translatable="false">Sound</string>
+    <string name="preference_audio_key" translatable="false">audio</string>
+    <string name="preference_audio_onSummary" translatable="false">Sound enabled</string>
+    <string name="preference_audio_offSummary" translatable="false">Sound disabled</string>
     <!-- GPS Ping -->
     <string name="preference_ping_title" translatable="false">GPS Ping in ms</string>
     <string name="preference_ping_key" translatable="false">ping</string>
