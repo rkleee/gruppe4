@@ -32,11 +32,13 @@ public class SettingsActivity extends PreferenceActivity
             addPreferencesFromResource(R.xml.preferences);
 
             //added keys to Listener
+            Preference languagePref = findPreference(getString(R.string.language_key));
             Preference stylePref = findPreference(getString(R.string.preference_style_key));
             Preference pingPref = findPreference(getString(R.string.preference_ping_key));
             Preference routeColorPref = findPreference(getString(R.string.preference_route_color_key));
             Preference polygonColorPref = findPreference(getString(R.string.preference_polygon_color_key));
 
+            languagePref.setOnPreferenceChangeListener(this);
             stylePref.setOnPreferenceChangeListener(this);
             pingPref.setOnPreferenceChangeListener(this);
             routeColorPref.setOnPreferenceChangeListener(this);

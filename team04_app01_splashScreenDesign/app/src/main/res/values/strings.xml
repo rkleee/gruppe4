@@ -5,6 +5,10 @@
 
     <!-- Settings Activity -->
     <string name="title_activity_settings">Settings</string>
+    <!-- Language -->
+    <string name="language_title" translatable="false">Your System-Language is:</string>
+    <string name="language_key" translatable="false">language</string>
+    <string name="language_summary" translatable="false">English</string>
     <!-- GPS Ping -->
     <string name="preference_ping_title" translatable="false">GPS Ping in ms</string>
     <string name="preference_ping_key" translatable="false">ping</string>
@@ -96,6 +100,5 @@
     <string name="creators_text">Created by:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
     <string name="title_activity_test" translatable="false">TestActivity</string>
-    <string name="name">Name</string>
 
 </resources>
