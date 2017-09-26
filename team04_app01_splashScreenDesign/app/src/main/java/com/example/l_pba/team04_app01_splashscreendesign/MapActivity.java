@@ -276,14 +276,18 @@ public class MapActivity extends AppCompatActivity {
                 mSave = (Button) mView.findViewById(R.id.savebtn);
                 mCancel = (Button) mView.findViewById(R.id.cancelbtn);
 
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
                 mSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(!mName.getText().toString().isEmpty()&& ((mRoute.isChecked())||(mPolygon.isChecked()==true))){
+                        if(!mName.getText().toString().isEmpty()&& (mRoute.isChecked()||mPolygon.isChecked())){
 
-                            editor.putString("mydefault0", "color"); //EDIT
+                            editor.putString(mName.getText().toString()+"0", "color"); //EDIT
                             for (int i=0; i < routePoints.size(); i++) {
-                                String Key = mName.getText().toString();
+                                String Key = mName.getText().toString()+Integer.toString(i+1);
                                 String Data = routePoints.get(i).toString();
                                 editor.putString(Key, Data);
                             }
@@ -296,14 +300,20 @@ public class MapActivity extends AppCompatActivity {
                             Toast.makeText(MapActivity.this, "please fill any empty fields", Toast.LENGTH_SHORT).show();
                         }
 
+                        dialog.cancel();
+                    }
+                });
+
+                mCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
                     }
                 });
 
 
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-                dialog.cancel();
+
+                //dialog.cancel();
 
            /*     mSave.setOnClickListener(new View.OnClickListener() {
                     @Override

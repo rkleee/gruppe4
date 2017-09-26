@@ -24,6 +24,8 @@ import com.gjiazhe.panoramaimageview.PanoramaImageView;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
 
+import java.util.LinkedList;
+
 /**
  * Gjiazhe Imports for PanoramaImage at the Start-/MapButton
  * <p>
@@ -112,6 +114,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent mapview = new Intent(HomeActivity.this,MapActivity.class);
+                        mapview.putExtra("Items", new String[]{});
                         startActivity(mapview);
                         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                         finish();
