@@ -36,7 +36,7 @@ public class StatisticActivity extends AppCompatActivity {
     String chartUrl = "file:///android_asset/index.html";
 
     //set Background color
-    private int statisticColor = Color.parseColor("#FFF0F5"); //grey
+    private int statisticColor = Color.parseColor("#eeeeee"); //grey
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class StatisticActivity extends AppCompatActivity {
         cL.setBackgroundColor(statisticColor);
 
         //set ScreenOrientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //getData from shared Preferences
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,13 +35,20 @@ public class DataActivity extends AppCompatActivity {
     private String[] caption;
     private String[] prefArray;     //raw data
 
+    private ConstraintLayout cL;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Android
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //set Backgroundcolor for DataActivity
+        cL = (ConstraintLayout) findViewById(R.id.cL);
+        cL.setBackgroundResource(R.drawable.data_background);
+
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //Buttons
         delete = (Button) findViewById(R.id.deleteButton);
         show = (Button) findViewById(R.id.showButton);

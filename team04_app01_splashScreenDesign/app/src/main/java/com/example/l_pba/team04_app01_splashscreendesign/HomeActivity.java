@@ -36,6 +36,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
  */
 
 
+
 /**
  * HomeActivity to go to other Activities
  */
@@ -53,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     private int settingsColor = Color.parseColor("#E6a6daef"); //blue-ffc1e3ff
     private int dataColor = Color.parseColor("#E6f4858e"); //red-ffffa0a0
     private int informationColor = Color.parseColor("#E6fffacd"); //yellow-ffe8ffda
-    private int statisticColor = Color.parseColor("#E6FFF0F5"); //grey-eeeeee
+    private int statisticColor = Color.parseColor("#E6eeeeee"); //grey-eeeeee
 
     private GyroscopeObserver gyroscopeObserver;// for the panoramaImage
 
@@ -114,6 +115,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent mapview = new Intent(HomeActivity.this,MapActivity.class);
+                        mapview.putExtra("Items", new String[]{});
                         startActivity(mapview);
                         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                         finish();
