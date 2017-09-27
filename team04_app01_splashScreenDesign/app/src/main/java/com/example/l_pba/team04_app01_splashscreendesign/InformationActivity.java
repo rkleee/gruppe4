@@ -35,7 +35,7 @@ public class InformationActivity extends AppCompatActivity {
     private TextView appversion;
     private TextView informationtext;
 
-    private int informationColor = Color.parseColor("#ffe8ffda"); //BackgroundColor
+    private int informationColor = Color.parseColor("#E6fffacd"); //BackgroundColor
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

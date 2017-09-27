@@ -10,11 +10,13 @@ package com.example.l_pba.team04_app01_splashscreendesign;
  */
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.widget.Toast;
 
 //the SettingsActivity class
@@ -28,6 +30,7 @@ public class SettingsActivity extends PreferenceActivity
         public void onCreate(Bundle savedInstanceState) {
             //Android Shit
             super.onCreate(savedInstanceState);
+            getListView().setBackgroundResource(R.drawable.settings_background);
 
             //add preferences to vision
             addPreferencesFromResource(R.xml.preferences);

@@ -36,7 +36,7 @@ public class StatisticActivity extends AppCompatActivity {
     String chartUrl = "file:///android_asset/index.html";
 
     //set Background color
-    private int statisticColor = Color.parseColor("#eeeeee"); //grey
+    private int statisticColor = Color.parseColor("#FFF0F5"); //grey
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
