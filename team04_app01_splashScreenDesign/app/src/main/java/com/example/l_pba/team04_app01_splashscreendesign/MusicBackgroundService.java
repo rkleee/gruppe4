@@ -15,7 +15,7 @@ public class MusicBackgroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        player = MediaPlayer.create(this,R.raw.splash_screen_music);
+        player = MediaPlayer.create(this, R.raw.splash_screen_music);
 
         player.setLooping(false);
         player.start();
