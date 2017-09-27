@@ -242,7 +242,6 @@ public class MapActivity extends AppCompatActivity {
                         helpList.add(new LatLng(lat,lon));
                     } else {
                         color = raw;
-                        Toast.makeText(this, raw, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -251,7 +250,6 @@ public class MapActivity extends AppCompatActivity {
                     else {allRoutes.add(helpList);}
                     draw(helpList, color, polygon);
                     helpList.clear();
-                    Toast.makeText(this, "something added", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -284,7 +282,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Pause search
-                playButton.callOnClick();
+                playButton.performClick();
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_alert,null);
@@ -294,6 +292,8 @@ public class MapActivity extends AppCompatActivity {
                 mPolygon = (CheckBox) mView.findViewById(R.id.checkBox2);
                 mSave = (Button) mView.findViewById(R.id.savebtn);
                 mCancel = (Button) mView.findViewById(R.id.cancelbtn);
+
+                if (!polyPoints.isEmpty()) {mPolygon.setChecked(true);}
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -328,7 +328,6 @@ public class MapActivity extends AppCompatActivity {
                                 allPolygons.add(polyPoints);
                                 polyPoints.clear();
                                 polyCountPoints = 0;
-                                Toast.makeText(MapActivity.this, "poly added", Toast.LENGTH_SHORT).show();
                             }
 
                             dialog.cancel();
@@ -345,7 +344,7 @@ public class MapActivity extends AppCompatActivity {
                         //clear polyPoints for next polygon
                         polyPoints.clear();
                         polyCountPoints = 0;
-                        Toast.makeText(MapActivity.this, "poly added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MapActivity.this, "polyPoints cleared", Toast.LENGTH_SHORT).show();
 
                         dialog.cancel();
                     }
@@ -414,44 +413,42 @@ public class MapActivity extends AppCompatActivity {
                                         .add(points)
                                         .color(Color.parseColor(lineColor))
                                         .width(lineWidth));
-                            }
 
 
-                            //POLYGON
-                            int polygonCounter = 0; //number of points out of offset
+                                //POLYGON
+                                int polygonCounter = 0; //number of points out of offset
 
-                            //search through the field of points
-                            for (int i = routePoints.size() - 2; i>=0; i--) {
-                                LatLng temp = routePoints.get(i);
-                                //Deltas
-                                double dLat = Math.abs(temp.getLatitude() - actualPoint.getLatitude());
-                                double dLong = Math.abs(temp.getLongitude() - actualPoint.getLongitude());
+                                //search through the field of points
+                                for (int i = routePoints.size() - 2; i >= 0; i--) {
+                                    LatLng temp = routePoints.get(i);
+                                    //Deltas
+                                    double dLat = Math.abs(temp.getLatitude() - actualPoint.getLatitude());
+                                    double dLong = Math.abs(temp.getLongitude() - actualPoint.getLongitude());
 
-                                //Trigger
-                                if((dLat > offset) || (dLong > offset)) {
-                                    polygonCounter++;
-                                }
-
-                                //Polygon found
-                                if ((dLat < offset) && (dLong < offset) && (polygonCounter > polyCountPoints)) {
-                                    Toast.makeText(MapActivity.this, "Polygon", Toast.LENGTH_SHORT).show();
-                                    //create polygon
-                                    for (int j = routePoints.size() - 1; j >= i; j--) {
-                                        polyPoints.add(routePoints.get(j));
+                                    //Trigger
+                                    if ((dLat > offset) || (dLong > offset)) {
+                                        polygonCounter++;
                                     }
 
-                                    //draw Polygon
-                                    mapboxMap.addPolygon(new PolygonOptions()
-                                            .addAll(polyPoints)
-                                            .fillColor(Color.parseColor(polygonColor)));
+                                    //Polygon found
+                                    if ((dLat < offset) && (dLong < offset) && (polygonCounter > polyCountPoints)) {
+                                        Toast.makeText(MapActivity.this, "Polygon", Toast.LENGTH_SHORT).show();
+                                        //create polygon
+                                        for (int j = routePoints.size() - 1; j >= i; j--) {
+                                            polyPoints.add(routePoints.get(j));
+                                        }
 
-                                    //call save
-                                    saveButton.callOnClick();
-                                    Toast.makeText(MapActivity.this, "call onClickSave", Toast.LENGTH_SHORT).show();
+                                        //draw Polygon
+                                        mapboxMap.addPolygon(new PolygonOptions()
+                                                .addAll(polyPoints)
+                                                .fillColor(Color.parseColor(polygonColor)));
 
+                                        //call save
+                                        saveButton.performClick();
 
-                                    //end the search
-                                    break;
+                                        //end the search
+                                        break;
+                                    }
                                 }
                             }
                         }//end of onMapReady
@@ -503,19 +500,15 @@ public class MapActivity extends AppCompatActivity {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
-                Toast.makeText(MapActivity.this, Boolean.toString(poly), Toast.LENGTH_SHORT).show();
-
                 if (poly){
                     mapboxMap.addPolygon(new PolygonOptions()
                             .addAll(myList)
                             .fillColor(Color.parseColor(myColor)));
-                    Toast.makeText(MapActivity.this, "poly drawed", Toast.LENGTH_SHORT).show();
                 } else {
                     mapboxMap.addPolyline(new PolylineOptions()
                             .addAll(myList)
                             .color(Color.parseColor(color))
                             .width(lineWidth));
-                    Toast.makeText(MapActivity.this, "route drawed", Toast.LENGTH_SHORT).show();
                 }
 
 

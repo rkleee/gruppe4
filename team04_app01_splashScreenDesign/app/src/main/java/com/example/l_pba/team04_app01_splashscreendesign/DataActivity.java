@@ -90,7 +90,6 @@ public class DataActivity extends AppCompatActivity {
                 selectedItem.clear();
                 GetCaption();
                 listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
-
             }
         });
 
@@ -101,7 +100,6 @@ public class DataActivity extends AppCompatActivity {
                 Intent intent = new Intent(DataActivity.this,MapActivity.class);
                 intent.putExtra("Items",selectedItem.toArray(new String[0]));
                 startActivity(intent);
-
             }
         });
 
@@ -119,14 +117,13 @@ public class DataActivity extends AppCompatActivity {
             ArrayList<String> helpArray = new ArrayList<>();
             //extract Route names
             for (int i=0; i<prefArray.length; i++){
-                helpArray.add(prefArray[i].replaceAll("[0-9]", "")); //remove numbers
+                helpArray.add(prefArray[i].replaceAll("[0-9]", "").replace("#","")); //remove numbers
                 if (!allItems.contains(helpArray.get(i))){
                     allItems.add(helpArray.get(i)); //allItems contains all Route names by String
                 }
             }
-
             caption = allItems.toArray(new String[0]);
-            //Toast.makeText(this, caption[0], Toast.LENGTH_SHORT).show();
+
         } else {
             caption = empty;
             Toast.makeText(this, "no Data found", Toast.LENGTH_SHORT).show();
