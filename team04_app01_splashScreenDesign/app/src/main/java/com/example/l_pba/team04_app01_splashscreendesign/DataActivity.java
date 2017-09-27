@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -76,7 +77,7 @@ public class DataActivity extends AppCompatActivity {
                 String [] helpselected = selectedItem.toArray(new String[0]);
                 for (int i=0; i<prefArray.length; i++){
                     for (int j=0; j<helpselected.length; j++) {
-                        if (prefArray[i].contains(helpselected[j])) {
+                        if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(helpselected[j])) {
                             editor.remove(prefArray[i]);
                             break;
                         }
@@ -114,12 +115,11 @@ public class DataActivity extends AppCompatActivity {
 
         if (!preferences.getAll().isEmpty()) {
             prefArray = preferences.getAll().keySet().toArray(new String[0]);
-            ArrayList<String> helpArray = new ArrayList<>();
             //extract Route names
             for (int i=0; i<prefArray.length; i++){
-                helpArray.add(prefArray[i].replaceAll("[0-9]", "").replace("#","")); //remove numbers
-                if (!allItems.contains(helpArray.get(i))){
-                    allItems.add(helpArray.get(i)); //allItems contains all Route names by String
+                String help = prefArray[i].replaceAll("[0-9]", "").replace("#",""); //remove numbers
+                if (!allItems.contains(help)){
+                    allItems.add(help); //allItems contains all Route names by String
                 }
             }
             caption = allItems.toArray(new String[0]);

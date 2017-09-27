@@ -122,17 +122,17 @@ public class MapActivity extends AppCompatActivity {
     private static final Map<String, String> routeColors;
     static {
         Map<String, String> aMap = new HashMap<>();
-        aMap.put("black",       "ff000000");
-        aMap.put("red",         "ffff0000");
-        aMap.put("green",       "ff00ff00");
-        aMap.put("blue",        "ff0000ff");
-        aMap.put("yellow",      "ffffff00");
-        aMap.put("magenta",     "ffff00ff");
-        aMap.put("cyan",        "ff00ffff");
-        aMap.put("white",       "ffffffff");
-        aMap.put("grey",        "ff7f7f7f");
-        aMap.put("lightgrey",   "ffd3d3d3");
-        aMap.put("silver",      "ffc0c0c0");
+        aMap.put("black",       "#ff000000");
+        aMap.put("red",         "#ffff0000");
+        aMap.put("green",       "#ff00ff00");
+        aMap.put("blue",        "#ff0000ff");
+        aMap.put("yellow",      "#ffffff00");
+        aMap.put("magenta",     "#ffff00ff");
+        aMap.put("cyan",        "#ff00ffff");
+        aMap.put("white",       "#ffffffff");
+        aMap.put("grey",        "#ff7f7f7f");
+        aMap.put("lightgrey",   "#ffd3d3d3");
+        aMap.put("silver",      "#ffc0c0c0");
         routeColors = Collections.unmodifiableMap(aMap);
     }
 
@@ -140,17 +140,17 @@ public class MapActivity extends AppCompatActivity {
     private static final Map<String, String> polygonColors;
     static {
         Map<String, String> aMap = new HashMap<>();
-        aMap.put("black",       "7f000000");
-        aMap.put("red",         "7fff0000");
-        aMap.put("green",       "7f00ff00");
-        aMap.put("blue",        "7f0000ff");
-        aMap.put("yellow",      "7fffff00");
-        aMap.put("magenta",     "7fff00ff");
-        aMap.put("cyan",        "7f00ffff");
-        aMap.put("white",       "7fffffff");
-        aMap.put("grey",        "7f7f7f7f");
-        aMap.put("lightgrey",   "7fd3d3d3");
-        aMap.put("silver",      "7fc0c0c0");
+        aMap.put("black",       "#7f000000");
+        aMap.put("red",         "#7fff0000");
+        aMap.put("green",       "#7f00ff00");
+        aMap.put("blue",        "#7f0000ff");
+        aMap.put("yellow",      "#7fffff00");
+        aMap.put("magenta",     "#7fff00ff");
+        aMap.put("cyan",        "#7f00ffff");
+        aMap.put("white",       "#7fffffff");
+        aMap.put("grey",        "#7f7f7f7f");
+        aMap.put("lightgrey",   "#7fd3d3d3");
+        aMap.put("silver",      "#7fc0c0c0");
         polygonColors = Collections.unmodifiableMap(aMap);
     }
 
@@ -245,7 +245,7 @@ public class MapActivity extends AppCompatActivity {
                     }
                 }
 
-                if ((helpList.size()>0)&&(!raw.contains(",") || ((i+1)==keyArray.length))){    //else-branch
+                if ((helpList.size()>0)&&(!raw.contains(",") || ((i+1)==keyArray.length))){
                     if (polygon) {allPolygons.add(helpList);}
                     else {allRoutes.add(helpList);}
                     draw(helpList, color, polygon);
@@ -253,6 +253,8 @@ public class MapActivity extends AppCompatActivity {
                 }
             }
         }
+
+        Toast.makeText(MapActivity.this, routeColors.get(lineColor), Toast.LENGTH_SHORT).show();
 
 
         /**
@@ -284,6 +286,7 @@ public class MapActivity extends AppCompatActivity {
                 //Pause search
                 playButton.performClick();
 
+
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_alert,null);
 
@@ -305,7 +308,7 @@ public class MapActivity extends AppCompatActivity {
                         if(!mName.getText().toString().isEmpty()&& (mRoute.isChecked()||mPolygon.isChecked())){
 
                             if (mRoute.isChecked()){
-                                editor.putString(mName.getText().toString()+"0000", "#00ffff");
+                                editor.putString(mName.getText().toString()+"0000", routeColors.get(lineColor));
                                 for (int i=0; i < routePoints.size(); i++) {
                                     String Key = mName.getText().toString()+String.format("%04d", i+1);
                                     String Data = routePoints.get(i).toString();
@@ -315,7 +318,7 @@ public class MapActivity extends AppCompatActivity {
                                 Toast.makeText(MapActivity.this, "Route saved", Toast.LENGTH_SHORT).show();
                             }
                             if (mPolygon.isChecked()){
-                                editor.putString("#"+mName.getText().toString()+"0000", "#00ffff");
+                                editor.putString("#"+mName.getText().toString()+"0000", polygonColors.get(polygonColor));
                                 for (int i=0; i < polyPoints.size(); i++) {
                                     String Key = "#"+mName.getText().toString()+String.format("%04d", i+1);
                                     String Data = polyPoints.get(i).toString();
@@ -492,62 +495,32 @@ public class MapActivity extends AppCompatActivity {
 
 
 
-    private void draw(final LinkedList<LatLng> list , final String color, final Boolean poly){
+
+    private void draw(final LinkedList<LatLng> list , final String color, final Boolean poly) {
         final LinkedList<LatLng> myList = new LinkedList<>(list);
         final String myColor = new String(color);
-        final Boolean myPoly = new Boolean(poly);
 
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
-                if (poly){
+                if (poly) {
                     mapboxMap.addPolygon(new PolygonOptions()
                             .addAll(myList)
                             .fillColor(Color.parseColor(myColor)));
                 } else {
                     mapboxMap.addPolyline(new PolylineOptions()
                             .addAll(myList)
-                            .color(Color.parseColor(color))
+                            .color(Color.parseColor(myColor))
                             .width(lineWidth));
                 }
-
+                Toast.makeText(MapActivity.this, "something drawed", Toast.LENGTH_SHORT).show();
 
             }
         });
 
     }
 
-    /**
-    //Farben aus dem datensatz auslesen!!
-    private void FillMap(){
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(MapboxMap mapboxMap) {
-                //Draw Routes
-                for (int i=0; i<allRoutes.size(); i++){
-                    mapboxMap.addPolyline(new PolylineOptions()
-                            .addAll(allRoutes.get(i))
-                            .color(Color.parseColor(lineColor))
-                            .width(lineWidth));
-                }
-                Toast.makeText(MapActivity.this, Integer.toString(allRoutes.size())+" Routes", Toast.LENGTH_SHORT).show();
-                //Draw Polygons
-                for (int i=0; i<allPolygons.size(); i++){
-                    mapboxMap.addPolygon(new PolygonOptions()
-                            .addAll(allPolygons.get(i))
-                            .fillColor(Color.parseColor(polygonColor)));
-                }
-                Toast.makeText(MapActivity.this, Integer.toString(allPolygons.size())+" Polygons", Toast.LENGTH_SHORT).show();
-                //Draw current line (for landscape)
-                mapboxMap.addPolyline(new PolylineOptions()
-                        .addAll(routePoints)
-                        .color(Color.parseColor(lineColor))
-                        .width(lineWidth));
-            }
 
-        });
-    }
-    */
 
 
     @Override
