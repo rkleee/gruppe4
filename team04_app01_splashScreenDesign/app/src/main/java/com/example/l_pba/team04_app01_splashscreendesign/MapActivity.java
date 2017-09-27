@@ -50,6 +50,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
  * Util Imports
  */
 import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -135,7 +136,7 @@ public class MapActivity extends AppCompatActivity {
         routeColors = Collections.unmodifiableMap(aMap);
     }
 
-    //Map with Route Colors
+    //Map with Poly Colors
     private static final Map<String, String> polygonColors;
     static {
         Map<String, String> aMap = new HashMap<>();
@@ -219,25 +220,41 @@ public class MapActivity extends AppCompatActivity {
         //  Polygon: #name0 = ff... ; #name1 = LatLng ; ...LatLng
         //  Route:   name0 = ff.... ; ....
 
+
+        String[] loading = getIntent().getExtras().getStringArray("Items");
         String[] keyArray = preferences.getAll().keySet().toArray(new String[0]);
         LinkedList<LatLng> helpList = new LinkedList<>();
-        boolean route = false;
-        for (int i=1; i<keyArray.length; i++){
-            String raw = preferences.getString(keyArray[i],"");
-            if (raw.contains(",")){
-                String[] splitString = raw.split(",");
-                route = !keyArray[i].startsWith("#");
-                Double lat = Double.parseDouble(splitString[0].substring(17));
-                Double lon = Double.parseDouble(splitString[1].substring(11));
-                helpList.add(new LatLng(lat,lon));
-            }
-            if (!raw.contains(",") || ((i+1)==keyArray.length)){    //else-branch
-               if (route) {allRoutes.add(helpList);}
-                else {allPolygons.add(helpList);}
+
+        Arrays.sort(keyArray);
+        boolean polygon = false;
+
+        for (String s : loading){
+            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+            String color = "";
+            for (int i=0; i<keyArray.length; i++){
+                String raw = preferences.getString(keyArray[i],"");
+                if (keyArray[i].replaceAll("[0-9]","").replace("#","").equals(s)){
+                    if (raw.contains(",")){
+                        String[] splitString = raw.split(",");
+                        polygon = keyArray[i].startsWith("#");
+                        Double lat = Double.parseDouble(splitString[0].substring(17));
+                        Double lon = Double.parseDouble(splitString[1].substring(11));
+                        helpList.add(new LatLng(lat,lon));
+                    } else {
+                        color = raw;
+                        Toast.makeText(this, raw, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if ((helpList.size()>0)&&(!raw.contains(",") || ((i+1)==keyArray.length))){    //else-branch
+                    if (polygon) {allPolygons.add(helpList);}
+                    else {allRoutes.add(helpList);}
+                    draw(helpList, color, polygon);
+                    helpList.clear();
+                    Toast.makeText(this, "something added", Toast.LENGTH_SHORT).show();
+                }
             }
         }
-
-        FillMap();
 
 
         /**
@@ -266,6 +283,8 @@ public class MapActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Pause search
+                playButton.callOnClick();
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_alert,null);
@@ -285,56 +304,53 @@ public class MapActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if(!mName.getText().toString().isEmpty()&& (mRoute.isChecked()||mPolygon.isChecked())){
 
-                            editor.putString(mName.getText().toString()+"0", "color"); //EDIT
-                            for (int i=0; i < routePoints.size(); i++) {
-                                String Key = mName.getText().toString()+Integer.toString(i+1);
-                                String Data = routePoints.get(i).toString();
-                                editor.putString(Key, Data);
+                            if (mRoute.isChecked()){
+                                editor.putString(mName.getText().toString()+"0000", "#00ffff");
+                                for (int i=0; i < routePoints.size(); i++) {
+                                    String Key = mName.getText().toString()+String.format("%04d", i+1);
+                                    String Data = routePoints.get(i).toString();
+                                    editor.putString(Key, Data);
+                                }
+                                editor.commit();
+                                Toast.makeText(MapActivity.this, "Route saved", Toast.LENGTH_SHORT).show();
                             }
-                            editor.commit();
-                            Toast.makeText(MapActivity.this, "saved", Toast.LENGTH_SHORT).show();
+                            if (mPolygon.isChecked()){
+                                editor.putString("#"+mName.getText().toString()+"0000", "#00ffff");
+                                for (int i=0; i < polyPoints.size(); i++) {
+                                    String Key = "#"+mName.getText().toString()+String.format("%04d", i+1);
+                                    String Data = polyPoints.get(i).toString();
+                                    editor.putString(Key, Data);
+                                }
+                                editor.commit();
+                                Toast.makeText(MapActivity.this, "Polygon saved", Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(MapActivity.this, "new element created", Toast.LENGTH_SHORT).show();
-                            //"mydefault" + Integer.toString(i+1);
+                                //clear polyPoints for next polygon and add it
+                                allPolygons.add(polyPoints);
+                                polyPoints.clear();
+                                polyCountPoints = 0;
+                                Toast.makeText(MapActivity.this, "poly added", Toast.LENGTH_SHORT).show();
+                            }
+
+                            dialog.cancel();
                         }else {
                             Toast.makeText(MapActivity.this, "please fill any empty fields", Toast.LENGTH_SHORT).show();
                         }
 
-                        dialog.cancel();
                     }
                 });
 
                 mCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //clear polyPoints for next polygon
+                        polyPoints.clear();
+                        polyCountPoints = 0;
+                        Toast.makeText(MapActivity.this, "poly added", Toast.LENGTH_SHORT).show();
+
                         dialog.cancel();
                     }
                 });
 
-
-
-                //dialog.cancel();
-
-           /*     mSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                     dialog.cancel();
-                    }
-
-                }); */
-
-
-
-
-             /*   editor.putString("mydefault0", "color"); //EDIT
-                for (int i=0; i < routePoints.size(); i++) {
-                    String Key = "mydefault" + Integer.toString(i+1);
-                    String Data = routePoints.get(i).toString();
-                    editor.putString(Key, Data);
-                }
-                editor.commit();
-                Toast.makeText(MapActivity.this, "saved", Toast.LENGTH_SHORT).show();*/
             }
         });
 
@@ -429,14 +445,10 @@ public class MapActivity extends AppCompatActivity {
                                             .addAll(polyPoints)
                                             .fillColor(Color.parseColor(polygonColor)));
 
-                                    //clear polyPoints for next polygon
-                                    allPolygons.add(polyPoints);
-                                    polyPoints.clear();
-                                    polyCountPoints = 0;
+                                    //call save
+                                    saveButton.callOnClick();
+                                    Toast.makeText(MapActivity.this, "call onClickSave", Toast.LENGTH_SHORT).show();
 
-
-                                    gpsPlay = false;
-                                    Toast.makeText(MapActivity.this, "Pause", Toast.LENGTH_SHORT).show();
 
                                     //end the search
                                     break;
@@ -482,6 +494,37 @@ public class MapActivity extends AppCompatActivity {
     }
 
 
+
+    private void draw(final LinkedList<LatLng> list , final String color, final Boolean poly){
+        final LinkedList<LatLng> myList = new LinkedList<>(list);
+        final String myColor = new String(color);
+        final Boolean myPoly = new Boolean(poly);
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(MapboxMap mapboxMap) {
+                Toast.makeText(MapActivity.this, Boolean.toString(poly), Toast.LENGTH_SHORT).show();
+
+                if (poly){
+                    mapboxMap.addPolygon(new PolygonOptions()
+                            .addAll(myList)
+                            .fillColor(Color.parseColor(myColor)));
+                    Toast.makeText(MapActivity.this, "poly drawed", Toast.LENGTH_SHORT).show();
+                } else {
+                    mapboxMap.addPolyline(new PolylineOptions()
+                            .addAll(myList)
+                            .color(Color.parseColor(color))
+                            .width(lineWidth));
+                    Toast.makeText(MapActivity.this, "route drawed", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+    }
+
+    /**
     //Farben aus dem datensatz auslesen!!
     private void FillMap(){
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -498,10 +541,10 @@ public class MapActivity extends AppCompatActivity {
                 //Draw Polygons
                 for (int i=0; i<allPolygons.size(); i++){
                     mapboxMap.addPolygon(new PolygonOptions()
-                            .addAll(polyPoints)
+                            .addAll(allPolygons.get(i))
                             .fillColor(Color.parseColor(polygonColor)));
                 }
-                Toast.makeText(MapActivity.this, Integer.toString(allRoutes.size())+" Polygons", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapActivity.this, Integer.toString(allPolygons.size())+" Polygons", Toast.LENGTH_SHORT).show();
                 //Draw current line (for landscape)
                 mapboxMap.addPolyline(new PolylineOptions()
                         .addAll(routePoints)
@@ -511,7 +554,7 @@ public class MapActivity extends AppCompatActivity {
 
         });
     }
-
+    */
 
 
     @Override
