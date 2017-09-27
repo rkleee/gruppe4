@@ -26,9 +26,7 @@
         android:ems="10"
         android:hint="@string/name"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-
-        />
+        android:layout_marginLeft="5dp" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -53,14 +51,13 @@
 
         <Button
             android:id="@+id/savebtn"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="170dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:text="Save"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@android:color/white"
             android:onClick="OnClick"
             />
@@ -68,12 +65,13 @@
 
         <Button
             android:id="@+id/cancelbtn"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:text="Cancel"
             android:textColor="@android:color/white"
-            android:textSize="20dp"/>
+            android:textSize="15dp" />
     </TableRow>
 </LinearLayout>

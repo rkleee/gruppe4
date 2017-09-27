@@ -104,7 +104,8 @@
         special Animations. \n\n ENJOY!</string>
     <string name="creators_text">Created by:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
-    <string name="title_activity_test" translatable="false">TestActivity</string>
+
+    <!-- Dialog Alert -->
     <string name="name">name</string>
 
 </resources>
