@@ -112,6 +112,7 @@ public class DataActivity extends AppCompatActivity {
 
     private void GetCaption(){
         String[] empty = new String[]{}; //String if preferences.isEmpty
+        allItems.clear();
 
         if (!preferences.getAll().isEmpty()) {
             prefArray = preferences.getAll().keySet().toArray(new String[0]);
