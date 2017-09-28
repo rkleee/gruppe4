@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MC Route</string>
+    <string name="back">Zurück</string>
     <string name="creators_text">Entwickelt von:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
     <string name="delete">Löschen</string>

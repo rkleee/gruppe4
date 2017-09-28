@@ -128,5 +128,7 @@
 
     <!-- Dialog Alert -->
     <string name="name">name</string>
+    <string name="back">Back</string>
+    <string name="savings">Speicherungen</string>
 
 </resources>
