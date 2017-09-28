@@ -36,7 +36,6 @@ import android.widget.Toast;
  */
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
-import com.mapbox.mapboxsdk.annotations.MarkerViewOptions;
 import com.mapbox.mapboxsdk.annotations.PolygonOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -266,12 +265,12 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!gpsPlay){
                     gpsPlay = true;
-                    playButton.setText("Pause");
-                    Toast.makeText(MapActivity.this, "Go", Toast.LENGTH_SHORT).show();
+                    playButton.setText(R.string.pause);
+                    Toast.makeText(MapActivity.this, R.string.go, Toast.LENGTH_SHORT).show();
                 } else {
                     gpsPlay = false;
-                    playButton.setText("Play");
-                    Toast.makeText(MapActivity.this, "Stop", Toast.LENGTH_SHORT).show();
+                    playButton.setText(R.string.play);
+                    Toast.makeText(MapActivity.this, R.string.stop, Toast.LENGTH_SHORT).show();
                 }
             }
         });

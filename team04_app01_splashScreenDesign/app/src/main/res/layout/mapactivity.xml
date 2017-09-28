@@ -13,7 +13,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="89dp"
         android:layout_marginTop="14dp"
-        android:text="Play"
+        android:text="@string/play"
         mapbox:layout_constraintHorizontal_bias="0.0"
         mapbox:layout_constraintLeft_toLeftOf="parent"
         mapbox:layout_constraintRight_toLeftOf="@+id/saveButton"
@@ -25,7 +25,7 @@
         android:layout_height="51dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="14dp"
-        android:text="Save"
+        android:text="@string/save"
         mapbox:layout_constraintRight_toRightOf="parent"
         mapbox:layout_constraintTop_toBottomOf="@+id/mapView" />
 
