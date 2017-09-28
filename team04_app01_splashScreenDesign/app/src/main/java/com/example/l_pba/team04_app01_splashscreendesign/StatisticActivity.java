@@ -53,7 +53,7 @@ public class StatisticActivity extends AppCompatActivity {
         //getData from shared Preferences
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
 
-        //--Example Datasets data and b--//
+        /*--Example Datasets data and b--//
         String[] test = {"data0","#ffff0000","data1",new LatLng(30.0,40.0).toString(),"data2",new LatLng(50.0,45.0).toString(),
                 "data3",new LatLng(10.0,60.0).toString(),"data4",new LatLng(60.0,50.0).toString(),"data5",new LatLng(70.0,70.0).toString(),
                 "data6",new LatLng(30.0,100.0).toString(),"b0","#ffff0000","b1",new LatLng(20.0,50.0).toString(),"b2",new LatLng(45.0,60.0).toString(),
@@ -61,64 +61,68 @@ public class StatisticActivity extends AppCompatActivity {
                 "b6",new LatLng(25.0,50.0).toString()};
         String[] s = test.clone();
         //--//
-
+        */
         final LinkedList<String> keyArray = new LinkedList<>();
         LinkedList<String> helpArray = new LinkedList<>();
 
+        final JSONObject obj = new JSONObject();
+
         //store all preferencepoints as Strings
-        //String[] s = preferences.getAll().keySet().toArray(new String[0]);
+        if(!preferences.getAll().isEmpty()) {
+            String[] s = preferences.getAll().keySet().toArray(new String[0]);
 
-        int x = 0;
-        //store all data-names in keyArray
-        for (int i=0; i<s.length; i+=2){
-           if (s[i].charAt(0) == '#') continue;
-            helpArray.add(s[i].replaceAll("[0-9]", "")); //remove numbers
-            if (!keyArray.contains(helpArray.get(x))){
-                keyArray.add(helpArray.get(x)); //keyArray contains all Route names by String
+            int x = 0;
+            //store all data-names in keyArray
+            for (int i = 0; i < s.length; i += 2) {
+                if (s[i].charAt(0) == '#') continue;
+                helpArray.add(s[i].replaceAll("[0-9]", "")); //remove numbers
+                if (!keyArray.contains(helpArray.get(x))) {
+                    keyArray.add(helpArray.get(x)); //keyArray contains all Route names by String
+                }
+                x++;
             }
-            x++;
-        }
 
-        //fill Hashmap with Stringname and LatLng-List
-        HashMap<String, String> colorMap = new HashMap<>();
-        String name = "";
-        for (int j = 0; j < s.length; j+=2) {
-            name = s[j].substring(0,s[j].length()-1);
-            if (name.charAt(0) == '#') continue;
-            if (s[j+1].charAt(0) == '#') {
-                //save colors in colorMap
-                colorMap.put(name, s[j+1]);
-            } else {
-                //save LatLng as value and datasetname as key in Map
-                if (!map.containsKey(name)) {
-                    LinkedList<LatLng> l = new LinkedList<>();
-                    l.add(StringtoLatLng(s[j + 1]));
-                    map.put(name, l);
+            //fill Hashmap with Stringname and LatLng-List
+            HashMap<String, String> colorMap = new HashMap<>();
+            String name = "";
+            for (int j = 0; j < s.length; j += 2) {
+                name = s[j].substring(0, s[j].length() - 1);
+                if (name.charAt(0) == '#') continue;
+                if (s[j + 1].charAt(0) == '#') {
+                    //save colors in colorMap
+                    colorMap.put(name, s[j + 1]);
                 } else {
-                    map.get(name).add(StringtoLatLng(s[j+1]));
+                    //save LatLng as value and datasetname as key in Map
+                    if (!map.containsKey(name)) {
+                        LinkedList<LatLng> l = new LinkedList<>();
+                        l.add(StringtoLatLng(s[j + 1]));
+                        map.put(name, l);
+                    } else {
+                        map.get(name).add(StringtoLatLng(s[j + 1]));
+                    }
                 }
             }
-        }
 
-
-        final JSONObject obj = new JSONObject();
-        JSONArray arr;
-        //Create JSONArrays and store in JSONobject
-        for(int index = 0; index<keyArray.size(); index++) {
-            arr = new JSONArray();
-            for(int l=0; l<map.get(keyArray.get(index)).size();l++) {
+            JSONArray arr;
+            //Create JSONArrays and store in JSONobject
+            for (int index = 0; index < keyArray.size(); index++) {
+                arr = new JSONArray();
+                for (int l = 0; l < map.get(keyArray.get(index)).size(); l++) {
+                    try {
+                        arr.put(map.get(keyArray.get(index)).get(l).getLongitude());
+                        arr.put(map.get(keyArray.get(index)).get(l).getLatitude());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 try {
-                    arr.put(map.get(keyArray.get(index)).get(l).getLongitude());
-                    arr.put(map.get(keyArray.get(index)).get(l).getLatitude());
+                    obj.put(keyArray.get(index), arr);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            try {
-                obj.put(keyArray.get(index),arr);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        } else {
+            Toast.makeText(this, "preferences empty", Toast.LENGTH_SHORT).show();
         }
         //set Webview display
         webView = (WebView) findViewById(R.id.webView);
