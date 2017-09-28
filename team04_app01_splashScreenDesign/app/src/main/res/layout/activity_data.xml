@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/cL"
     tools:context="com.example.l_pba.team04_app01_splashscreendesign.DataActivity">
 
     <ListView
@@ -20,7 +21,7 @@
 
     <Button
         android:id="@+id/deleteButton"
-        android:text="Delete"
+        android:text="@string/delete"
         android:layout_width="150dp"
         android:layout_height="55dp"
         android:layout_marginTop="15dp"
@@ -29,11 +30,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/showButton"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:background="@drawable/data_button"/>
 
     <Button
         android:id="@+id/showButton"
-        android:text="Show"
+        android:text="@string/show"
         android:layout_width="150dp"
         android:layout_height="55dp"
         android:layout_marginRight="16dp"
@@ -41,5 +43,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ListView"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.94" />
+        app:layout_constraintHorizontal_bias="0.94"
+        android:background="@drawable/data_button"/>
 </android.support.constraint.ConstraintLayout>

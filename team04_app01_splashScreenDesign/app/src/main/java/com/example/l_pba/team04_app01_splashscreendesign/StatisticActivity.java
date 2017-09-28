@@ -48,7 +48,7 @@ public class StatisticActivity extends AppCompatActivity {
         cL.setBackgroundColor(statisticColor);
 
         //set ScreenOrientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //getData from shared Preferences
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);

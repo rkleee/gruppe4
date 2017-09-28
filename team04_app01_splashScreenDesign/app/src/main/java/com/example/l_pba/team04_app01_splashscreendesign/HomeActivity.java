@@ -18,13 +18,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gjiazhe.panoramaimageview.GyroscopeObserver;
 import com.gjiazhe.panoramaimageview.PanoramaImageView;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
-
-import java.util.LinkedList;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 
 /**
  * Gjiazhe Imports for PanoramaImage at the Start-/MapButton
@@ -34,6 +34,7 @@ import java.util.LinkedList;
 /**
  * Hitomi Imports for CircleMenu
  */
+
 
 
 /**
@@ -49,11 +50,11 @@ public class HomeActivity extends AppCompatActivity {
     private TextView welcome; //welcome
     private CircleMenu circleMenu; //circleMenu
 
-    private int circleMenuColor = Color.WHITE;
-    private int settingsColor = Color.parseColor("#ffc1e3ff"); //blue
-    private int dataColor = Color.parseColor("#ffffa0a0"); //red
-    private int informationColor = Color.parseColor("#ffe8ffda"); //green
-    private int statisticColor = Color.parseColor("#eeeeee"); //grey
+    private int circleMenuColor = Color.parseColor("#99ffffff");
+    private int settingsColor = Color.parseColor("#E6a6daef"); //blue-ffc1e3ff
+    private int dataColor = Color.parseColor("#E6f4858e"); //red-ffffa0a0
+    private int informationColor = Color.parseColor("#E6fffacd"); //yellow-ffe8ffda
+    private int statisticColor = Color.parseColor("#E6eeeeee"); //grey-eeeeee
 
     private GyroscopeObserver gyroscopeObserver;// for the panoramaImage
 
@@ -90,11 +91,11 @@ public class HomeActivity extends AppCompatActivity {
 
         //set the Background
         cL = (ConstraintLayout) findViewById(R.id.constraintLayout);
-        cL.setBackgroundResource(R.drawable.background);
+        cL.setBackgroundResource(R.drawable.color_gradient_background);
 
 
         //set Screen Orientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
         //SecretButton, which will rotate the logo
@@ -125,37 +126,38 @@ public class HomeActivity extends AppCompatActivity {
 
         /**Start new Activities from the Circle-Menu**/
         circleMenu = (CircleMenu) findViewById(R.id.circleMenu);
+        circleMenu.setRotation(45);
         circleMenu.setMainMenu(circleMenuColor,R.drawable.ic_addbtn,R.drawable.ic_clear)
                 .addSubMenu(settingsColor,R.drawable.ic_settings03)
-                .addSubMenu(dataColor,R.drawable.ic_data03)
-                .addSubMenu(informationColor,R.drawable.ic_information)
-                .addSubMenu(statisticColor,R.drawable.ic_statistic)
+                .addSubMenu(dataColor,R.drawable.dataic01)
+                .addSubMenu(informationColor,R.drawable.informationic02)
+                .addSubMenu(statisticColor,R.drawable.statisticic01)
                 .setOnMenuSelectedListener(new OnMenuSelectedListener() {
 
                     @Override
                     public void onMenuSelected(int index) {
-                        switch(index) {
+                        switch (index) {
                             case 0:
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent setting = new Intent(HomeActivity.this,SettingsActivity.class);
+                                        Intent setting = new Intent(HomeActivity.this, SettingsActivity.class);
                                         startActivity(setting);
-                                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                         finish();
                                     }
-                                },500);
+                                }, 500);
                                 break;
                             case 1:
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent data = new Intent(HomeActivity.this,DataActivity.class);
+                                        Intent data = new Intent(HomeActivity.this, DataActivity.class);
                                         startActivity(data);
-                                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                         finish();
                                     }
-                                },500);
+                                }, 500);
                                 break;
                             case 2:
                                 new Handler().postDelayed(new Runnable() {
@@ -163,10 +165,10 @@ public class HomeActivity extends AppCompatActivity {
                                     public void run() {
                                         Intent fade = new Intent(HomeActivity.this, InformationActivity.class);
                                         startActivity(fade);
-                                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                         finish();
                                     }
-                                },500);
+                                }, 500);
                                 break;
                             case 3:
                                 new Handler().postDelayed(new Runnable() {
@@ -174,10 +176,10 @@ public class HomeActivity extends AppCompatActivity {
                                     public void run() {
                                         Intent fade = new Intent(HomeActivity.this, StatisticActivity.class);
                                         startActivity(fade);
-                                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                         finish();
                                     }
-                                },500);
+                                }, 500);
                                 break;
                         }
                     }

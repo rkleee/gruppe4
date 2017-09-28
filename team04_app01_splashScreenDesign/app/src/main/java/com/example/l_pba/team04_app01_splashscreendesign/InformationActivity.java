@@ -35,7 +35,7 @@ public class InformationActivity extends AppCompatActivity {
     private TextView appversion;
     private TextView informationtext;
 
-    private int informationColor = Color.parseColor("#ffe8ffda"); //BackgroundColor
+    private int informationColor = Color.parseColor("#E6fffacd"); //BackgroundColor
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class InformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_information);
 
         //set ScreenOrientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //rotate Animation of the Information-Button
         final Animation anim = AnimationUtils.loadAnimation(this,R.anim.animation);
