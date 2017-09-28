@@ -11,6 +11,7 @@
     <string name="marker_snippet">Du bist hier</string>
     <string name="marker_title">Deine Position</string>
     <string name="name">Name</string>
+    <string name="no_data">Keine Daten gefunden</string>
     <string name="preference_audio_title">Ton</string>
     <string name="preference_audio_key">audio</string>
     <string name="preference_audio_offSummary">Ton deaktiviert</string>

@@ -134,7 +134,7 @@ public class DataActivity extends AppCompatActivity {
 
         } else {
             caption = empty;
-            Toast.makeText(this, "no Data found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_data, Toast.LENGTH_SHORT).show();
         }
     }
 
