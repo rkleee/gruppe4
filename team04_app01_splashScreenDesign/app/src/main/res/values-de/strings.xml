@@ -3,6 +3,7 @@
     <string name="app_name">MC Route</string>
     <string name="creators_text">Entwickelt von:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
+    <string name="delete">Löschen</string>
     <string name="informationtext">Willkommen bei MC ROUTE.\n Die "MC ROUTE"-App ist ein
         Programmier-Projekt, welches während des Mobile Computing Praktikums der Universität Mainz
         entstand. \n\n Wir hoffen Sie genießen unsere App und versuchen all unsere versteckten
@@ -18,6 +19,9 @@
     <string name="preference_language_title">Ihre Systemsprache ist:</string>
     <string name="preference_polygon_color_title">Polygon Farbe</string>
     <string name="preference_route_color_title">Farbe der Route</string>
+    <string name="show">Anzeigen</string>
+    <string name="statistics">STATISTIKEN</string>
     <string name="title_activity_settings">Einstellungen</string>
+    <string name="welcome">Willkommen</string>
 
 </resources>

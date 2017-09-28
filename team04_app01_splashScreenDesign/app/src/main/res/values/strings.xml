@@ -1,7 +1,14 @@
 <resources>
+    <!-- Name of the App -->
     <string name="app_name">MC Route</string>
+
+    <!-- Map Activity -->
     <string name="marker_title">Your Position</string>
     <string name="marker_snippet">You are here</string>
+
+    <!-- Home Activity -->
+    <string name="welcome">Welcome</string>
+    <string name="created_by">Created by Group04</string>
 
     <!-- Settings Activity -->
     <string name="title_activity_settings">Settings</string>
@@ -97,6 +104,9 @@
         <item>silver</item>
     </string-array>
 
+    <!-- Statistics Activity -->
+    <string name="statistics">STATISTICS</string>
+
     <!-- Information Activity -->
     <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a
         programming-project which was born in cause of the Mobile Computing internship of the
@@ -104,6 +114,10 @@
         special Animations. \n\n ENJOY!</string>
     <string name="creators_text">Created by:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
+
+    <!-- Data Activity -->
+    <string name="delete">Delete</string>
+    <string name="show">Show</string>
 
     <!-- Dialog Alert -->
     <string name="name">name</string>
