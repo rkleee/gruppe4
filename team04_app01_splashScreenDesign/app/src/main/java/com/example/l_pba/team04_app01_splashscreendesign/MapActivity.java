@@ -36,6 +36,7 @@ import android.widget.Toast;
  */
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.MarkerViewOptions;
 import com.mapbox.mapboxsdk.annotations.PolygonOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -254,8 +255,6 @@ public class MapActivity extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(MapActivity.this, routeColors.get(lineColor), Toast.LENGTH_SHORT).show();
-
 
         /**
          * BUTTONS
@@ -377,25 +376,25 @@ public class MapActivity extends AppCompatActivity {
                         @Override
                         public void onMapReady(MapboxMap mapboxMap) {
 
-                            //CAMERAPOSITION
-                            CameraPosition camPos = new CameraPosition.Builder()
-                                    .target(actualPoint)
-                                    .build();
-                            //Camera moves smooth to actual position
-                            mapboxMap.easeCamera(CameraUpdateFactory.newCameraPosition(camPos),
-                                    cameraSmooth);
-
                             //MARKER
                             //delete Marker, if one exists
-                            if(!mapboxMap.getMarkers().isEmpty()) {
+                            if(!mapboxMap.getMarkers().isEmpty() && !mapboxMap.getMarkers().get(0).isInfoWindowShown()) {
                                 mapboxMap.getMarkers().get(0).remove();
                             }
+                            if (mapboxMap.getMarkers().isEmpty()){
+                                mapboxMap.addMarker(new MarkerOptions()
+                                        .position(actualPoint)
+                                        .title(getResources().getString(R.string.marker_title))
+                                        .snippet(getLocationString(actualPoint)));
+                                //CAMERAPOSITION
+                                CameraPosition camPos = new CameraPosition.Builder()
+                                        .target(actualPoint)
+                                        .build();
+                                //Camera moves smooth to actual position
+                                mapboxMap.easeCamera(CameraUpdateFactory.newCameraPosition(camPos),
+                                        cameraSmooth);
+                            }
 
-                            //create new Marker
-                            mapboxMap.addMarker(new MarkerOptions()
-                                    .position(actualPoint)
-                                    .title(getResources().getString(R.string.marker_title))
-                                    .snippet(getResources().getString(R.string.marker_snippet)));
 
                             //ROUTE
                             if (gpsPlay) {
@@ -414,7 +413,7 @@ public class MapActivity extends AppCompatActivity {
                                 // Draw Points on MapView
                                 mapboxMap.addPolyline(new PolylineOptions()
                                         .add(points)
-                                        .color(Color.parseColor(lineColor))
+                                        .color(Color.parseColor(routeColors.get(lineColor))) //!!!
                                         .width(lineWidth));
 
 
@@ -444,7 +443,7 @@ public class MapActivity extends AppCompatActivity {
                                         //draw Polygon
                                         mapboxMap.addPolygon(new PolygonOptions()
                                                 .addAll(polyPoints)
-                                                .fillColor(Color.parseColor(polygonColor)));
+                                                .fillColor(Color.parseColor(polygonColors.get(lineColor))));
 
                                         //call save
                                         saveButton.performClick();
@@ -506,18 +505,15 @@ public class MapActivity extends AppCompatActivity {
                 if (poly) {
                     mapboxMap.addPolygon(new PolygonOptions()
                             .addAll(myList)
-                            .fillColor(Color.parseColor(myColor)));
+                            .fillColor(Color.parseColor(polygonColors.get(lineColor))));
                 } else {
                     mapboxMap.addPolyline(new PolylineOptions()
                             .addAll(myList)
-                            .color(Color.parseColor(myColor))
+                            .color(Color.parseColor(routeColors.get(lineColor)))
                             .width(lineWidth));
                 }
-                Toast.makeText(MapActivity.this, "something drawed", Toast.LENGTH_SHORT).show();
-
             }
         });
-
     }
 
 
@@ -611,6 +607,17 @@ public class MapActivity extends AppCompatActivity {
                 finish();
             }
         },50);
+    }
+
+    private String getLocationString(LatLng latlng){
+        String sLat,sLon;
+        String[] help = latlng.toString().split(",");
+        double lat = Double.parseDouble(help[0].substring(17));
+        double lon = Double.parseDouble(help[1].substring(11));
+        if (lat>0) sLat=" N"; else sLat=" S";
+        if (lon>0) sLon=" O"; else sLon=" W";
+
+        return String.format("%.4f", Math.abs(lat))+sLat+"\n"+String.format("%.4f", Math.abs(lon))+sLon;
     }
 
 }
