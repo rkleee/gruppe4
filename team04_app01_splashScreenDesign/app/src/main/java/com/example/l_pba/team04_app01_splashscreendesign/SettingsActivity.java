@@ -8,6 +8,7 @@ package com.example.l_pba.team04_app01_splashscreendesign;
 /**
  * Android Imports
  */
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 //the SettingsActivity class
@@ -31,6 +33,10 @@ public class SettingsActivity extends PreferenceActivity
             //Android Shit
             super.onCreate(savedInstanceState);
             getListView().setBackgroundResource(R.drawable.settings_background);
+
+            //hide Actionbar on top of the Activity
+            ActionBar actionBar = getActionBar();
+            actionBar.hide();
 
             //add preferences to vision
             addPreferencesFromResource(R.xml.preferences);
