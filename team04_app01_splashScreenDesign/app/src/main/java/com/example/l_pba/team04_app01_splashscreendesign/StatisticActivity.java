@@ -19,8 +19,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.StringBufferInputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 public class StatisticActivity extends AppCompatActivity {
 
@@ -53,15 +56,6 @@ public class StatisticActivity extends AppCompatActivity {
         //getData from shared Preferences
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
 
-        /*--Example Datasets data and b--//
-        String[] test = {"data0","#ffff0000","data1",new LatLng(30.0,40.0).toString(),"data2",new LatLng(50.0,45.0).toString(),
-                "data3",new LatLng(10.0,60.0).toString(),"data4",new LatLng(60.0,50.0).toString(),"data5",new LatLng(70.0,70.0).toString(),
-                "data6",new LatLng(30.0,100.0).toString(),"b0","#ffff0000","b1",new LatLng(20.0,50.0).toString(),"b2",new LatLng(45.0,60.0).toString(),
-                "b3",new LatLng(50.0,100.0).toString(),"b4",new LatLng(60.0,75.0).toString(),"b5",new LatLng(70.0,70.0).toString(),
-                "b6",new LatLng(25.0,50.0).toString()};
-        String[] s = test.clone();
-        //--//
-        */
         final LinkedList<String> keyArray = new LinkedList<>();
         LinkedList<String> helpArray = new LinkedList<>();
 
@@ -70,38 +64,44 @@ public class StatisticActivity extends AppCompatActivity {
         //store all preferencepoints as Strings
         if(!preferences.getAll().isEmpty()) {
             String[] s = preferences.getAll().keySet().toArray(new String[0]);
+            //in String s are all datasetnames
 
-            int x = 0;
-            //store all data-names in keyArray
-            for (int i = 0; i < s.length; i += 2) {
-                if (s[i].charAt(0) == '#') continue;
-                helpArray.add(s[i].replaceAll("[0-9]", "")); //remove numbers
-                if (!keyArray.contains(helpArray.get(x))) {
-                    keyArray.add(helpArray.get(x)); //keyArray contains all Route names by String
+            int x=0;
+            //store all datanames in keyArray-List
+            for(int i=0; i < s.length; i++) {
+                if(s[i].charAt(0) == '#') continue;
+                helpArray.add(s[i].replaceAll("[0-9]","")); //remove numbers
+                if(!keyArray.contains(helpArray.get(x))) {
+                    keyArray.add(helpArray.get(x));
                 }
                 x++;
             }
 
             //fill Hashmap with Stringname and LatLng-List
-            HashMap<String, String> colorMap = new HashMap<>();
-            String name = "";
-            for (int j = 0; j < s.length; j += 2) {
-                name = s[j].substring(0, s[j].length() - 1);
-                if (name.charAt(0) == '#') continue;
-                if (s[j + 1].charAt(0) == '#') {
-                    //save colors in colorMap
-                    colorMap.put(name, s[j + 1]);
-                } else {
+            HashMap<String,String> colorMap = new HashMap<>();
+
+            Map<String,?> helper = new HashMap<>();
+            helper = preferences.getAll();
+            String name="";
+            String val = "";
+            for(int j=0; j < s.length; j++) {
+                name = s[j].replaceAll("[0-9]", ""); //datasetname
+                val = String.valueOf(helper.get(s[j])); //datavalue
+                if(name.charAt(0) == '#') continue;; //name is polygon
+                if(val.charAt(0)=='#') {    //value is color
+                    colorMap.put(name,val);
+                }else{
                     //save LatLng as value and datasetname as key in Map
-                    if (!map.containsKey(name)) {
+                    if(!map.containsKey(name)) {
                         LinkedList<LatLng> l = new LinkedList<>();
-                        l.add(StringtoLatLng(s[j + 1]));
-                        map.put(name, l);
-                    } else {
-                        map.get(name).add(StringtoLatLng(s[j + 1]));
+                        l.add(StringtoLatLng(val));
+                        map.put(name,l);
+                    }else{
+                        map.get(name).add(StringtoLatLng(val));
                     }
                 }
             }
+
 
             JSONArray arr;
             //Create JSONArrays and store in JSONobject
@@ -121,8 +121,9 @@ public class StatisticActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
         } else {
-            Toast.makeText(this, "preferences empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,R.string.no_stat_data, Toast.LENGTH_LONG).show();
         }
         //set Webview display
         webView = (WebView) findViewById(R.id.webView);

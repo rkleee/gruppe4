@@ -111,6 +111,7 @@
 
     <!-- Statistics Activity -->
     <string name="statistics">STATISTICS</string>
+    <string name="no_stat_data">No Data found to display.</string>>
 
     <!-- Information Activity -->
     <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a

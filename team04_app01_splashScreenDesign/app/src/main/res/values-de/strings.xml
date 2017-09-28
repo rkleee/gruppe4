@@ -13,6 +13,7 @@
     <string name="marker_title">Deine Position</string>
     <string name="name">Name</string>
     <string name="no_data">Keine Daten gefunden</string>
+    <string name="no_stat_data">Keine Daten zum Darstellen gespeichert.</string>>
     <string name="pause">Pausieren</string>
     <string name="play">Starten</string>
     <string name="preference_audio_title">Ton</string>
