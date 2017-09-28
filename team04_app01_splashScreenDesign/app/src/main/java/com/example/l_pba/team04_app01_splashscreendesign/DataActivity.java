@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +27,6 @@ import java.util.LinkedList;
 
 public class DataActivity extends AppCompatActivity {
 
-    private Button delete;
     private Button show;
 
     private ListView listView;
@@ -54,9 +55,7 @@ public class DataActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Buttons
-        delete = (Button) findViewById(R.id.deleteButton);
         show = (Button) findViewById(R.id.showButton);
-
 
         //Load data
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
@@ -68,7 +67,7 @@ public class DataActivity extends AppCompatActivity {
         final HashMap<Integer, Boolean> clickedMap = new HashMap<>();
         listView = (ListView) findViewById(R.id.ListView);
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, caption));
-        //registerForContextMenu(listView);
+        registerForContextMenu(listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,32 +95,6 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
-
-        //Buttons
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String [] helpselected = selectedItem.toArray(new String[0]);
-                for (int i=0; i<prefArray.length; i++){
-                    for (int j=0; j<helpselected.length; j++) {
-                        if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(helpselected[j])) {
-                            editor.remove(prefArray[i]);
-                            break;
-                        }
-                    }
-                }
-                editor.commit();
-
-                Toast.makeText(DataActivity.this, "Route deleted", Toast.LENGTH_SHORT).show();
-
-                //update listview
-                selectedItem.clear();
-                GetCaption();
-                listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
-            }
-        });
-
-
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,11 +104,7 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
-
-
 
     private void GetCaption(){
         String[] empty = new String[]{}; //String if preferences.isEmpty
@@ -158,6 +127,60 @@ public class DataActivity extends AppCompatActivity {
         }
     }
 
+    public void onCreateContextMenu(ContextMenu menu, android.view.View v, ContextMenu.ContextMenuInfo menuinfo) {
+
+        super.onCreateContextMenu(menu, v, menuinfo);
+
+        menu.setHeaderTitle("Select the action");
+        menu.add(0, v.getId(), 0, "Delete");
+        menu.add(0, v.getId(), 0, "Rename");
+    }
+
+
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int listPosition = info.position;
+        String longItem = allItems.get(listPosition);
+
+        if (item.getTitle()=="Delete") {
+            for (int i=0; i<prefArray.length; i++){
+                if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(longItem)) {
+                    editor.remove(prefArray[i]);
+                }
+            }
+
+            editor.commit();
+
+            Toast.makeText(DataActivity.this, "Route deleted", Toast.LENGTH_SHORT).show();
+
+            //update listview
+            GetCaption();
+            listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
+
+        } else if (item.getTitle()=="Rename") {
+
+
+
+
+            String input = "hi";
+            for (int i=0; i<prefArray.length; i++){
+                if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(longItem)) {
+                    String extra = prefArray[i].replaceAll("[^\\d.]", "");
+                    String key = input + extra;
+                    String copy = preferences.getString(prefArray[i], "");
+                    editor.remove(prefArray[i]);
+                    editor.putString(key, copy);
+                }
+            }
+
+            editor.commit();
+
+            //update listview
+            GetCaption();
+            listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
+        }
+        return true;
+    }
 
     @Override
     public void onBackPressed() {

@@ -20,20 +20,6 @@
         app:layout_constraintHorizontal_bias="0.0" />
 
     <Button
-        android:id="@+id/deleteButton"
-        android:text="@string/delete"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/ListView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/showButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/data_button"/>
-
-    <Button
         android:id="@+id/showButton"
         android:text="@string/show"
         android:layout_width="150dp"
