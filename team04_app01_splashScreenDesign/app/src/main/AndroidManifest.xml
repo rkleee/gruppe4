@@ -28,8 +28,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/PreferenceScreen"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/PreferenceScreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.l_pba.team04_app01_splashscreendesign.HomeActivity" />
@@ -41,6 +41,7 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".RenameActivity"></activity>
     </application>
 
 </manifest>

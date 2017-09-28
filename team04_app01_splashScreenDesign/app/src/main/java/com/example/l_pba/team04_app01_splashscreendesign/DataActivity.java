@@ -42,6 +42,7 @@ public class DataActivity extends AppCompatActivity {
 
     String selectedColor = "#ffff0000"; //red
 
+    String longItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,27 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
+        //rename
+        if(getIntent().hasExtra("newName") == true) {
+            String input = getIntent().getExtras().getString("newName", "");
+            longItem = getIntent().getExtras().getString("longItem", "");
+            for (int i=0; i<prefArray.length; i++){
+                if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(longItem)) {
+                    String extra = prefArray[i].replaceAll("[^\\d.]", "");
+                    String key = input + extra;
+                    String copy = preferences.getString(prefArray[i], "");
+                    editor.remove(prefArray[i]);
+                    editor.putString(key, copy);
+                }
+            }
+
+            editor.commit();
+
+            //update listview
+            GetCaption();
+            listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
+        }
+
     }
 
     private void GetCaption(){
@@ -140,7 +162,7 @@ public class DataActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item){
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int listPosition = info.position;
-        String longItem = allItems.get(listPosition);
+        longItem = allItems.get(listPosition);
 
         if (item.getTitle()=="Delete") {
             for (int i=0; i<prefArray.length; i++){
@@ -159,25 +181,10 @@ public class DataActivity extends AppCompatActivity {
 
         } else if (item.getTitle()=="Rename") {
 
+            Intent ren = new Intent(DataActivity.this,RenameActivity.class);
+            ren.putExtra("longItem", longItem);
+            startActivity(ren);
 
-
-
-            String input = "hi";
-            for (int i=0; i<prefArray.length; i++){
-                if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(longItem)) {
-                    String extra = prefArray[i].replaceAll("[^\\d.]", "");
-                    String key = input + extra;
-                    String copy = preferences.getString(prefArray[i], "");
-                    editor.remove(prefArray[i]);
-                    editor.putString(key, copy);
-                }
-            }
-
-            editor.commit();
-
-            //update listview
-            GetCaption();
-            listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
         }
         return true;
     }
@@ -194,5 +201,4 @@ public class DataActivity extends AppCompatActivity {
             }
         },50);
     }
-
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.l_pba.team04_app01_splashscreendesign.RenameActivity">
+
+    <EditText
+        android:id="@+id/nntV"
+        android:layout_width="374dp"
+        android:layout_height="84dp"
+        android:hint="Neuer Name"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/savebtn2"
+        android:layout_width="134dp"
+        android:layout_height="73dp"
+        android:text="Save"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/nntV"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="5dp" />
+
+    <Button
+        android:id="@+id/backbtn"
+        android:layout_width="134dp"
+        android:layout_height="73dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="@+id/savebtn2"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/nntV"
+        app:layout_constraintLeft_toRightOf="@+id/savebtn2"
+        android:layout_marginLeft="106dp"
+        app:layout_constraintVertical_bias="0.0" />
+</android.support.constraint.ConstraintLayout>
