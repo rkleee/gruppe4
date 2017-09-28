@@ -40,7 +40,7 @@ public class DataActivity extends AppCompatActivity {
 
     private ConstraintLayout cL;
 
-    String selectedColor = "#ffff0000"; //red
+    String selectedColor = "#ff6e7b8b"; //red
 
     String longItem;
 
