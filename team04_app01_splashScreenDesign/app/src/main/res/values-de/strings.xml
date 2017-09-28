@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MC Route</string>
+    <string name="back">Zurück</string>
     <string name="creators_text">Entwickelt von:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
     <string name="delete">Löschen</string>
@@ -13,10 +14,10 @@
     <string name="marker_title">Deine Position</string>
     <string name="name">Name</string>
     <string name="no_data">Keine Daten gefunden</string>
+    <string name="no_stat_data">Keine Daten zum Darstellen gespeichert.</string>>
     <string name="pause">Pausieren</string>
     <string name="play">Starten</string>
     <string name="preference_audio_title">Ton</string>
-    <string name="preference_audio_key">audio</string>
     <string name="preference_audio_offSummary">Ton deaktiviert</string>
     <string name="preference_audio_onSummary">Ton aktiviert</string>
     <string name="preference_language_summary">Deutsch</string>

@@ -18,14 +18,14 @@
     <!-- Settings Activity -->
     <string name="title_activity_settings">Settings</string>
     <!-- Language -->
-    <string name="preference_language_title" translatable="false">Your System-Language is:</string>
+    <string name="preference_language_title">Your System-Language is:</string>
     <string name="preference_language_key" translatable="false">language</string>
-    <string name="preference_language_summary" translatable="false">English</string>
+    <string name="preference_language_summary">English</string>
     <!-- Audio Settings -->
-    <string name="preference_audio_title" translatable="false">Sound</string>
+    <string name="preference_audio_title">Sound</string>
     <string name="preference_audio_key" translatable="false">audio</string>
-    <string name="preference_audio_onSummary" translatable="false">Sound enabled</string>
-    <string name="preference_audio_offSummary" translatable="false">Sound disabled</string>
+    <string name="preference_audio_onSummary">Sound enabled</string>
+    <string name="preference_audio_offSummary">Sound disabled</string>
     <!-- GPS Ping -->
     <string name="preference_ping_title" translatable="false">GPS Ping in ms</string>
     <string name="preference_ping_key" translatable="false">ping</string>
@@ -111,6 +111,7 @@
 
     <!-- Statistics Activity -->
     <string name="statistics">STATISTICS</string>
+    <string name="no_stat_data">No Data found to display.</string>>
 
     <!-- Information Activity -->
     <string name="informationtext">Welcome to MC ROUTE.\n The "MC ROUTE"-App is a
@@ -127,5 +128,7 @@
 
     <!-- Dialog Alert -->
     <string name="name">name</string>
+    <string name="back">Back</string>
+    <string name="savings">Speicherungen</string>
 
 </resources>
