@@ -217,16 +217,30 @@ public class MapActivity extends AppCompatActivity {
         //Die DataActivity übergibt ein String[], indem die namen aller zu ladenden routen steht
         //HomeActivity übergibt dann ein leeres StringArray, sd. keine Route geladen wird
 
-        //  Polygon: #name0 = ff... ; #name1 = LatLng ; ...LatLng
+        //  Polygon: #name0 = #ff... ; #name1 = LatLng ; #name2 = LatLng; ....
         //  Route:   name0 = ff.... ; ....
 
 
         String[] loading = getIntent().getExtras().getStringArray("Items");
-        String[] keyArray = preferences.getAll().keySet().toArray(new String[0]);
+        final String[] keyArray;
+        if (preferences.getAll().isEmpty()){
+            keyArray = new String[]{};
+        } else {
+            keyArray = preferences.getAll().keySet().toArray(new String[0]);
+        }
+
         LinkedList<LatLng> helpList = new LinkedList<>();
 
         Arrays.sort(keyArray);
         boolean polygon = false;
+
+        final LinkedList<String> routeNames = new LinkedList<>();
+        for (int i=0; i<keyArray.length; i++){
+            String key = keyArray[i].replaceAll("[0-9]","").replace("#","");
+            if (!routeNames.contains(key)){
+                routeNames.add(key);
+            }
+        }
 
         for (String s : loading){
             Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
@@ -281,75 +295,96 @@ public class MapActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Pause search
-                playButton.performClick();
+
+                if (!routePoints.isEmpty()) {
+                    //Pause search
+                    playButton.performClick();
 
 
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialog_alert,null);
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapActivity.this);
+                    View mView = getLayoutInflater().inflate(R.layout.dialog_alert, null);
 
-                mName = (EditText) mView.findViewById(R.id.et2);
-                mRoute = (CheckBox) mView.findViewById(R.id.checkBox);
-                mPolygon = (CheckBox) mView.findViewById(R.id.checkBox2);
-                mSave = (Button) mView.findViewById(R.id.savebtn);
-                mCancel = (Button) mView.findViewById(R.id.cancelbtn);
+                    mName = (EditText) mView.findViewById(R.id.et2);
+                    mRoute = (CheckBox) mView.findViewById(R.id.checkBox);
+                    mPolygon = (CheckBox) mView.findViewById(R.id.checkBox2);
+                    mSave = (Button) mView.findViewById(R.id.savebtn);
+                    mCancel = (Button) mView.findViewById(R.id.cancelbtn);
 
-                if (!polyPoints.isEmpty()) {mPolygon.setChecked(true);}
+                    if (!polyPoints.isEmpty()) {
+                        mPolygon.setChecked(true);
+                        mPolygon.setEnabled(false);
+                    }
 
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
+                    mBuilder.setView(mView);
+                    final AlertDialog dialog = mBuilder.create();
+                    dialog.show();
 
-                mSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(!mName.getText().toString().isEmpty()&& (mRoute.isChecked()||mPolygon.isChecked())){
+                    mSave.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (!mName.getText().toString().isEmpty() && (mRoute.isChecked() || mPolygon.isChecked())) {
 
-                            if (mRoute.isChecked()){
-                                editor.putString(mName.getText().toString()+"0000", routeColors.get(lineColor));
-                                for (int i=0; i < routePoints.size(); i++) {
-                                    String Key = mName.getText().toString()+String.format("%04d", i+1);
-                                    String Data = routePoints.get(i).toString();
-                                    editor.putString(Key, Data);
+                                String name = mName.getText().toString().replaceAll("[0-9]", "").replace("#", "");
+
+                                if (!routeNames.contains(name)) {
+                                    if (!mName.getText().toString().equals(name)) {
+                                        Toast.makeText(MapActivity.this, "numbers and '#' were removed", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    if (mRoute.isChecked()) {
+                                        editor.putString(name + "0000", routeColors.get(lineColor));
+                                        for (int i = 0; i < routePoints.size(); i++) {
+                                            String Key = name + String.format("%04d", i + 1);
+                                            String Data = routePoints.get(i).toString();
+                                            editor.putString(Key, Data);
+                                        }
+                                        editor.commit();
+
+                                        allRoutes.add(routePoints);
+                                        routeNames.add(name);
+                                        Toast.makeText(MapActivity.this, "Route saved", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if (mPolygon.isChecked()) {
+                                        editor.putString("#" + name + "0000", polygonColors.get(polygonColor));
+                                        for (int i = 0; i < polyPoints.size(); i++) {
+                                            String Key = "#" + name + String.format("%04d", i + 1);
+                                            String Data = polyPoints.get(i).toString();
+                                            editor.putString(Key, Data);
+                                        }
+                                        editor.commit();
+                                        Toast.makeText(MapActivity.this, "Polygon saved", Toast.LENGTH_SHORT).show();
+
+                                        //clear polyPoints for next polygon and add it
+                                        allPolygons.add(polyPoints);
+                                        polyPoints.clear();
+                                        polyCountPoints = 0;
+                                    }
+
+                                    dialog.cancel();
+                                } else {
+                                    Toast.makeText(MapActivity.this, name + " already exists", Toast.LENGTH_SHORT).show();
                                 }
-                                editor.commit();
-                                Toast.makeText(MapActivity.this, "Route saved", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MapActivity.this, "please fill any empty fields", Toast.LENGTH_SHORT).show();
                             }
-                            if (mPolygon.isChecked()){
-                                editor.putString("#"+mName.getText().toString()+"0000", polygonColors.get(polygonColor));
-                                for (int i=0; i < polyPoints.size(); i++) {
-                                    String Key = "#"+mName.getText().toString()+String.format("%04d", i+1);
-                                    String Data = polyPoints.get(i).toString();
-                                    editor.putString(Key, Data);
-                                }
-                                editor.commit();
-                                Toast.makeText(MapActivity.this, "Polygon saved", Toast.LENGTH_SHORT).show();
 
-                                //clear polyPoints for next polygon and add it
-                                allPolygons.add(polyPoints);
-                                polyPoints.clear();
-                                polyCountPoints = 0;
-                            }
+                        }
+                    });
+
+                    mCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //clear polyPoints for next polygon
+                            polyPoints.clear();
+                            polyCountPoints = 0;
+                            Toast.makeText(MapActivity.this, "polyPoints cleared", Toast.LENGTH_SHORT).show();
 
                             dialog.cancel();
-                        }else {
-                            Toast.makeText(MapActivity.this, "please fill any empty fields", Toast.LENGTH_SHORT).show();
                         }
-
-                    }
-                });
-
-                mCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //clear polyPoints for next polygon
-                        polyPoints.clear();
-                        polyCountPoints = 0;
-                        Toast.makeText(MapActivity.this, "polyPoints cleared", Toast.LENGTH_SHORT).show();
-
-                        dialog.cancel();
-                    }
-                });
+                    });
+                } else {
+                    Toast.makeText(MapActivity.this, "nothing to save", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -504,11 +539,11 @@ public class MapActivity extends AppCompatActivity {
                 if (poly) {
                     mapboxMap.addPolygon(new PolygonOptions()
                             .addAll(myList)
-                            .fillColor(Color.parseColor(polygonColors.get(lineColor))));
+                            .fillColor(Color.parseColor(myColor)));
                 } else {
                     mapboxMap.addPolyline(new PolylineOptions()
                             .addAll(myList)
-                            .color(Color.parseColor(routeColors.get(lineColor)))
+                            .color(Color.parseColor(myColor))
                             .width(lineWidth));
                 }
             }
