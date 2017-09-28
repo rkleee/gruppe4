@@ -12,6 +12,7 @@
     <SwitchPreference
         android:key="@string/preference_audio_key"
         android:title="@string/preference_audio_title"
+        android:defaultValue="true"
         android:summaryOn="@string/preference_audio_onSummary"
         android:summaryOff="@string/preference_audio_offSummary"/>
 

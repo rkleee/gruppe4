@@ -140,17 +140,17 @@ public class MapActivity extends AppCompatActivity {
     private static final Map<String, String> polygonColors;
     static {
         Map<String, String> aMap = new HashMap<>();
-        aMap.put("black",       "#7f000000");
-        aMap.put("red",         "#7fff0000");
-        aMap.put("green",       "#7f00ff00");
-        aMap.put("blue",        "#7f0000ff");
-        aMap.put("yellow",      "#7fffff00");
-        aMap.put("magenta",     "#7fff00ff");
-        aMap.put("cyan",        "#7f00ffff");
-        aMap.put("white",       "#7fffffff");
-        aMap.put("grey",        "#7f7f7f7f");
-        aMap.put("lightgrey",   "#7fd3d3d3");
-        aMap.put("silver",      "#7fc0c0c0");
+        aMap.put("black",       "#4f000000");
+        aMap.put("red",         "#4fff0000");
+        aMap.put("green",       "#4f00ff00");
+        aMap.put("blue",        "#4f0000ff");
+        aMap.put("yellow",      "#4fffff00");
+        aMap.put("magenta",     "#4fff00ff");
+        aMap.put("cyan",        "#4f00ffff");
+        aMap.put("white",       "#4fffffff");
+        aMap.put("grey",        "#4f7f7f7f");
+        aMap.put("lightgrey",   "#4fd3d3d3");
+        aMap.put("silver",      "#4fc0c0c0");
         polygonColors = Collections.unmodifiableMap(aMap);
     }
 
