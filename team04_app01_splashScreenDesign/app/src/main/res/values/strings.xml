@@ -5,6 +5,11 @@
     <!-- Map Activity -->
     <string name="marker_title">Your Position</string>
     <string name="marker_snippet">You are here</string>
+    <string name="go">Go</string>
+    <string name="stop">Stop</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="save">Save</string>
 
     <!-- Home Activity -->
     <string name="welcome">Welcome</string>
