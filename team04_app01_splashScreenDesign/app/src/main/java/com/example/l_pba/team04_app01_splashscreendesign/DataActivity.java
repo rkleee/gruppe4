@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -37,6 +39,8 @@ public class DataActivity extends AppCompatActivity {
 
     private ConstraintLayout cL;
 
+    String selectedColor = "#ffff0000"; //red
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,8 @@ public class DataActivity extends AppCompatActivity {
         //set Backgroundcolor for DataActivity
         cL = (ConstraintLayout) findViewById(R.id.cL);
         cL.setBackgroundResource(R.drawable.data_background);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //Buttons
         delete = (Button) findViewById(R.id.deleteButton);
         show = (Button) findViewById(R.id.showButton);
@@ -61,12 +65,27 @@ public class DataActivity extends AppCompatActivity {
         GetCaption();
 
         //Listview
-
+        final HashMap<Integer, Boolean> clickedMap = new HashMap<>();
         listView = (ListView) findViewById(R.id.ListView);
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, caption));
+        //registerForContextMenu(listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Selected Color
+                if(!clickedMap.containsKey(position)) {
+                    clickedMap.put(position, true); //insert new input
+                } else { //change settings
+                    if (clickedMap.get(position)) {
+                        clickedMap.put(position, false);
+                    } else {
+                        clickedMap.put(position, true);
+                    }
+                }
+                if (clickedMap.get(position)) parent.getChildAt(position).setBackgroundColor(Color.parseColor(selectedColor)); //set selected color
+                else parent.getChildAt(position).setBackgroundColor(Color.parseColor("#00000000")); //set transparent default color
+
+                //functionality
                 if (!selectedItem.contains(allItems.get(position))){
                     selectedItem.add(allItems.get(position));
                     Toast.makeText(DataActivity.this, allItems.get(position)+" picked", Toast.LENGTH_SHORT).show();
