@@ -18,7 +18,6 @@
     <string name="pause">Pausieren</string>
     <string name="play">Starten</string>
     <string name="preference_audio_title">Ton</string>
-    <string name="preference_audio_key">audio</string>
     <string name="preference_audio_offSummary">Ton deaktiviert</string>
     <string name="preference_audio_onSummary">Ton aktiviert</string>
     <string name="preference_language_summary">Deutsch</string>
