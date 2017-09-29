@@ -14,6 +14,7 @@
     <string name="marker_snippet">Du bist hier</string>
     <string name="marker_title">Deine Position</string>
     <string name="name">Name</string>
+    <string name="new_name">Neuen Namen einfügen</string>
     <string name="no_data">Keine Daten gefunden</string>
     <string name="no_stat_data">Keine Daten zum Darstellen gespeichert.</string>>
     <string name="pause">Pausieren</string>
@@ -25,6 +26,7 @@
     <string name="preference_language_title">Ihre Systemsprache ist:</string>
     <string name="preference_polygon_color_title">Polygon Farbe</string>
     <string name="preference_route_color_title">Farbe der Route</string>
+    <string name="rename_data">Umbenennung</string>
     <string name="save">Speichern</string>
     <string name="savings">Speicherungen</string>
     <string name="show">Anzeigen</string>

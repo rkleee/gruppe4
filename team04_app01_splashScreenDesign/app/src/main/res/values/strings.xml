@@ -132,7 +132,9 @@
 
     <!-- Dialog Alert -->
     <string name="name">Name</string>
+    <string name="new_name">Enter new name here</string>
     <string name="back">Back</string>
     <string name="savings">Savings</string>
+    <string name="rename_data">Rename my Dataset</string>
 
 </resources>
