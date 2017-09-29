@@ -9,7 +9,6 @@ package com.example.l_pba.team04_app01_splashscreendesign;
  * Android Imports
  */
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -50,7 +49,6 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 /**
  * Util Imports
  */
-import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -211,19 +209,11 @@ public class MapActivity extends AppCompatActivity {
          */
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
         editor = preferences.edit();
+
         /**
          * loading Routes/Polygons
          */
-        //über alle keys sollen nun die latlng ausgelesen und in allRoute/allPolygon abgespeichert werden
-        //Die DataActivity übergibt ein String[], indem die namen aller zu ladenden routen steht
-        //HomeActivity übergibt dann ein leeres StringArray, sd. keine Route geladen wird
-
-        //  Polygon: #name0 = #ff... ; #name1 = LatLng ; #name2 = LatLng; ....
-        //  Route:   name0 = ff.... ; ....
-
-
-        String[] loading = getIntent().getExtras().getStringArray("Items");
-        final String[] keyArray;
+        final String[] keyArray;       //List of all Keys
         if (preferences.getAll().isEmpty()){
             keyArray = new String[]{};
         } else {
@@ -243,6 +233,8 @@ public class MapActivity extends AppCompatActivity {
             }
         }
 
+        //Get StringArray of all selected Routes/Polys to load and extract the LatLng to draw them
+        String[] loading = getIntent().getExtras().getStringArray("Items");
         for (String s : loading){
             Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
             String color = "";
@@ -308,7 +300,6 @@ public class MapActivity extends AppCompatActivity {
         });
 
         //Button to save the Routes and Polygons
-
         saveButton = (ImageButton) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -317,7 +308,6 @@ public class MapActivity extends AppCompatActivity {
                 if (!routePoints.isEmpty()) {
                     //Pause search
                     playButton.performClick();
-
 
                     AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapActivity.this);
                     View mView = getLayoutInflater().inflate(R.layout.dialog_alert, null);
