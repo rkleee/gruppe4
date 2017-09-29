@@ -534,9 +534,11 @@ public class MapActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
-
-
-
+    /**
+     * @param list LinkedList, all points of a route, that should be drawed
+     * @param color String of the Color of the Route
+     * @param poly Boolean is true, when list is a polygon
+     */
     private void draw(final LinkedList<LatLng> list , final String color, final Boolean poly) {
         final LinkedList<LatLng> myList = new LinkedList<>(list);
         final String myColor = new String(color);
@@ -651,9 +653,13 @@ public class MapActivity extends AppCompatActivity {
         },50);
     }
 
-    private String getLocationString(LatLng latlng){
+    /**
+     * @param latLng LatLng
+     * @return String of the latlng
+     */
+    private String getLocationString(LatLng latLng){
         String sLat,sLon;
-        String[] help = latlng.toString().split(",");
+        String[] help = latLng.toString().split(",");
         double lat = Double.parseDouble(help[0].substring(17));
         double lon = Double.parseDouble(help[1].substring(11));
         if (lat>0) sLat=" N"; else sLat=" S";
