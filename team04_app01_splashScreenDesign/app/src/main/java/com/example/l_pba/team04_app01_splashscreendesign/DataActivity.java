@@ -188,7 +188,7 @@ public class DataActivity extends AppCompatActivity {
 
         super.onCreateContextMenu(menu, v, menuinfo);
 
-        menu.setHeaderTitle("Select the action");
+        menu.setHeaderTitle(R.string.context_menu_header);
         menu.add(0, v.getId(), 0, "Delete");
         menu.add(0, v.getId(), 0, "Rename");
     }

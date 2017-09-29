@@ -126,10 +126,13 @@
     <string name="show">Show</string>
     <string name="no_data">No Data found</string>
     <string name="stored_data">My stored Routes and Polygons</string>
+    <string name="context_menu_header">Select the action</string>
+    <string name="context_menu_delete">Delete</string>
+    <string name="context_menu_rename">Rename</string>
 
     <!-- Dialog Alert -->
-    <string name="name">name</string>
+    <string name="name">Name</string>
     <string name="back">Back</string>
-    <string name="savings">Speicherungen</string>
+    <string name="savings">Savings</string>
 
 </resources>

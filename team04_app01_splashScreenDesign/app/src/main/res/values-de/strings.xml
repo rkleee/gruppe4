@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">MC Route</string>
     <string name="back">Zurück</string>
+    <string name="context_menu_header">Wähle deine Aktion</string>
     <string name="creators_text">Entwickelt von:
         \n\n Rebecca \n Lisa-Patricia \n Peter \n Jan\n Damian </string>
     <string name="delete">Löschen</string>
@@ -25,6 +26,7 @@
     <string name="preference_polygon_color_title">Polygon Farbe</string>
     <string name="preference_route_color_title">Farbe der Route</string>
     <string name="save">Speichern</string>
+    <string name="savings">Speicherungen</string>
     <string name="show">Anzeigen</string>
     <string name="statistics">STATISTIKEN</string>
     <string name="stop">Aufnahme gestoppt</string>
