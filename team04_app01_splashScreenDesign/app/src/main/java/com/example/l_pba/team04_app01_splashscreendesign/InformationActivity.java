@@ -6,17 +6,15 @@
 package com.example.l_pba.team04_app01_splashscreendesign;
 
 /**
- * Necessary Imports
+ * Android Imports
  */
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Handler;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,10 +23,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
- * InformationActivity to display Appinformation
+ * InformationActivity to display the Appinformation
  */
 public class InformationActivity extends AppCompatActivity {
 
+    /**Declarate XML-Readings**/
     private ConstraintLayout cL;
     private ImageButton infoBtn;
     private Button secretButton;
@@ -38,12 +37,12 @@ public class InformationActivity extends AppCompatActivity {
     private int informationColor = Color.parseColor("#E6fffacd"); //BackgroundColor
 
     @Override
+    /**
+     * @param savedInstanceState : Bundle
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
-
-        //set ScreenOrientation
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //rotate Animation of the Information-Button
         final Animation anim = AnimationUtils.loadAnimation(this,R.anim.animation);
@@ -98,6 +97,9 @@ public class InformationActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * onBackPressed to return to HomeActivity
+     */
     @Override
     public void onBackPressed() {
         new Handler().postDelayed(new Runnable() {

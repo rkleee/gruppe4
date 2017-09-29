@@ -13,7 +13,7 @@
         android:icon="@mipmap/ic_mcroute"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".InformationActivity" />
-        <activity android:name=".DataActivity" />
+        <activity android:name=".DataActivity"/>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -41,7 +41,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".RenameActivity"></activity>
     </application>
 
 </manifest>

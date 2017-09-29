@@ -1,9 +1,20 @@
+/**
+ * @author group04
+ * @version 1.0
+ * JacascriptInterface, to allow communication between java and javascript
+ */
 package com.example.l_pba.team04_app01_splashscreendesign;
 
+/**
+ * Necessary Imports for Interface
+ */
 import android.content.Context;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+/**
+ * JacascriptInterface for Communication
+ */
 public class JavaScriptInterface {
     Context mContext;
 

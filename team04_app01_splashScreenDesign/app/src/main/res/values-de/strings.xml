@@ -28,6 +28,7 @@
     <string name="show">Anzeigen</string>
     <string name="statistics">STATISTIKEN</string>
     <string name="stop">Aufnahme gestoppt</string>
+    <string name="stored_data">Meine gespeicherten Datensätze</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="welcome">Willkommen</string>
 

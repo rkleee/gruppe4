@@ -49,31 +49,35 @@ public class SplashActivity extends AppCompatActivity {
         String prefAudioKey = getString(R.string.preference_audio_key);
         Boolean audio = sPrefs.getBoolean(prefAudioKey, true);
 
+        //set ScreenOrientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         /**
-         * Layout Shit
+         * Layout initialize
          */
         cL = (ConstraintLayout) findViewById(R.id.constraintLayout);
         cL.setBackgroundResource(images[0]); //first image
 
-        //set ScreenOrientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //start MusicBackgroundService if audio-setting is on
         if (audio) startService(new Intent(this,MusicBackgroundService.class));
+
         //flipbook implementation
         new CountDownTimer(3900, 300) {
             int i = 1; //get the right image of the images[]
             public void onTick(long millisUntilFinished) {
                 cL.setBackgroundResource(images[i]);
                 i++;
-                //This is when you click on each tick it came here after 300 millisecond
             }
 
             public void onFinish() {
                 cL.setBackgroundResource(images[11]); //last image
+                //stop playing Music
                 stopService(new Intent(SplashActivity.this, MusicBackgroundService.class));
+                //Open HomeActivity for Userinteraction
                 Intent homeIntent = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(homeIntent);
                 finish();
-                // After the time of 3900 is over so here can change image
             }
         }.start();
     }

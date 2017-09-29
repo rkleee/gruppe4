@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 /**
@@ -63,7 +64,7 @@ import java.util.Map;
  */
 public class MapActivity extends AppCompatActivity {
     private MapView mapView;
-    private Button saveButton, playButton;
+    private ImageButton saveButton, playButton, dataButton;
     private EditText mName;
     private CheckBox mRoute;
     private CheckBox mPolygon;
@@ -272,18 +273,35 @@ public class MapActivity extends AppCompatActivity {
         /**
          * BUTTONS
          */
+        //Button to switch to DataActivity
+        dataButton = (ImageButton) findViewById(R.id.databtn);
+        dataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent backIntent = new Intent(MapActivity.this, DataActivity.class);
+                        startActivity(backIntent);
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        finish();
+                    }
+                }, 50);
+            }
+        });
+
         //Button to start the Route record
-        playButton = (Button) findViewById(R.id.playButton);
+        playButton = (ImageButton) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!gpsPlay){
                     gpsPlay = true;
-                    playButton.setText(R.string.pause);
+                    playButton.setImageResource(R.drawable.pauseic);
                     Toast.makeText(MapActivity.this, R.string.go, Toast.LENGTH_SHORT).show();
                 } else {
                     gpsPlay = false;
-                    playButton.setText(R.string.play);
+                    playButton.setImageResource(R.drawable.playicon3);
                     Toast.makeText(MapActivity.this, R.string.stop, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -291,7 +309,7 @@ public class MapActivity extends AppCompatActivity {
 
         //Button to save the Routes and Polygons
 
-        saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton = (ImageButton) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

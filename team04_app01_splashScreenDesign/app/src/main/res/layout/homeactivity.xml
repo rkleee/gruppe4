@@ -26,7 +26,7 @@
     <!-- image moves -->
     <com.gjiazhe.panoramaimageview.PanoramaImageView
         android:id="@+id/panorama_image_view"
-        android:src="@drawable/newyork02"
+        android:src="@drawable/homemapbtn"
         android:layout_width="404dp"
         android:layout_height="261dp"
         app:piv_enablePanoramaMode="true"
@@ -167,10 +167,12 @@
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintTop_toBottomOf="@+id/textViewWelcome"
         app:layout_constraintBottom_toTopOf="@+id/secretButton" />
+
+    <!--Displays "START" on the panoramiqueView-->
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="346dp"
-        android:layout_height="236dp"
+        android:layout_width="369dp"
+        android:layout_height="239dp"
         app:srcCompat="@drawable/startic"
         app:layout_constraintTop_toTopOf="@+id/panorama_image_view"
         android:layout_marginTop="8dp"
@@ -178,8 +180,9 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="@+id/mapbutton"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="@+id/mapbutton"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="8dp" />
 </android.support.constraint.ConstraintLayout>

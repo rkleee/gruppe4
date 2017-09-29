@@ -30,7 +30,7 @@
     <!-- image moves -->
     <com.gjiazhe.panoramaimageview.PanoramaImageView
         android:id="@+id/panorama_image_view"
-        android:src="@drawable/newyork02"
+        android:src="@drawable/homemapbtn"
         android:layout_width="262dp"
         android:layout_height="389dp"
         app:piv_enablePanoramaMode="true"

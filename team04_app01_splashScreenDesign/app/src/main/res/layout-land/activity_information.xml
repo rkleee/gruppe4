@@ -83,27 +83,6 @@
         app:layout_constraintVertical_bias="1.0"
         app:layout_constraintHorizontal_bias="0.502" />
 
-    <!-- Displays Informationtext -->
-    <TextView
-        android:id="@+id/informationtext"
-        android:layout_width="320dp"
-        android:layout_height="207dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:fontFamily="casual"
-        android:text="@string/informationtext"
-        android:textAlignment="center"
-        android:textColor="@color/cardview_dark_background"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.882"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="45dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.02" />
-
     <!-- Displays AppVersion -->
     <TextView
         android:id="@+id/appversion"
@@ -123,6 +102,41 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/secretButton"
+        app:layout_constraintLeft_toRightOf="@+id/infoButton"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="0.0">
+        <!-- Displays Informationtext -->
+        <TextView
+            android:id="@+id/informationtext"
+            android:layout_width="320dp"
+            android:layout_height="207dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="45dp"
+            android:fontFamily="casual"
+            android:text="@string/informationtext"
+            android:textAlignment="center"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.882"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.02" />
+    </ScrollView>
 
     <!-- Displays Information-Text -->
 

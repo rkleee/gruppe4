@@ -1,12 +1,14 @@
+/**
+ * @author group04
+ * @version 1.0
+ * HomeActivity, the focus Activity of the app
+ */
 package com.example.l_pba.team04_app01_splashscreendesign;
-
 
 /**
  * Android Imports
  */
-
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -18,24 +20,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.gjiazhe.panoramaimageview.GyroscopeObserver;
-import com.gjiazhe.panoramaimageview.PanoramaImageView;
-import com.hitomi.cmlibrary.CircleMenu;
-import com.hitomi.cmlibrary.OnMenuSelectedListener;
-import com.mapbox.mapboxsdk.geometry.LatLng;
 
 /**
  * Gjiazhe Imports for PanoramaImage at the Start-/MapButton
- * <p>
- * Hitomi Imports for CircleMenu
  */
+import com.gjiazhe.panoramaimageview.GyroscopeObserver;
+import com.gjiazhe.panoramaimageview.PanoramaImageView;
+
 /**
  * Hitomi Imports for CircleMenu
  */
-
-
+import com.hitomi.cmlibrary.CircleMenu;
+import com.hitomi.cmlibrary.OnMenuSelectedListener;
 
 /**
  * HomeActivity to go to other Activities
@@ -51,24 +47,18 @@ public class HomeActivity extends AppCompatActivity {
     private CircleMenu circleMenu; //circleMenu
 
     private int circleMenuColor = Color.parseColor("#99ffffff");
-    private int settingsColor = Color.parseColor("#E6a6daef"); //blue-ffc1e3ff
-    private int dataColor = Color.parseColor("#E6f4858e"); //red-ffffa0a0
-    private int informationColor = Color.parseColor("#E6fffacd"); //yellow-ffe8ffda
-    private int statisticColor = Color.parseColor("#E6eeeeee"); //grey-eeeeee
+    private int settingsColor = Color.parseColor("#E6a6daef"); //blue
+    private int dataColor = Color.parseColor("#E6f4858e"); //red
+    private int informationColor = Color.parseColor("#E6fffacd"); //yellow
+    private int statisticColor = Color.parseColor("#E6eeeeee"); //grey
 
     private GyroscopeObserver gyroscopeObserver;// for the panoramaImage
-
-    //The buttons of the circle menu
-    String circleArray[] = {"Settings","Data","Information","Statistic"};
 
     @Override
     /**
      * @param savedInstanceState  Bundle
      */
     protected void onCreate(Bundle savedInstanceState) {
-        /**
-         * Android Shit
-         */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homeactivity);
 
@@ -84,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Initialize
         secretButton = (Button) findViewById(R.id.secretButton);
-        secretButton.getBackground().setColorFilter(0x00000000, PorterDuff.Mode.MULTIPLY);
+        secretButton.getBackground().setColorFilter(0x00000000, PorterDuff.Mode.MULTIPLY); //Set Button Backgroundcolor transparent
         logo = (TextView) findViewById(R.id.textViewLogo);
         mapButton = (Button) findViewById(R.id.mapbutton);
         welcome = (TextView) findViewById(R.id.textViewWelcome);
@@ -92,11 +82,6 @@ public class HomeActivity extends AppCompatActivity {
         //set the Background
         cL = (ConstraintLayout) findViewById(R.id.constraintLayout);
         cL.setBackgroundResource(R.drawable.color_gradient_background);
-
-
-        //set Screen Orientation
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 
         //SecretButton, which will rotate the logo
         secretButton.setOnClickListener(new View.OnClickListener(){
@@ -186,12 +171,18 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     *
+     */
     @Override
     protected void onResume() {
         super.onResume();
         gyroscopeObserver.register(this);
     }
 
+    /**
+     *
+     */
     @Override
     protected void onPause() {
         super.onPause();

@@ -125,6 +125,7 @@
     <string name="delete">Delete</string>
     <string name="show">Show</string>
     <string name="no_data">No Data found</string>
+    <string name="stored_data">My stored Routes and Polygons</string>
 
     <!-- Dialog Alert -->
     <string name="name">name</string>

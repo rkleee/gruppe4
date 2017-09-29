@@ -83,24 +83,37 @@
         app:layout_constraintHorizontal_bias="0.502" />
 
     <!-- Displays Informationtext -->
-    <TextView
-        android:id="@+id/informationtext"
-        android:layout_width="320dp"
-        android:layout_height="207dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="casual"
-        android:text="@string/informationtext"
-        android:textAlignment="center"
-        android:textColor="@color/cardview_dark_background"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewLogo"
+        app:layout_constraintTop_toBottomOf="@+id/appversion"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/secretButton"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoButton"
-        app:layout_constraintVertical_bias="0.353" />
+        app:layout_constraintVertical_bias="0.538">
+        <TextView
+            android:id="@+id/informationtext"
+            android:layout_width="320dp"
+            android:layout_height="207dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="casual"
+            android:text="@string/informationtext"
+            android:textAlignment="center"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLogo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/infoButton"
+            app:layout_constraintVertical_bias="0.353" />
+    </ScrollView>
 
     <!-- Displays AppVersion -->
     <TextView

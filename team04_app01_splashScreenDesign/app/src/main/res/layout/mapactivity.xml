@@ -6,34 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/playButton"
-        android:layout_width="140dp"
-        android:layout_height="51dp"
-        android:text="@string/play"
-        mapbox:layout_constraintRight_toLeftOf="@+id/saveButton"
-        mapbox:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp" />
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="140dp"
-        android:layout_height="51dp"
-        android:text="@string/save"
-        mapbox:layout_constraintRight_toRightOf="parent"
-        mapbox:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp" />
-
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="379dp"
+        android:layout_height="581dp"
 
         mapbox:layout_constraintBottom_toBottomOf="parent"
 
-        mapbox:layout_constraintHorizontal_bias="1.0"
+        mapbox:layout_constraintHorizontal_bias="0.6"
         mapbox:layout_constraintLeft_toLeftOf="parent"
         mapbox:layout_constraintRight_toRightOf="parent"
         mapbox:layout_constraintTop_toTopOf="parent"
@@ -45,6 +25,65 @@
         mapbox:mapbox_cameraZoom="17"
         mapbox:mapbox_cameraZoomMax="20"
         mapbox:mapbox_cameraZoomMin="0"
-        mapbox:mapbox_uiRotateGestures="true" />
+        mapbox:mapbox_uiRotateGestures="true">
+
+    </com.mapbox.mapboxsdk.maps.MapView>
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="99dp"
+        android:layout_height="93dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+        android:alpha="0.80"
+        android:background="@android:color/transparent"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
+        mapbox:layout_constraintVertical_bias="0.982"
+        mapbox:srcCompat="@drawable/playicon3"
+        mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="458dp" />
+
+    <ImageButton
+        android:id="@+id/databtn"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        mapbox:srcCompat="@drawable/dataic1"
+        android:visibility="visible"
+        android:alpha="0.80"
+        android:background="@android:color/transparent"
+        mapbox:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        mapbox:layout_constraintLeft_toLeftOf="parent"
+        mapbox:layout_constraintRight_toLeftOf="@+id/playButton"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintHorizontal_bias="1.0"
+        mapbox:layout_constraintVertical_bias="0.982" />
+
+    <ImageButton
+        android:id="@+id/saveButton"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+        android:alpha="0.80"
+        android:background="@android:color/transparent"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintRight_toRightOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
+        mapbox:layout_constraintVertical_bias="0.982"
+        mapbox:srcCompat="@drawable/saveic"
+        mapbox:layout_constraintLeft_toRightOf="@+id/playButton"
+        mapbox:layout_constraintHorizontal_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

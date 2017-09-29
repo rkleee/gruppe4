@@ -1,50 +1,70 @@
+/**
+ * @author group04
+ * @version 1.0
+ * DataActivity, the data Activity of the app
+ */
 package com.example.l_pba.team04_app01_splashscreendesign;
 
+/**
+ * Android Imports
+ */
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+/**
+ * Java util Imports
+ */
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
-
+/**
+ * DataActivity to display stored Datasets
+ */
 public class DataActivity extends AppCompatActivity {
 
+    /**Declarate Layout**/
+    private ConstraintLayout cL;
+
+    /**Declarate Buttons and View**/
     private Button show;
-
+    private ImageButton circleButton;
     private ListView listView;
-    private LinkedList<String> allItems = new LinkedList<>();       //contains all Route names
-    private LinkedList<String> selectedItem = new LinkedList<>();   //Teilmenge allItems
 
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
+    /**Declarate Arrays and Lists**/
+    private LinkedList<String> allItems = new LinkedList<>();       //contains all Route names
+    private LinkedList<String> selectedItem = new LinkedList<>();   //Subset allItems
     private String[] caption;
     private String[] prefArray;     //raw data
 
-    private ConstraintLayout cL;
+    /**Declarate Shared Preferences**/
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
-    String selectedColor = "#ff6e7b8b"; //red
 
+    String selectedColor = "#985358";//winered// //color for selected Items
     String longItem;
 
     @Override
+    /**
+     * @param savedInstanceState : Bundle
+     */
     protected void onCreate(Bundle savedInstanceState) {
         //Android
         super.onCreate(savedInstanceState);
@@ -53,21 +73,22 @@ public class DataActivity extends AppCompatActivity {
         //set Backgroundcolor for DataActivity
         cL = (ConstraintLayout) findViewById(R.id.cL);
         cL.setBackgroundResource(R.drawable.data_background);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //Buttons
+        /**Initialize Buttons**/
         show = (Button) findViewById(R.id.showButton);
+        circleButton = (ImageButton) findViewById(R.id.circlebtn);
 
-        //Load data
+        //Load data from GPSFile
         preferences = getSharedPreferences("GPSFile", Context.MODE_PRIVATE);
         editor = preferences.edit();
 
+        //Get Captions from GPS
         GetCaption();
 
-        //Listview
+        /**Initialize ListView and set functionality**/
         final HashMap<Integer, Boolean> clickedMap = new HashMap<>();
         listView = (ListView) findViewById(R.id.ListView);
-        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, caption));
+        listView.setAdapter(new ArrayAdapter<>(this,R.layout.textview, caption));
         registerForContextMenu(listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,38 +117,46 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
-        show.setOnClickListener(new View.OnClickListener() {
+        /**set OnClick to circleButton to open MapActivity**/
+        circleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DataActivity.this,MapActivity.class);
-                intent.putExtra("Items",selectedItem.toArray(new String[0]));
-                startActivity(intent);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent mapview = new Intent(DataActivity.this,MapActivity.class);
+                        mapview.putExtra("Items", new String[]{});
+                        startActivity(mapview);
+                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                        finish();
+                    }
+                },25);
             }
         });
 
-        //rename
-        if(getIntent().hasExtra("newName") == true) {
-            String input = getIntent().getExtras().getString("newName", "");
-            longItem = getIntent().getExtras().getString("longItem", "");
-            for (int i=0; i<prefArray.length; i++){
-                if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(longItem)) {
-                    String extra = prefArray[i].replaceAll("[^\\d.]", "");
-                    String key = input + extra;
-                    String copy = preferences.getString(prefArray[i], "");
-                    editor.remove(prefArray[i]);
-                    editor.putString(key, copy);
-                }
+        /**set OnClick to showButton to display routes on MapActivity**/
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent mapview = new Intent(DataActivity.this,MapActivity.class);
+                        mapview.putExtra("Items",selectedItem.toArray(new String[0]));
+                        startActivity(mapview);
+                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                        finish();
+                    }
+                },25);
             }
+        });
 
-            editor.commit();
-
-            //update listview
-            GetCaption();
-            listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
-        }
 
     }
 
+    /**
+     * Function to getCaption from Shared Preferences
+     */
     private void GetCaption(){
         String[] empty = new String[]{}; //String if preferences.isEmpty
         allItems.clear();
@@ -149,6 +178,12 @@ public class DataActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @param menu : ContextMenu
+     * @param v : View
+     * @param menuinfo : ContextMenuInfo
+     */
     public void onCreateContextMenu(ContextMenu menu, android.view.View v, ContextMenu.ContextMenuInfo menuinfo) {
 
         super.onCreateContextMenu(menu, v, menuinfo);
@@ -159,6 +194,11 @@ public class DataActivity extends AppCompatActivity {
     }
 
 
+    /**
+     *
+     * @param item : MenuItem
+     * @return : boolean
+     */
     public boolean onContextItemSelected(MenuItem item){
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int listPosition = info.position;
@@ -177,28 +217,61 @@ public class DataActivity extends AppCompatActivity {
 
             //update listview
             GetCaption();
-            listView.setAdapter(new ArrayAdapter<>(DataActivity.this, android.R.layout.simple_list_item_1, caption));
+            listView.setAdapter(new ArrayAdapter<>(DataActivity.this,R.layout.textview, caption));
 
         } else if (item.getTitle()=="Rename") {
 
-            Intent ren = new Intent(DataActivity.this,RenameActivity.class);
-            ren.putExtra("longItem", longItem);
-            startActivity(ren);
+            /**Build AlertDialog to question User-information**/
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(DataActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.activity_rename,null);
+            mBuilder.setView(mView);
+            final AlertDialog dialog = mBuilder.create();
 
+            /**Initialize EditText and Button**/
+            final EditText rename = (EditText) mView.findViewById(R.id.nntV);
+            Button savename = (Button) mView.findViewById(R.id.savebtn);
+
+            dialog.show();
+
+            //set onClick functionality to save Userspecified name
+            savename.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                     String input = rename.getText().toString();
+                    for (int i=0; i<prefArray.length; i++){
+                        if (prefArray[i].replaceAll("[0-9]","").replace("#","").equals(longItem)) {
+                            String extra = prefArray[i].replaceAll("[^\\d.]", "");
+                            String key = input + extra;
+                            String copy = preferences.getString(prefArray[i], "");
+                            editor.remove(prefArray[i]);
+                            editor.putString(key, copy);
+                        }
+                    }
+                    editor.commit();
+
+                    //update listview
+                    GetCaption();
+                    listView.setAdapter(new ArrayAdapter<>(DataActivity.this, R.layout.textview, caption));
+                    dialog.cancel();
+                }
+            });
         }
         return true;
     }
 
+    /**
+     * onBackPressed to return to HomeActivity
+     */
     @Override
     public void onBackPressed() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent backIntent = new Intent(DataActivity.this,HomeActivity.class);
+                Intent backIntent = new Intent(DataActivity.this, HomeActivity.class);
                 startActivity(backIntent);
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
             }
-        },50);
+        }, 50);
     }
 }
