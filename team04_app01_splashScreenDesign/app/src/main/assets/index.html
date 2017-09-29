@@ -10,6 +10,24 @@
 <body style="background-color:#eeeeee;">
 <div id="chart"></div>
     <script type="text/javascript">
+        function secretfunction(val1,val2,val3) {
+            //display points in chart
+            setTimeout(function () {
+                chart.transform('scatter');
+            }, 0);
+            setTimeout(function () {
+                chart.transform('pie');
+            }, 2000);
+            setTimeout(function () {
+                chart.transform('donut');
+            }, 4000);
+            setTimeout(function () {
+                chart.transform('spline');
+            }, 6000);
+            setTimeout(function () {
+                chart.transform('area-spline');
+            }, 8000);
+        }
 
         function makeArray(val1,val2,val3) {
             var a = val1; //JSON.toString() from StatisticActivity

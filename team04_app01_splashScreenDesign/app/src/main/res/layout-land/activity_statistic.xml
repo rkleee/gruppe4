@@ -7,29 +7,88 @@
     android:layout_height="match_parent"
     tools:context="com.example.l_pba.team04_app01_splashscreendesign.StatisticActivity">
 
-
+    <!--SlidingUp-Panel -->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout3"
-        android:layout_width="245dp"
-        android:layout_height="359dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="-1dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="243dp"
+        android:layout_height="354dp"
         android:gravity="bottom"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintVertical_bias="0.545"
+        app:layout_constraintLeft_toRightOf="@+id/constraintLayout2"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="1.0">
+
+        <Button
+            android:id="@+id/secretbutton"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="127dp"
+            android:layout_height="64dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/listviewst"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteY="282dp" />
+
+        <TextView
+            android:id="@+id/textViewLogo"
+            android:layout_width="123dp"
+            android:layout_height="27dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:lineSpacingExtra="36sp"
+            android:text="MCROUTE"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="24sp"
+            app:layout_constraintTop_toTopOf="@+id/secretbutton"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCreator" />
+
+        <TextView
+            android:id="@+id/textViewCreator"
+            android:layout_width="118dp"
+            android:layout_height="19dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/created_by"
+            android:textAlignment="center"
+            android:textColor="?attr/colorButtonNormal"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="319dp" />
 
         <TextView
             android:id="@+id/informationtv"
-            android:layout_width="233dp"
-            android:layout_height="43dp"
+            android:layout_width="155dp"
+            android:layout_height="34dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="casual"
             android:text="INFORMATION"
             android:textAlignment="center"
@@ -39,39 +98,37 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.013" />
+            app:layout_constraintVertical_bias="0.026" />
 
         <ListView
             android:id="@+id/listviewst"
-            android:layout_width="242dp"
-            android:layout_height="284dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="236dp"
+            android:layout_height="224dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/informationtv"
-            app:layout_constraintVertical_bias="0.0"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:layout_editor_absoluteX="3dp" />
+            tools:layout_editor_absoluteY="30dp"
+            tools:layout_editor_absoluteX="-12dp"
+            app:layout_constraintHorizontal_bias="0.52" />
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="352dp"
-        android:layout_height="353dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="6dp"
+        android:layout_width="330dp"
+        android:layout_height="350dp"
         android:gravity="top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/constraintLayout3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.375">
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="1dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintVertical_bias="0.545"
+        android:id="@+id/constraintLayout2"
+        tools:layout_editor_absoluteY="6dp">
 
         <TextView
             android:id="@+id/statistic"
@@ -82,14 +139,13 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="casual"
             android:text="@string/statistics"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -97,20 +153,16 @@
 
         <WebView
             android:id="@+id/webView"
-            android:layout_width="333dp"
-            android:layout_height="291dp"
+            android:layout_width="311dp"
+            android:layout_height="293dp"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/statistic"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintVertical_bias="0.0">
-
-        </WebView>
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/statistic" />
 
     </android.support.constraint.ConstraintLayout>
 

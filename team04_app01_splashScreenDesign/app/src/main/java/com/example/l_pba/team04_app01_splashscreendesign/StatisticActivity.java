@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +69,8 @@ public class StatisticActivity extends AppCompatActivity {
 
     //set Background color
     private int statisticColor = Color.parseColor("#eeeeee"); //grey
+
+    private boolean pressed = false;
 
     @Override
     /**
@@ -165,18 +168,17 @@ public class StatisticActivity extends AppCompatActivity {
 
         secretButton = (Button) findViewById(R.id.secretbutton);
         secretButton.getBackground().setColorFilter(0x00000000, PorterDuff.Mode.MULTIPLY); //Set Button Backgroundcolor transparent
-/*
+
         secretButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.setWebViewClient(new WebViewClient() {
-                    public void onPageFinished(WebView view, String url) {
-                        webView.loadUrl("javascript:secretfunction()");
-                    }
-                });
+                if(!pressed) {
+                    webView.loadUrl("javascript:secretfunction('"+obj+"','"+keyArray.size()+"','"+2+"')");
+                }else pressed = false;
+
             }
         });
-*/
+
         //Send data to Javascript
         webView.setWebViewClient(new WebViewClient(){
             public void onPageFinished(WebView view, String url) {
