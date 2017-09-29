@@ -203,6 +203,7 @@ public class StatisticActivity extends AppCompatActivity {
                 temp += calculate(ll.get(ind2),ll.get(ind2+1));
             }
             distance.put(keyArray.get(ind),temp);
+            temp=0;
         }
 
         //Build String to display on Information-Screen
@@ -230,7 +231,7 @@ public class StatisticActivity extends AppCompatActivity {
      * @param l2 : LatLng
      * @return double
      */
-    public double calculate(LatLng l1, LatLng l2) {;
+    public double calculate(LatLng l1, LatLng l2) {
         double lat1=l1.getLatitude();
         double lat2=l2.getLatitude();
         double lon1=l1.getLongitude();
